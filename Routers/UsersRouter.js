@@ -14,6 +14,7 @@ userRouter.get('/getAll',(req,res,next)=>{
     })
 });
 
+
 userRouter.post('/addUser',(req,res,next)=>{
     const users = new Users({
         _id:new mongoose.Types.ObjectId,
