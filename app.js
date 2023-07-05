@@ -5,6 +5,7 @@ var bodyParser = require('body-parser')
 
 var userRouter = require('./Routers/UsersRouter');
 var categoryRouter = require('./Routers/CategoryRouter');
+var appointmentRouter = require('./Routers/AppointmentRouter');
 
 
 mongoose.set("strictQuery", false);
@@ -24,6 +25,7 @@ app.use(bodyParser.json());
 
 app.use('/api/users',userRouter);
 app.use('/api/category',categoryRouter);
+app.use('/api/appointments',appointmentRouter);
 
 
 module.exports = app;
