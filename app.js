@@ -3,9 +3,9 @@ var app = express();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser')
 
-var userRouter = require('./Routers/UsersRouter');
-var categoryRouter = require('./Routers/CategoryRouter');
-var appointmentRouter = require('./Routers/AppointmentRouter');
+var userRouter = require('./MVCLC/Routers/UsersRouter');
+var categoryRouter = require('./MVCLC/Routers/CategoryRouter');
+var appointmentRouter = require('./MVCLC/Routers/AppointmentRouter');
 
 
 mongoose.set("strictQuery", false);
