@@ -251,7 +251,7 @@ userRouter.get('/getlimit',(req,res,next)=>{
 });
 
 
-userRouter.get('/getAll',(req,res,next)=>{
+userRouter.get('/getAll',checkAuth,(req,res,next)=>{
     Users.find().then(result=>{
         res.status(200).json({
             status:true,
