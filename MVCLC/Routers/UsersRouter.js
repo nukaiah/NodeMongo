@@ -79,11 +79,12 @@ userRouter.post('/login',(req,res,next)=>{
             return res.status(401).json({
                 message:"No User Exist",
                 status:false,
+                statCode:res.statusCode
             });
         }
         else{
             bcrypt.compare(req.body.password, user[0].password,(err, result)=>{
-                if(!result){
+                if(result){
                     const token = jwt.sign({
                         firstName:user[0].firstName,
                         lastName:user[0].lastName,
@@ -111,7 +112,7 @@ userRouter.post('/login',(req,res,next)=>{
                          });
                     
                 }
-                if(result){
+                else{
                     return res.status(401).json({
                         message:"Password not matched",
                         status:false
