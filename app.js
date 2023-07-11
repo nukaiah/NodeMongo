@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser')
+const cors = require('cors');
 
 var userRouter = require('./MVCLC/Routers/UsersRouter');
 var categoryRouter = require('./MVCLC/Routers/CategoryRouter');
@@ -19,6 +20,19 @@ mongoose.connection.on("connected",connected=>{
     console.log("Connected Succeffully");
 });
 
+const corsOptions = {
+    origin: function (origin, callback) {
+      if (!origin || whitelist.indexOf(origin) !== -1) {
+        callback(null, true)
+      } else {
+        callback(new Error("Not allowed by CORS"))
+      }
+    },
+    credentials: true,
+  }
+  
+
+app.use(cors(corsOptions));
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
