@@ -80,7 +80,7 @@ userRouter.post('/login',(req,res,next)=>{
         console.log(user);
         if(user.length==0){
             return res.status(401).json({
-                message:"No User Existed",
+                message:"No User found",
                 status:false,
             });
         }
