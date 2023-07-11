@@ -78,7 +78,7 @@ userRouter.post('/login',(req,res,next)=>{
      .exec()
      .then(user=>{
         console.log(user);
-        if(user.length<1){
+        if(user.length==0){
             return res.status(401).json({
                 message:"No User Exist",
                 status:false,
