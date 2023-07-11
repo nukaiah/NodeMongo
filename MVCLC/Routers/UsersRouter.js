@@ -78,7 +78,8 @@ res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Ty
         if(user.length<1){
             return res.status(401).json({
                 message:"No User Exist",
-                status:false
+                status:false,
+                error:user
             });
         }
         else{
