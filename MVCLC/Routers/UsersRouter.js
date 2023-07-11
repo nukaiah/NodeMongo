@@ -72,11 +72,12 @@ userRouter.post('/login',(req,res,next)=>{
     res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
      Users.find({email:req.body.email})
+     .exec()
      .then(user=>{
         console.log(user);
         if(user.length<1){
             return res.status(401).json({
-                message:"No User Exists",
+                message:"No User Exist",
                 status:false,
             });
         }
