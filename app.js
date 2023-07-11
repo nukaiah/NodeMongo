@@ -25,7 +25,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
 var corsOptions = {
-    origin: 'https://node-mongo-seven.vercel.app',
+    origin: 'https://node-mongo-seven.vercel.app/',
     optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
   }
 
