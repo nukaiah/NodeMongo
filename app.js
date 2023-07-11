@@ -24,12 +24,9 @@ app.use(cors());
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
-var corsOptions = {
-    origin: 'https://node-mongo-seven.vercel.app/',
-    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-  }
 
-app.use('/api/users',cors(corsOptions),userRouter);
+
+app.use('/api/users',userRouter);
 app.use('/api/category',categoryRouter);
 app.use('/api/appointments',appointmentRouter);
 
