@@ -21,7 +21,7 @@ mongoose.connection.on("connected",connected=>{
 });
 
 app.use(cors({
-    origin:"*"
+    origin:'https://node-mongo-seven.vercel.app'
 }));
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
