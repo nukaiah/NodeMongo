@@ -76,7 +76,7 @@ res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Ty
      .then(user=>{
         console.log(user);
         if(user.length<1){
-            return res.status(200).json({
+            return res.status(401).json({
                 message:"No User Exist",
                 status:false
             });
