@@ -68,11 +68,11 @@ userRouter.post('/signUp',(req,res,next)=>{
 // Login Function is Here....
 userRouter.post('/login',(req,res,next)=>{
    try {
-    res.set('Access-Control-Allow-Origin', '*'); // or 'localhost:8888'
-  res.set('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
-  res.set(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept'
+    res.set('Access-Control-Allow-Origin', '*');
+    res.set('Access-Control-Allow-Methods', 'PUT,POST,GET,DELETE,OPTIONS');
+     res.set(
+       'Access-Control-Allow-Headers',
+       'Origin, X-Requested-With, Content-Type, Accept'
   );
      Users.find({email:req.body.email})
      .exec()
