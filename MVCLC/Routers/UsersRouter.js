@@ -234,7 +234,7 @@ userRouter.post('/getAccountDetails',(req,res,next)=>{
 
 userRouter.delete('/delete',(req,res,next)=>{
     var query = {_id:req.body._id};
-    Users.findByIdAndRemove(query).then(result=>{
+    Users.remove(query).then(result=>{
         res.status(200).json({
             status:true,
             message:"User removed Sucessfully"
