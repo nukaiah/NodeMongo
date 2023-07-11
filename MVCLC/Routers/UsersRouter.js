@@ -76,46 +76,49 @@ res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Ty
      .then(user=>{
         console.log(user);
         if(user.length<1){
-            return res.status(401).json({
+            return res.status(200).json({
                 message:"No User Exist",
                 status:false
             });
         }
-        bcrypt.compare(req.body.password, user[0].password,(err, result)=>{
-            if(!result){
-                return res.status(401).json({
-                    message:"Password not matched",
-                    status:false
-                });
-            }
-            if(result){
-                const token = jwt.sign({
-                    firstName:user[0].firstName,
-                    lastName:user[0].lastName,
-                    email:user[0].email,
-                    phone:user[0].phone,
-                },
-                'this is login data',
-                {
-                    expiresIn:"24h"
-                },
-                );
-                res.status(200).json({
-                         firstName:user[0].firstName,
-                         lastName:user[0].lastName,
-                         email:user[0].email,
-                         password:user[0].password,
-                         phone:user[0].phone,
-                         presentAdd:user[0].presentAdd,
-                         permanentAdd:user[0].permanentAdd,
-                         proofType:user[0].proofType,
-                         proofIdNumber:user[0].proofIdNumber,
-                         token:token,
-                         status:true,
-                         message:"Login Successfully"
-                     });
-                 }
-             });
+        else{
+            bcrypt.compare(req.body.password, user[0].password,(err, result)=>{
+                if(!result){
+                    return res.status(401).json({
+                        message:"Password not matched",
+                        status:false
+                    });
+                }
+                if(result){
+                    const token = jwt.sign({
+                        firstName:user[0].firstName,
+                        lastName:user[0].lastName,
+                        email:user[0].email,
+                        phone:user[0].phone,
+                    },
+                    'this is login data',
+                    {
+                        expiresIn:"24h"
+                    },
+                    );
+                    res.status(200).json({
+                             firstName:user[0].firstName,
+                             lastName:user[0].lastName,
+                             email:user[0].email,
+                             password:user[0].password,
+                             phone:user[0].phone,
+                             presentAdd:user[0].presentAdd,
+                             permanentAdd:user[0].permanentAdd,
+                             proofType:user[0].proofType,
+                             proofIdNumber:user[0].proofIdNumber,
+                             token:token,
+                             status:true,
+                             message:"Login Successfully"
+                         });
+                     }
+                 });
+        }
+
          });
    } catch (error) {
     message:error
