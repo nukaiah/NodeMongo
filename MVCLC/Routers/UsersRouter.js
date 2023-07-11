@@ -5,6 +5,7 @@ var userRouter = express.Router();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
+const checkAuth = require('../MiddleWares/CheckAuth');
 
 
 
@@ -72,13 +73,15 @@ userRouter.post('/login',(req,res,next)=>{
      .then(user=>{
         if(user.length<1){
             return res.status(401).json({
-                message:"No User Exist"
+                message:"No User Exist",
+                status:false
             });
         }
         bcrypt.compare(req.body.password, user[0].password,(err, result)=>{
             if(!result){
                 return res.status(401).json({
-                    message:"Password not matched"
+                    message:"Password not matched",
+                    status:false
                 });
             }
             if(result){
@@ -103,7 +106,9 @@ userRouter.post('/login',(req,res,next)=>{
                          permanentAdd:user[0].permanentAdd,
                          proofType:user[0].proofType,
                          proofIdNumber:user[0].proofIdNumber,
-                         token:token
+                         token:token,
+                         status:true,
+                         message:"Login Successfully"
                      });
                  }
              });
@@ -190,6 +195,7 @@ userRouter.post('/forgotPassword',(req,res,next)=>{
     })
 })
 
+// Get Account details
 userRouter.post('/getAccountDetails',(req,res,next)=>{
     try {
         var query = { _id: req.body._id};
@@ -212,6 +218,9 @@ userRouter.post('/getAccountDetails',(req,res,next)=>{
     }
 
 });
+
+
+
 
 userRouter.delete('/delete',(req,res,next)=>{
     var query = {_id:req.body._id};
@@ -241,7 +250,7 @@ userRouter.get('/getlimit',(req,res,next)=>{
 });
 
 
-userRouter.get('/getAll',(req,res,next)=>{
+userRouter.get('/getAll',checkAuth,(req,res,next)=>{
     Users.find().then(result=>{
         res.status(200).json({
             status:true,

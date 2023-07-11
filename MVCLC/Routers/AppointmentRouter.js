@@ -2,9 +2,11 @@ var express = require("express");
 var appointmentRouter = express.Router(); 
 var mongoose = require("mongoose");
 var Appointment = require('../Models/AppointmentModels');
+const checkAuth = require('../MiddleWares/CheckAuth');
+const Category  = require('../Models/CategoryModels')
 
 
-appointmentRouter.get('/getAll',(req,res,next)=>{
+appointmentRouter.get('/getAll',checkAuth,(req,res,next)=>{
     Appointment.find().then(result=>{
         res.status(200).json({
             status:true,
@@ -54,5 +56,8 @@ appointmentRouter.post('/addAppointment',(req,res,next)=>{
 });
 
 
+appointmentRouter.post('/update',(req,res,next)=>{
+    const collection = db.collection('counters');
+})
 
 module.exports = appointmentRouter;
