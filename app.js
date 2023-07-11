@@ -20,9 +20,8 @@ mongoose.connection.on("connected",connected=>{
     console.log("Connected Succeffully");
 });
 
-app.use(cors({
-    origin: '*'
-}));
+app.use(cors());
+app.options('*', cors());
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
