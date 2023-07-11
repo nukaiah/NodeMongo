@@ -20,14 +20,16 @@ mongoose.connection.on("connected",connected=>{
     console.log("Connected Succeffully");
 });
 
-app.use(cors({
-    origin:'https://node-mongo-seven.vercel.app'
-}));
+app.use(cors());
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
+var corsOptions = {
+    origin: 'http://example.com',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+  }
 
-app.use('/api/users',userRouter);
+app.use('/api/users',cors(corsOptions),userRouter);
 app.use('/api/category',categoryRouter);
 app.use('/api/appointments',appointmentRouter);
 
