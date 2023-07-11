@@ -1,7 +1,8 @@
 var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
+var cors = require("cors");
 
 var userRouter = require('./MVCLC/Routers/UsersRouter');
 var categoryRouter = require('./MVCLC/Routers/CategoryRouter');
@@ -20,6 +21,7 @@ mongoose.connection.on("connected",connected=>{
 });
 
 app.use(bodyParser.urlencoded({extended:false}));
+app.use(cors());
 app.use(bodyParser.json());
 
 
