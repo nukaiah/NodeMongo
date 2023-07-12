@@ -220,7 +220,7 @@ userRouter.post('/forgotPassword',(req,res,next)=>{
 })
 
 // Get Account details
-userRouter.post('/getAccountDetails',(req,res,next)=>{
+userRouter.post('/getAccountDetails',checkAuth,(req,res,next)=>{
     try {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
@@ -247,7 +247,7 @@ userRouter.post('/getAccountDetails',(req,res,next)=>{
 });
 
 
-userRouter.delete('/delete',(req,res,next)=>{
+userRouter.delete('/delete',checkAuth,(req,res,next)=>{
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -267,7 +267,7 @@ userRouter.delete('/delete',(req,res,next)=>{
 
 
 
-userRouter.get('/getlimit',(req,res,next)=>{
+userRouter.get('/getlimit',checkAuth,(req,res,next)=>{
     try {
         res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
