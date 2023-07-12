@@ -7,6 +7,7 @@ var cors = require("cors");
 var userRouter = require('./MVCLC/Routers/UsersRouter');
 var villageLeaders = require('./MVCLC/Routers/VillageLeaderRouter');
 var appointmentRouter = require('./MVCLC/Routers/AppointmentRouter');
+var personalRouter = require('./MVCLC/Routers/PersonalRouter');
 
 
 mongoose.set("strictQuery", false);
@@ -29,6 +30,7 @@ app.use(bodyParser.json());
 // Routers are defined here.........>>>>
 
 app.use('/api/users',userRouter);
+app.use('/api/personal',personalRouter);
 app.use('/api/villageLeaders',villageLeaders);
 app.use('/api/appointments',appointmentRouter);
 

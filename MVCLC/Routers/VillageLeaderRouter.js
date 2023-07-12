@@ -55,7 +55,7 @@ villageLeaderRouter.post('/addVillageLeader',checkAuth,(req,res,next)=>{
             status:true,
             message:"VillageLeader added Successfully",
             newVillageLeader:result
-        })
+        });
     }).catch(error=>{
         res.status(500).json({
             status:false,
