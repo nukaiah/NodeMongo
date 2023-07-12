@@ -14,7 +14,12 @@ var appointmentSchema = new mongoose.Schema({
     natureofWork:String,
     priortyofVisit:String,
     photo:String,
-    visitPurpose:String
+    visitPurpose:String,
+    aptId:String,
+    aptStatus:String,
+    ticketStatus:String,
+    followupDate:Date,
+    createdDate:Date
 });
 
 

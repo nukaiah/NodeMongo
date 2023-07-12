@@ -26,6 +26,8 @@ app.use(bodyParser.json());
 
 
 
+// Routers are defined here.........>>>>
+
 app.use('/api/users',userRouter);
 app.use('/api/villageLeaders',villageLeaders);
 app.use('/api/appointments',appointmentRouter);
