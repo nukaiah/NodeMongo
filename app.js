@@ -5,7 +5,7 @@ var bodyParser = require('body-parser');
 var cors = require("cors");
 
 var userRouter = require('./MVCLC/Routers/UsersRouter');
-var categoryRouter = require('./MVCLC/Routers/CategoryRouter');
+var villageLeaders = require('./MVCLC/Routers/VillageLeaderRouter');
 var appointmentRouter = require('./MVCLC/Routers/AppointmentRouter');
 
 
@@ -27,7 +27,7 @@ app.use(bodyParser.json());
 
 
 app.use('/api/users',userRouter);
-app.use('/api/category',categoryRouter);
+app.use('/api/villageLeaders',villageLeaders);
 app.use('/api/appointments',appointmentRouter);
 
 

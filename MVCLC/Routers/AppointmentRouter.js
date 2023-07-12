@@ -3,10 +3,12 @@ var appointmentRouter = express.Router();
 var mongoose = require("mongoose");
 var Appointment = require('../Models/AppointmentModels');
 const checkAuth = require('../MiddleWares/CheckAuth');
-const Category  = require('../Models/CategoryModels')
 
 
-appointmentRouter.get('/getAll',checkAuth,(req,res,next)=>{
+appointmentRouter.get('/getAll',(req,res,next)=>{
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     Appointment.find().then(result=>{
         res.status(200).json({
             status:true,
@@ -22,7 +24,10 @@ appointmentRouter.get('/getAll',checkAuth,(req,res,next)=>{
     
 });
 
-appointmentRouter.post('/addAppointment',(req,res,next)=>{
+appointmentRouter.post('/addAppointment',checkAuth,(req,res,next)=>{
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     const appointment = new Appointment({
         _id:new mongoose.Types.ObjectId,
         voterId:req.body.voterId,
@@ -54,10 +59,5 @@ appointmentRouter.post('/addAppointment',(req,res,next)=>{
         })
     })
 });
-
-
-appointmentRouter.post('/update',(req,res,next)=>{
-    const collection = db.collection('counters');
-})
 
 module.exports = appointmentRouter;
