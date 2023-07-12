@@ -46,6 +46,9 @@ personalRouter.post('/addPersonal',checkAuth,(req,res,next)=>{
 
 personalRouter.get('/getAll',checkAuth,(req,res,next)=>{
     try {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         Personal.find().exec().then(result=>{
             res.status(200).json({
                 status:true,
