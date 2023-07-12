@@ -97,9 +97,7 @@ userRouter.post('/login',(req,res,next)=>{
                         expiresIn:"24h"
                     },
                     );
-                    res.status(200).json({
-                
-                             
+                    res.status(200).json({                 
                          status:true,
                              message:"Login Successfully",
                              loginData:{
@@ -140,6 +138,9 @@ userRouter.post('/login',(req,res,next)=>{
 // Update or Change Password is Here.....
 userRouter.put('/updatePassword',(req,res,next)=>{
    try {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
      var query = { _id: req.body._id};
      bcrypt.hash(req.body.password,10,(err,hash)=>{
          if(err){
@@ -170,51 +171,61 @@ userRouter.put('/updatePassword',(req,res,next)=>{
 
 // Forgot Password is Here......
 userRouter.post('/forgotPassword',(req,res,next)=>{
-    var queryEmail ={email: req.body.email};
-    Users.find(queryEmail)
-    .exec()
-    .then(user=>{
-        if(user.length<1){
-            return res.status(401).json({
-                message:"This Email is not registerd"
-            });
-        }
-        else{
-            console.log(req.body.email);
-            const transporter = nodemailer.createTransport({
-                service: 'gmail',
-                auth: {
-                  user: 'srinivas.y@lionorbit.com',
-                  pass: 'Srinivas@123',
-                },
-              });
-              
-              var mailOptions = {
-                from: 'noreply@gmail.com',
-                to:req.body.email,
-                subject: 'Reset You Password',
-                text: '1. Click on link below to reset your LC account password \nwwww.google.com '
-              };
-              
-              transporter.sendMail(mailOptions, function(error, info){
-                if (error) {
-                  console.log(error);
-                } else {
-                  console.log('Email sent: ' + info.response);
-                }
-              });
-              
-              
-            return res.status(200).json({
-                message:"Email Sent Successfully"
-            });
-        }
-    })
+    try {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        var queryEmail ={email: req.body.email};
+        Users.find(queryEmail)
+        .exec()
+        .then(user=>{
+            if(user.length<1){
+                return res.status(401).json({
+                    message:"This Email is not registerd"
+                });
+            }
+            else{
+                console.log(req.body.email);
+                const transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                      user: 'srinivas.y@lionorbit.com',
+                      pass: 'Srinivas@123',
+                    },
+                  });
+                  
+                  var mailOptions = {
+                    from: 'noreply@gmail.com',
+                    to:req.body.email,
+                    subject: 'Reset You Password',
+                    text: '1. Click on link below to reset your LC account password \nwwww.google.com '
+                  };
+                  
+                  transporter.sendMail(mailOptions, function(error, info){
+                    if (error) {
+                      console.log(error);
+                    } else {
+                      console.log('Email sent: ' + info.response);
+                    }
+                  });
+                  
+                  
+                return res.status(200).json({
+                    message:"Email Sent Successfully"
+                });
+            }
+        })
+    } catch (error) {
+        message:error
+    }
 })
 
 // Get Account details
 userRouter.post('/getAccountDetails',(req,res,next)=>{
     try {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         var query = { _id: req.body._id};
         Users.find(query).exec()
         .then(result=>{
@@ -258,24 +269,39 @@ userRouter.delete('/delete',(req,res,next)=>{
 
 
 userRouter.get('/getlimit',(req,res,next)=>{
-    Users.find().limit(2).then(result=>{
-        res.status(200).json({
-            status:true,
-            message:" Users Data Fetched",
-            userData:result
+    try {
+        res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        Users.find().limit(2).then(result=>{
+            res.status(200).json({
+                status:true,
+                message:" Users Data Fetched",
+                userData:result
+            })
         })
-    })
+    } catch (error) {
+        message:error
+        
+    }
 });
 
 
 userRouter.get('/getAll',(req,res,next)=>{
-    Users.find().then(result=>{
-        res.status(200).json({
-            status:true,
-            message:" Users Data Fetched",
-            userData:result
-        })
-    })
+   try {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+     Users.find().then(result=>{
+         res.status(200).json({
+             status:true,
+             message:" Users Data Fetched",
+             userData:result
+         })
+     })
+   } catch (error) {
+    message:error
+   }
 });
 
 
