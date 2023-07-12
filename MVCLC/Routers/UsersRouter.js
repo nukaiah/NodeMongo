@@ -98,7 +98,12 @@ userRouter.post('/login',(req,res,next)=>{
                     },
                     );
                     res.status(200).json({
-                             firstName:user[0].firstName,
+                
+                             
+                         status:true,
+                             message:"Login Successfully",
+                             loginData:{
+                                firstName:user[0].firstName,
                              lastName:user[0].lastName,
                              email:user[0].email,
                              password:user[0].password,
@@ -107,9 +112,9 @@ userRouter.post('/login',(req,res,next)=>{
                              permanentAdd:user[0].permanentAdd,
                              proofType:user[0].proofType,
                              proofIdNumber:user[0].proofIdNumber,
-                             token:token,
-                             status:true,
-                             message:"Login Successfully"
+                             token:token
+
+                             }
                          });
                     
                 }
