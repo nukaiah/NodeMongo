@@ -193,14 +193,13 @@ userRouter.post('/forgotPassword',(req,res,next)=>{
                       pass: 'Srinivas@123',
                     },
                   });
-                  
                   var mailOptions = {
-                    from: 'noreply@gmail.com',
+                    from: 'srinivas.y@lionorbit.com',
                     to:req.body.email,
                     subject: 'Reset You Password',
                     text: '1. Click on link below to reset your LC account password \nwwww.google.com '
                   };
-                  
+                
                   transporter.sendMail(mailOptions, function(error, info){
                     if (error) {
                       console.log(error);
@@ -208,7 +207,6 @@ userRouter.post('/forgotPassword',(req,res,next)=>{
                       console.log('Email sent: ' + info.response);
                     }
                   });
-                  
                   
                 return res.status(200).json({
                     message:"Email Sent Successfully"
