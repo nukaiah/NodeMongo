@@ -4,7 +4,7 @@ var mongoose = require("mongoose");
 const checkAuth = require('../MiddleWares/CheckAuth');
 const Personal = require('../Models/PersonModels');
 
-personalRouter.post('/addPersonal',(req,res,next)=>{
+personalRouter.post('/addPersonal',checkAuth,(req,res,next)=>{
     try {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
