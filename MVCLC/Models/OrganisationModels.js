@@ -12,4 +12,4 @@ const organisationSchema =  new mongoose.Schema({
 });
 
 
-module.exports = mongoose.model("Oganisation",organisationSchema);
+module.exports = mongoose.model("Organisation",organisationSchema);

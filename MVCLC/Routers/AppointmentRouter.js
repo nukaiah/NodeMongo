@@ -84,7 +84,7 @@ appointmentRouter.post('/addAppointment',(req,res,next)=>{
    }
 });
 
-
+ 
 // Get Appointmeny By id is here.......
 appointmentRouter.post('/getById',(req,res,next)=>{
    try {
