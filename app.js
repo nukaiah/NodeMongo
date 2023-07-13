@@ -6,6 +6,7 @@ var cors = require("cors");
 
 var userRouter = require('./MVCLC/Routers/UsersRouter');
 var villageLeaders = require('./MVCLC/Routers/VillageLeaderRouter');
+var organisations = require('./MVCLC/Routers/OganisationRouter');
 var appointmentRouter = require('./MVCLC/Routers/AppointmentRouter');
 var personalRouter = require('./MVCLC/Routers/PersonalRouter');
 
@@ -31,6 +32,7 @@ app.use(bodyParser.json());
 
 app.use('/api/users',userRouter);
 app.use('/api/personal',personalRouter);
+app.use('/api/organisation',organisations)
 app.use('/api/villageLeaders',villageLeaders);
 app.use('/api/appointments',appointmentRouter);
 

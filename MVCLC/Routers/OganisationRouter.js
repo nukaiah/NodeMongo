@@ -4,7 +4,7 @@ var mongoose = require("mongoose");
 const checkAuth = require('../MiddleWares/CheckAuth');
 const Oraganisation = require('../Models/OrganisationModels');
 
-organisationRouter.post('/addOrganisation',(req,res,next)=>{
+organisationRouter.post('/addOrganisation',checkAuth,(req,res,next)=>{
     try {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
@@ -41,7 +41,7 @@ organisationRouter.post('/addOrganisation',(req,res,next)=>{
     }
 });
 
-organisationRouter.get('/getAll',(req,res,next)=>{
+organisationRouter.get('/getAll',checkAuth,(req,res,next)=>{
     try {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
@@ -68,4 +68,4 @@ organisationRouter.get('/getAll',(req,res,next)=>{
     }
 });
 
-module.exports = personalRouter;
+module.exports = organisationRouter;
