@@ -62,7 +62,10 @@ userRouter.post('/signUp',(req,res,next)=>{
         }
     })
    } catch (error) {
-      message:error
+    res.status(500).json({
+        status:false,
+        error:error
+    });
    }
 });
 
@@ -129,7 +132,10 @@ userRouter.post('/login',(req,res,next)=>{
 
          });
    } catch (error) {
-    message:error
+    res.status(500).json({
+        status:false,
+        error:error
+    });
     
    }
 });
@@ -144,7 +150,10 @@ userRouter.put('/updatePassword',checkAuth,(req,res,next)=>{
      var query = { _id: req.body._id};
      bcrypt.hash(req.body.password,10,(err,hash)=>{
          if(err){
-             error:err
+            res.status(500).json({
+                status:false,
+                error:err
+            });
          }
          else{
              Users.findByIdAndUpdate(query,{
@@ -165,7 +174,10 @@ userRouter.put('/updatePassword',checkAuth,(req,res,next)=>{
          }
      });
    } catch (error) {
-    message:error
+    res.status(500).json({
+        status:false,
+        error:error
+    });
    }
 });
 
@@ -215,9 +227,12 @@ userRouter.post('/forgotPassword',(req,res,next)=>{
             }
         })
     } catch (error) {
-        message:error
+        res.status(500).json({
+            status:false,
+            error:error
+        });
     }
-})
+});
 
 // Get Account details
 userRouter.post('/getAccountDetails',checkAuth,(req,res,next)=>{
@@ -260,8 +275,9 @@ userRouter.delete('/delete',checkAuth,(req,res,next)=>{
     }).catch(error=>{
         res.status(500).json({
             status:false,
-            message:"Failed to Remove User"
-        })
+            message:"Failed to Remove User",
+            error:error
+        });
     })
 });
 
@@ -280,8 +296,10 @@ userRouter.get('/getlimit',checkAuth,(req,res,next)=>{
             })
         })
     } catch (error) {
-        message:error
-        
+        res.status(500).json({
+            status:false,
+            error:error
+        });
     }
 });
 
@@ -299,7 +317,10 @@ userRouter.get('/getAll',checkAuth,(req,res,next)=>{
          })
      })
    } catch (error) {
-    message:error
+    res.status(500).json({
+        status:false,
+        error:error
+    });
    }
 });
 
