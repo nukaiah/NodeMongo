@@ -13,7 +13,7 @@ cloudinary.config({
   });
 
 // GetAll Appointment is here......
-appointmentRouter.get('/getAll',checkAuth,(req,res,next)=>{
+appointmentRouter.get('/getAll',(req,res,next)=>{
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -33,14 +33,15 @@ appointmentRouter.get('/getAll',checkAuth,(req,res,next)=>{
 });
 
 // Create Appointment here.......
-appointmentRouter.post('/addAppointment',checkAuth,(req,res,next)=>{
+appointmentRouter.post('/addAppointment',(req,res,next)=>{
    try {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     const file = req.files.photo;
-    cloudinary.uploader.upload(file.tempFilePath,(err,pic)=>{
-        if(res.status==200){
+    cloudinary.uploader.upload(file.tempFilePath,(error,pic)=>{
+        console.log(pic);
+        if(!error){
             var query = {_id:"64ae599988318ab14b07860e"};
             Counter.findById(query).then(result=>{
                 var aptCount = result.count+1;
