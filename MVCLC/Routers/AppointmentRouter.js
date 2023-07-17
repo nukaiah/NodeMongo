@@ -4,7 +4,7 @@ var mongoose = require("mongoose");
 var Appointment = require('../Models/AppointmentModels');
 var Counter = require('../Models/CouterModels');
 const checkAuth = require('../MiddleWares/CheckAuth');
-const cloudinary = require('cloudinary').v2;
+const cloudinary = require('cloudinary');
 
 cloudinary.config({ 
     cloud_name: 'dvk97rgcd', 
@@ -36,7 +36,7 @@ appointmentRouter.get('/getAll',(req,res,next)=>{
 appointmentRouter.post('/addAppointment',(req,res,next)=>{
    try {
     const file = req.files.photo;
-    cloudinary.uploader.upload(file.tempFilePath,(error,pic)=>{
+    cloudinary.v2.uploader.upload(file.tempFilePath,(error,pic)=>{
         console.log(pic);
         if(!error){
             var query = {_id:"64ae599988318ab14b07860e"};
