@@ -13,7 +13,7 @@ cloudinary.config({
   });
 
 // GetAll Appointment is here......
-appointmentRouter.get('/getAll',(req,res,next)=>{
+appointmentRouter.get('/getAll',checkAuth,(req,res,next)=>{
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -33,7 +33,7 @@ appointmentRouter.get('/getAll',(req,res,next)=>{
 });
 
 // Create Appointment here.......
-appointmentRouter.post('/addAppointment',(req,res,next)=>{
+appointmentRouter.post('/addAppointment',checkAuth,(req,res,next)=>{
    try {
     const file = req.files.photo;
     cloudinary.v2.uploader.upload(file.tempFilePath,(error,pic)=>{
@@ -132,7 +132,7 @@ appointmentRouter.post('/getById',checkAuth,(req,res,next)=>{
 
 
 // Change Appointment status is here.....
-appointmentRouter.put('/updateStatus',(req,res,next)=>{
+appointmentRouter.put('/updateStatus',checkAuth,(req,res,next)=>{
     try {
         res.header("Access-Control-Allow-Origin", "*");
      res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
