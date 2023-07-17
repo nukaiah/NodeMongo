@@ -3,6 +3,7 @@ var app = express();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var cors = require("cors");
+const fileuploader = require('express-fileupload');
 
 var userRouter = require('./MVCLC/Routers/UsersRouter');
 var villageLeaders = require('./MVCLC/Routers/VillageLeaderRouter');
@@ -23,6 +24,9 @@ mongoose.connection.on("connected",connected=>{
 });
 
 app.use(cors());
+app.use(fileuploader({
+    useTempFiles:true
+}))
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
