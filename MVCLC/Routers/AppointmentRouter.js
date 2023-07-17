@@ -13,7 +13,7 @@ cloudinary.config({
   });
 
 // GetAll Appointment is here......
-appointmentRouter.get('/getAll',(req,res,next)=>{
+appointmentRouter.get('/getAll',checkAuth,(req,res,next)=>{
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -33,7 +33,7 @@ appointmentRouter.get('/getAll',(req,res,next)=>{
 });
 
 // Create Appointment here.......
-appointmentRouter.post('/addAppointment',(req,res,next)=>{
+appointmentRouter.post('/addAppointment',checkAuth,(req,res,next)=>{
    try {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
@@ -88,8 +88,7 @@ appointmentRouter.post('/addAppointment',(req,res,next)=>{
                 });
             });
         }
-    })
-    
+    });
    } catch (error) {
     res.status(500).json({
         error:error,
@@ -100,7 +99,7 @@ appointmentRouter.post('/addAppointment',(req,res,next)=>{
 
  
 // Get Appointmeny By id is here.......
-appointmentRouter.post('/getById',(req,res,next)=>{
+appointmentRouter.post('/getById',checkAuth,(req,res,next)=>{
    try {
     res.header("Access-Control-Allow-Origin", "*");
      res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
@@ -164,7 +163,7 @@ appointmentRouter.put('/updateStatus',(req,res,next)=>{
 });
 
 // Delete the appointment permanantly is here.......
-appointmentRouter.delete('/delete',(req,res,next)=>{
+appointmentRouter.delete('/delete',checkAuth,(req,res,next)=>{
     try {
         res.header("Access-Control-Allow-Origin", "*");
      res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
