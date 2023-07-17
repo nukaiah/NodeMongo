@@ -114,7 +114,6 @@ userRouter.post('/login',(req,res,next)=>{
                              proofType:user[0].proofType,
                              proofIdNumber:user[0].proofIdNumber,
                              token:token
-
                              }
                          });
                     

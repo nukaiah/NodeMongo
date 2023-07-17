@@ -39,6 +39,7 @@ appointmentRouter.post('/addAppointment',(req,res,next)=>{
          Counter.findByIdAndUpdate(query,{$set:{count:aptCount}}).then(data=>{
              const appointment = new Appointment({
                  _id:new mongoose.Types.ObjectId,
+                 userId:req.body.userId,
                  voterId:req.body.voterId,
                  aadharId:req.body.aadharId,
                  foodId:req.body.foodId,
