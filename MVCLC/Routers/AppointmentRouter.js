@@ -53,6 +53,7 @@ appointmentRouter.post('/addAppointment',(req,res,next)=>{
                  priortyofVisit:req.body.priortyofVisit,
                  photo:req.body.photo,
                  visitPurpose:req.body.visitPurpose,  
+                 remarks:req.body.remarks,
                  aptId:aptCount,
                  aptStatus:'Pending',
                  ticketStatus:'',

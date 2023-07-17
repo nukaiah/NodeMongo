@@ -20,6 +20,7 @@ var appointmentSchema = new mongoose.Schema({
     aptStatus:String,
     ticketStatus:String,
     followupDate:Date,
+    remarks:String,
     createdDate:Date
 });
 
