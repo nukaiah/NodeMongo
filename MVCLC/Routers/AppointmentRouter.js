@@ -33,68 +33,71 @@ appointmentRouter.get('/getAll',(req,res,next)=>{
 });
 
 // Create Appointment here.......
-appointmentRouter.post('/addAppointment',(req,res,next)=>{
+appointmentRouter.post('/addAppointment',async (req,res,next)=>{
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
    try {
     const file = req.files.photo;
     console.log(file);
-    cloudinary.v2.uploader.upload(file.tempFilePath,(error,pic)=>{
-        console.log(pic.url);
-        if(!error){
-            res.status(200).json({
-                status:true,
-                message:"ADDED PIC"
-            });
-            // var query = {_id:"64ae599988318ab14b07860e"};
-            // Counter.findById(query).then(result=>{
-            //     var aptCount = result.count+1;
-            //     console.log(aptCount);
-            //     Counter.findByIdAndUpdate(query,{$set:{count:aptCount}}).then(data=>{
-            //         const appointment = new Appointment({
-            //             _id:new mongoose.Types.ObjectId,
-            //             userId:req.body.userId,
-            //             voterId:req.body.voterId,
-            //             aadharId:req.body.aadharId,
-            //             foodId:req.body.foodId,
-            //             contactNumber:req.body.contactNumber,
-            //             firstName:req.body.firstName,
-            //             lastName:req.body.lastName,
-            //             address:req.body.address,
-            //             ConstituencywithVoteId:req.body.ConstituencywithVoteId,
-            //             vistCount:req.body.vistCount,
-            //             natureofWork:req.body.natureofWork,
-            //             priortyofVisit:req.body.priortyofVisit,
-            //             photo:pic.url,
-            //             visitPurpose:req.body.visitPurpose,  
-            //             remarks:req.body.remarks,
-            //             aptId:aptCount,
-            //             aptStatus:'Pending',
-            //             ticketStatus:'',
-            //             followupDate:'',
-            //             createdDate:Date()
-            //         });
-            //         appointment.save().then(result=>{
-            //             console.log(result);
-            //             res.status(200).json({
-            //                 status:true,
-            //                 message:"Appointment added Successfully",
-            //                 newAppoinment:result
-            //             })
-            //         }).catch(error=>{
-            //             console.log(error);
-            //             res.status(500).json({
-            //                 status:false,
-            //                 message:"Failed to add Appointment",
-            //                 error:error
-            //             })
-            //         });
+    const result = await cloudinary.uploader.upload('path/to/local/image.jpg');
+    console.log(result);
+
+    // cloudinary.v2.uploader.upload(file.tempFilePath,(error,pic)=>{
+    //     console.log(pic.url);
+    //     if(!error){
+    //         res.status(200).json({
+    //             status:true,
+    //             message:"ADDED PIC"
+    //         });
+    //         // var query = {_id:"64ae599988318ab14b07860e"};
+    //         // Counter.findById(query).then(result=>{
+    //         //     var aptCount = result.count+1;
+    //         //     console.log(aptCount);
+    //         //     Counter.findByIdAndUpdate(query,{$set:{count:aptCount}}).then(data=>{
+    //         //         const appointment = new Appointment({
+    //         //             _id:new mongoose.Types.ObjectId,
+    //         //             userId:req.body.userId,
+    //         //             voterId:req.body.voterId,
+    //         //             aadharId:req.body.aadharId,
+    //         //             foodId:req.body.foodId,
+    //         //             contactNumber:req.body.contactNumber,
+    //         //             firstName:req.body.firstName,
+    //         //             lastName:req.body.lastName,
+    //         //             address:req.body.address,
+    //         //             ConstituencywithVoteId:req.body.ConstituencywithVoteId,
+    //         //             vistCount:req.body.vistCount,
+    //         //             natureofWork:req.body.natureofWork,
+    //         //             priortyofVisit:req.body.priortyofVisit,
+    //         //             photo:pic.url,
+    //         //             visitPurpose:req.body.visitPurpose,  
+    //         //             remarks:req.body.remarks,
+    //         //             aptId:aptCount,
+    //         //             aptStatus:'Pending',
+    //         //             ticketStatus:'',
+    //         //             followupDate:'',
+    //         //             createdDate:Date()
+    //         //         });
+    //         //         appointment.save().then(result=>{
+    //         //             console.log(result);
+    //         //             res.status(200).json({
+    //         //                 status:true,
+    //         //                 message:"Appointment added Successfully",
+    //         //                 newAppoinment:result
+    //         //             })
+    //         //         }).catch(error=>{
+    //         //             console.log(error);
+    //         //             res.status(500).json({
+    //         //                 status:false,
+    //         //                 message:"Failed to add Appointment",
+    //         //                 error:error
+    //         //             })
+    //         //         });
                     
-            //     });
-            // });
-        }
-    });
+    //         //     });
+    //         // });
+    //     }
+    // });
    } catch (error) {
     res.status(500).json({
         error:error,
