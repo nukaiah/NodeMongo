@@ -105,7 +105,7 @@ appointmentRouter.post('/addAppointment', async(req,res,next)=>{
     // });
    } catch (e) {
     res.status(500).json({
-        error:e,
+        error:e.photo,
         status:false,
         message:"Failed Add An Appointment"
     })
