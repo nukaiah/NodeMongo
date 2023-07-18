@@ -34,11 +34,8 @@ appointmentRouter.get('/getAll',(req,res,next)=>{
 
 // Create Appointment here.......
 appointmentRouter.post('/addAppointment', async(req,res,next)=>{
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
- 
     const file = req.files.photo;
+    console.log(file);
   try {
     if (!file) {
       return res.status(400).json({ error: "No File Selected" });
@@ -51,7 +48,7 @@ appointmentRouter.post('/addAppointment', async(req,res,next)=>{
  
     return res.status(200).send({
       public_id: result.public_id,
-      url: result.secure_url,
+      url: result,
     });
   } catch (error) {
     return res.status(500).send(error.message);
