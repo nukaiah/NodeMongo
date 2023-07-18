@@ -6,10 +6,11 @@ var Counter = require('../Models/CouterModels');
 const checkAuth = require('../MiddleWares/CheckAuth');
 const cloudinary = require('cloudinary').v2;
 
+
 cloudinary.config({ 
-    cloud_name: 'dvk97rgcd', 
-    api_key: '572936161325485', 
-    api_secret: 'TM-MIROUzrcfCc2CyczjffK-4wk' 
+    cloud_name: 'djeijog2o', 
+    api_key: '367211954513513', 
+    api_secret: 'OAekp042IQNVaY63p0122vZAsRk' 
   });
 
 // GetAll Appointment is here......
