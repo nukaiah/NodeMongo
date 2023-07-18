@@ -38,17 +38,17 @@ appointmentRouter.post('/addAppointment',async (req,res,next)=>{
     res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
    try {
-    const file = req.files.photo;
-    const result = await cloudinary.uploader.upload(file.tempFilePath);
-    console.log(result.url);
-    res.status(200).json({
-        status:true,
-        result:result.url
-    }).catch(e).json({
-        status:false,
-        error:e
-    })
+   
+    const filePath = req.file.photo.tempFilePath;
 
+    // Upload the file to Cloudinary
+    const result = await cloudinary.uploader.upload(filePath);
+
+    // Clean up: delete the temporary file
+    fs.unlinkSync(filePath);
+
+    console.log(result.url);
+    
 
     // cloudinary.v2.uploader.upload(file.tempFilePath,(error,pic)=>{
     //     console.log(pic.url);
