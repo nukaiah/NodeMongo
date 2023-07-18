@@ -33,7 +33,7 @@ appointmentRouter.get('/getAll',(req,res,next)=>{
 });
 
 // Create Appointment here.......
-appointmentRouter.post('/addAppointment',checkAuth,(req,res,next)=>{
+appointmentRouter.post('/addAppointment',(req,res,next)=>{
    try {
     const file = req.files.photo;
     cloudinary.v2.uploader.upload(file.tempFilePath,(error,pic)=>{
