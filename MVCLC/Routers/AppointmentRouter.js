@@ -40,7 +40,7 @@ appointmentRouter.post('/addAppointment', async(req,res,next)=>{
    try {
     const file = req.files.photo;
     await cloudinary.uploader.upload(file.tempFilePath,(error,result)=>{
-        console.log(result);
+        // console.log(result);
     });
 
     
