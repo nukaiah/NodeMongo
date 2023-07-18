@@ -13,7 +13,7 @@ cloudinary.config({
   });
 
 // GetAll Appointment is here......
-appointmentRouter.get('/getAll',checkAuth,(req,res,next)=>{
+appointmentRouter.get('/getAll',(req,res,next)=>{
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
