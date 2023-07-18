@@ -45,6 +45,7 @@ appointmentRouter.post('/addAppointment', async(req,res,next)=>{
     const result = await cloudinary.uploader.upload(file.tempFilePath, {
       public_id: `${Date.now()}`,
       resource_type: "auto",
+      folder:"images"
     });
  
     return res.status(200).send({
