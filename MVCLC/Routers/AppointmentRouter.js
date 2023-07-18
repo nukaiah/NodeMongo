@@ -42,7 +42,7 @@ appointmentRouter.post('/addAppointment', async(req,res,next)=>{
       return res.status(400).json({ error: "No File Selected" });
     }
  
-    const result = await cloudinary.uploader.upload_stream(file.tempFilePath, {
+    const result = await cloudinary.uploader.upload_stream({
       public_id: `${Date.now()}`,
       resource_type: "auto",
       folder:"images"
