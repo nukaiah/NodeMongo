@@ -46,9 +46,10 @@ appointmentRouter.post('/addAppointment',async (req,res,next)=>{
         res.status(200).json({
             status:true,
             result:result
-        }).catch(e).json({
-            status:true,
-            error:e
+        });
+        res.status(500).json({
+            status:false,
+            result:error
         })
     });
 
