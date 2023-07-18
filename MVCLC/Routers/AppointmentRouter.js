@@ -105,7 +105,7 @@ appointmentRouter.post('/addAppointment', async(req,res,next)=>{
     // });
    } catch (e) {
     res.status(500).json({
-        error:e.photo,
+        error:"Yalagala Error is" +e ,
         status:false,
         message:"Failed Add An Appointment"
     })
