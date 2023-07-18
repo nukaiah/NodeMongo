@@ -44,7 +44,7 @@ appointmentRouter.post('/addAppointment', async(req,res,next)=>{
         api_secret: 'TM-MIROUzrcfCc2CyczjffK-4wk' ,
         secure:true
       };
-    const file = req.files.photo;
+    const file = req.files.file;
     const result = await cloudinary.uploader.upload(file.tempFilePath,config);
     console.log(result.url);
 
