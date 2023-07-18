@@ -2,7 +2,8 @@ var express = require('express');
 var app = express();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
-var cors = require("cors");
+const cors = require("cors");
+
 const fileuploader = require('express-fileupload');
 
 var userRouter = require('./MVCLC/Routers/UsersRouter');
@@ -23,7 +24,9 @@ mongoose.connection.on("connected",connected=>{
     console.log("Connected Succeffully");
 });
 
-app.use(cors());
+app.use(cors({
+    optionsSuccessStatus: 200, // Some legacy browsers (IE11, various SmartTVs) choke on 204
+  }));
 app.use(fileuploader({
     useTempFiles:true
 }))
