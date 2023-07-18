@@ -24,10 +24,7 @@ mongoose.connection.on("connected",connected=>{
     console.log("Connected Succeffully");
 });
 
-app.use(cors({
-    origin: "*",
-    optionsSuccessStatus: 200, // Some legacy browsers (IE11, various SmartTVs) choke on 204
-  }));
+app.use(cors());
 app.use(fileUpload({
     useTempFiles:true
 }))
