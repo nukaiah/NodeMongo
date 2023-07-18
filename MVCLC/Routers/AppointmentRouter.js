@@ -6,7 +6,7 @@ var Counter = require('../Models/CouterModels');
 const checkAuth = require('../MiddleWares/CheckAuth');
 const cloudinary = require('cloudinary').v2;
 
-const config = cloudinary.config({ 
+cloudinary.config({ 
     cloud_name: 'dvk97rgcd', 
     api_key: '572936161325485', 
     api_secret: 'TM-MIROUzrcfCc2CyczjffK-4wk' 
@@ -38,10 +38,16 @@ appointmentRouter.post('/addAppointment', async(req,res,next)=>{
     res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
    try {
+    const config = { 
+        cloud_name: 'dvk97rgcd', 
+        api_key: '572936161325485', 
+        api_secret: 'TM-MIROUzrcfCc2CyczjffK-4wk' ,
+        secure:true
+      };
     const file = req.files.photo;
-    await cloudinary.uploader.upload(file.tempFilePath,config,(error,result)=>{
-        console.log(result);
-    });
+    const result = await cloudinary.uploader.upload(file.tempFilePath,config);
+    console.log(result.url);
+
 
     
 
