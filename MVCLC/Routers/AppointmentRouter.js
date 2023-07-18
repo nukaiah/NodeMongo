@@ -39,13 +39,11 @@ appointmentRouter.post('/addAppointment',async (req,res,next)=>{
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
    try {
    
-    const filePath = req.file.photo.tempFilePath;
+    const filePath = req.files.photo.tempFilePath;
 
     // Upload the file to Cloudinary
     const result = await cloudinary.uploader.upload(filePath);
 
-    // Clean up: delete the temporary file
-    fs.unlinkSync(filePath);
 
     console.log(result.url);
     
