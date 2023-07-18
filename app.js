@@ -25,6 +25,7 @@ mongoose.connection.on("connected",connected=>{
 });
 
 app.use(cors({
+    origin: "*",
     optionsSuccessStatus: 200, // Some legacy browsers (IE11, various SmartTVs) choke on 204
   }));
 app.use(fileUpload({
