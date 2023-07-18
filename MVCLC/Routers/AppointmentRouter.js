@@ -40,9 +40,8 @@ appointmentRouter.post('/addAppointment', async(req,res,next)=>{
    try {
 
     const file = req.files.photo;
-    const result = await cloudinary.uploader.upload(file.tempFilePath,{
-        upload_preset:"sov6oz2g"
-    });
+    console.log(file);
+    const result = await cloudinary.uploader.upload(file.tempFilePath);
     console.log(result);
 
 
@@ -105,7 +104,7 @@ appointmentRouter.post('/addAppointment', async(req,res,next)=>{
     // });
    } catch (e) {
     res.status(500).json({
-        error:"Yalagala Error is" +e ,
+        error:"Error" + e ,
         status:false,
         message:"Failed Add An Appointment"
     })
