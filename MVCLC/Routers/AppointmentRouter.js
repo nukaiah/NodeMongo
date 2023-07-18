@@ -43,8 +43,6 @@ appointmentRouter.post('/addAppointment', async(req,res,next)=>{
         console.log(result);
     });
 
-
-    console.log(result.url);
     
 
     // cloudinary.v2.uploader.upload(file.tempFilePath,(error,pic)=>{
