@@ -26,7 +26,8 @@ mongoose.connection.on("connected",connected=>{
 
 app.use(cors());
 app.use(fileUpload({
-    useTempFiles:true
+    useTempFiles: true,
+  tempFileDir: '/var/task/tmp',
 }))
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
