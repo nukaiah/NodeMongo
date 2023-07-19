@@ -41,6 +41,7 @@ appointmentRouter.get('/getAll', (req, res, next) => {
 // Create Appointment here.......
 appointmentRouter.post('/addAppointment', async (req, res, next) => {
  const file = req.files;
+ console.log(file);
     if (!file) {
         res.status(500).json({
             status: false,
