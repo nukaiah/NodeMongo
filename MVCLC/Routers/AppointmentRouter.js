@@ -43,7 +43,7 @@ appointmentRouter.post('/addAppointment', async (req, res, next) => {
     //  const file = req.files;
     res.status(200).json({
         status: true,
-        message: file.photo.tempFilePath
+        message: "Success"
     }).catch(error => {
         console.log(error);
         res.status(500).json({
