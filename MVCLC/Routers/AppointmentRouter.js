@@ -5,6 +5,8 @@ var Appointment = require('../Models/AppointmentModels');
 var Counter = require('../Models/CouterModels');
 const checkAuth = require('../MiddleWares/CheckAuth');
 const cloudinary = require('cloudinary').v2;
+const formidable = require('formidable');
+
 
 cloudinary.config({
     cloud_name: 'djeijog2o',
@@ -35,12 +37,12 @@ appointmentRouter.get('/getAll', (req, res, next) => {
 
 // Set Apt
 appointmentRouter.post('/setApt',(req,res,next)=>{
-    const file  = req.files.path
+    const file  = req.files.path;
+    file.mv('./uploads/'+file.name)
     res.status(200).json({
-        status:true,
-        message:file.tempFilePath
-    });
-    console.log(file.name);
+        message:file
+    })
+    //console.log(file.name);
 })
 
 // Create Appointment here.......
