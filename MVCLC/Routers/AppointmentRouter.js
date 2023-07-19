@@ -35,17 +35,13 @@ appointmentRouter.get('/getAll', (req, res, next) => {
 
 // Create Appointment here.......
 appointmentRouter.post('/addAppointment', async (req, res, next) => {
-const directoryPath = '/var/task/tmp';
+    const directoryPath = '/var/task/tmp';
 
-// Check if the directory exists
 if (!fs.existsSync(directoryPath)) {
-  // If the directory doesn't exist, create it
-  fs.mkdirSync(directoryPath, { recursive: true });
-  console.log('Directory created successfully.');
-} else {
-  console.log('Directory already exists.');
-}
-    const file = req.files;
+    // If the directory doesn't exist, create it
+    fs.mkdirSync(directoryPath, { recursive: true });
+  }
+ const file = req.files;
     if (!file) {
         res.status(500).json({
             status: false,
