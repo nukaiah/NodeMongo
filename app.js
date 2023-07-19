@@ -28,6 +28,7 @@ app.use(cors());
 app.use(fileUpload({
     useTempFiles: true,
   tempFileDir: '/tmp',
+  limits: { fileSize: 20 * 1024 * 1024 }, 
 }))
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
