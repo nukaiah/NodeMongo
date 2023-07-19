@@ -35,16 +35,12 @@ appointmentRouter.get('/getAll', (req, res, next) => {
 
 // Set Apt
 appointmentRouter.post('/setApt',(req,res,next)=>{
-    const file  = req.file.path
+    const file  = req.files.path
     res.status(200).json({
         status:true,
-        message:file
-    }).catch(err=>{
-        res.status(400).json({
-            status:false,
-            message:err
-        });
+        message:file.tempFilePath
     });
+    console.log(file.name);
 })
 
 // Create Appointment here.......
