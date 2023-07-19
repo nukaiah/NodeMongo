@@ -49,55 +49,60 @@ appointmentRouter.post('/addAppointment', async (req, res, next) => {
         });
     }
     else {
-        const result = await cloudinary.uploader.upload(file.photo.tempFilePath, { folder: 'uploads/' });
-        if (result) {
-            console.log(result.url);
-            const vistorImage = result.url;
-            var query = { _id: "64ae599988318ab14b07860e" };
-            Counter.findById(query).then(result => {
-                var aptCount = result.count + 1;
-                console.log(aptCount);
-                Counter.findByIdAndUpdate(query, { $set: { count: aptCount } }).then(data => {
-                    const appointment = new Appointment({
-                        _id: new mongoose.Types.ObjectId,
-                        userId: req.body.userId,
-                        voterId: req.body.voterId,
-                        aadharId: req.body.aadharId,
-                        foodId: req.body.foodId,
-                        contactNumber: req.body.contactNumber,
-                        firstName: req.body.firstName,
-                        lastName: req.body.lastName,
-                        address: req.body.address,
-                        ConstituencywithVoteId: req.body.ConstituencywithVoteId,
-                        vistCount: req.body.vistCount,
-                        natureofWork: req.body.natureofWork,
-                        priortyofVisit: req.body.priortyofVisit,
-                        image: vistorImage,
-                        visitPurpose: req.body.visitPurpose,
-                        remarks: req.body.remarks,
-                        aptId: aptCount,
-                        aptStatus: 'Pending',
-                        ticketStatus: '',
-                        followupDate: '',
-                        createdDate: Date()
-                    });
-                    appointment.save().then(result => {
-                        res.status(200).json({
-                            status: true,
-                            message: "Appointment added Successfully",
-                            newAppoinment: result
-                        });
-                    }).catch(error => {
-                        console.log(error);
-                        res.status(500).json({
-                            status: false,
-                            message: "Failed to add Appointment",
-                            error: error
-                        });
-                    });
-                });
-            });
-        }
+        res.status(500).json({
+            status: false,
+            message: file.photo.tempFilePath
+        });
+
+        // const result = await cloudinary.uploader.upload(file.photo.tempFilePath, { folder: 'uploads/' });
+        // if (result) {
+        //     console.log(result.url);
+        //     const vistorImage = result.url;
+        //     var query = { _id: "64ae599988318ab14b07860e" };
+        //     Counter.findById(query).then(result => {
+        //         var aptCount = result.count + 1;
+        //         console.log(aptCount);
+        //         Counter.findByIdAndUpdate(query, { $set: { count: aptCount } }).then(data => {
+        //             const appointment = new Appointment({
+        //                 _id: new mongoose.Types.ObjectId,
+        //                 userId: req.body.userId,
+        //                 voterId: req.body.voterId,
+        //                 aadharId: req.body.aadharId,
+        //                 foodId: req.body.foodId,
+        //                 contactNumber: req.body.contactNumber,
+        //                 firstName: req.body.firstName,
+        //                 lastName: req.body.lastName,
+        //                 address: req.body.address,
+        //                 ConstituencywithVoteId: req.body.ConstituencywithVoteId,
+        //                 vistCount: req.body.vistCount,
+        //                 natureofWork: req.body.natureofWork,
+        //                 priortyofVisit: req.body.priortyofVisit,
+        //                 image: vistorImage,
+        //                 visitPurpose: req.body.visitPurpose,
+        //                 remarks: req.body.remarks,
+        //                 aptId: aptCount,
+        //                 aptStatus: 'Pending',
+        //                 ticketStatus: '',
+        //                 followupDate: '',
+        //                 createdDate: Date()
+        //             });
+        //             appointment.save().then(result => {
+        //                 res.status(200).json({
+        //                     status: true,
+        //                     message: "Appointment added Successfully",
+        //                     newAppoinment: result
+        //                 });
+        //             }).catch(error => {
+        //                 console.log(error);
+        //                 res.status(500).json({
+        //                     status: false,
+        //                     message: "Failed to add Appointment",
+        //                     error: error
+        //                 });
+        //             });
+        //         });
+        //     });
+        // }
     }
 });
 
