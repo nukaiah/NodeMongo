@@ -6,12 +6,16 @@ var Counter = require('../Models/CouterModels');
 const checkAuth = require('../MiddleWares/CheckAuth');
 const cloudinary = require('cloudinary').v2;
 const fs = require('fs');
+const multer = require('multer');
+
 
 cloudinary.config({
     cloud_name: 'djeijog2o',
     api_key: '367211954513513',
     api_secret: 'OAekp042IQNVaY63p0122vZAsRk'
 });
+
+const upload = multer({ dest: 'uploads/' });
 
 // GetAll Appointment is here......
 appointmentRouter.get('/getAll', (req, res, next) => {
@@ -34,7 +38,7 @@ appointmentRouter.get('/getAll', (req, res, next) => {
 });
 
 // Create Appointment here.......
-appointmentRouter.post('/addAppointment', async (req, res, next) => {
+appointmentRouter.post('/addAppointment',upload.single('image'), async (req, res, next) => {
     const directoryPath = '/var/task/tmp';
 
 if (!fs.existsSync(directoryPath)) {
