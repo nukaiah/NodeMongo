@@ -49,8 +49,8 @@ appointmentRouter.post('/addAppointment', async (req, res, next) => {
         });
     }
     else {
-        res.status(500).json({
-            status: false,
+        res.status(200).json({
+            status: true,
             message: file.photo.tempFilePath
         });
 
