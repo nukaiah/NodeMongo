@@ -41,14 +41,13 @@ appointmentRouter.post('/addAppointment', async(req,res,next)=>{
         res.status(500).json({
             status:false,
             message: "Select File"
-        })
-        
+        }); 
     }
     else{
         res.status(200).json({
             status:true,
-            message: file.photo
-        })
+            message: file
+        });
     }
 //   try {
 //     if (!file) {
