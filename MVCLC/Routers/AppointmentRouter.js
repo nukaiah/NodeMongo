@@ -64,7 +64,7 @@ if (!fs.existsSync(directoryPath)) {
         });
     }
     else {
-        const result = await cloudinary.uploader.upload(file.photo.tempFilePath);
+        const result = await cloudinary.uploader.upload(file.photo.tempFilePath, { folder: 'uploads/' });
         if (result) {
             console.log(result.url);
             const vistorImage = result.url;
