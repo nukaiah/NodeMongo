@@ -35,9 +35,6 @@ appointmentRouter.get('/getAll', (req, res, next) => {
 
 // Create Appointment here.......
 appointmentRouter.post('/addAppointment', async (req, res, next) => {
-
-    
-
 const directoryPath = '/var/task/tmp';
 
 // Check if the directory exists
