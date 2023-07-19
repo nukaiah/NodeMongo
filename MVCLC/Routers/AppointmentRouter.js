@@ -5,18 +5,10 @@ var Appointment = require('../Models/AppointmentModels');
 var Counter = require('../Models/CouterModels');
 const checkAuth = require('../MiddleWares/CheckAuth');
 const cloudinary = require('cloudinary').v2;
-const fs = require('fs');
-const multer = require('multer');
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
 
 
-const storage = new CloudinaryStorage({
-    cloudinary: cloudinary,
-    params: {
-      folder: 'uploads', // Optional: specify a folder in Cloudinary for the uploads
-      resource_type: 'auto', // Tells Cloudinary to determine the resource type based on the file extension
-    },
-  });
+
+
   
 
 
@@ -25,8 +17,6 @@ cloudinary.config({
     api_key: '367211954513513',
     api_secret: 'OAekp042IQNVaY63p0122vZAsRk'
 });
-
-const upload = multer({ storage: storage });
 
 // GetAll Appointment is here......
 appointmentRouter.get('/getAll', (req, res, next) => {
@@ -49,13 +39,7 @@ appointmentRouter.get('/getAll', (req, res, next) => {
 });
 
 // Create Appointment here.......
-appointmentRouter.post('/addAppointment',upload.single('image'), async (req, res, next) => {
-    const directoryPath = '/var/task/tmp';
-
-if (!fs.existsSync(directoryPath)) {
-    // If the directory doesn't exist, create it
-    fs.mkdirSync(directoryPath, { recursive: true });
-  }
+appointmentRouter.post('/addAppointment', async (req, res, next) => {
  const file = req.files;
     if (!file) {
         res.status(500).json({
