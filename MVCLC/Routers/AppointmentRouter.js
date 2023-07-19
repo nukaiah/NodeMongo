@@ -32,6 +32,20 @@ appointmentRouter.get('/getAll', (req, res, next) => {
 
 });
 
+
+// Set Apt
+appointmentRouter.post('/setApt',(req,res,next)=>{
+    res.status(200).json({
+        status:true,
+        message:"SuceesFully Created Route"
+    }).catch(err=>{
+        res.status(400).json({
+            status:false,
+            message:err
+        });
+    })
+})
+
 // Create Appointment here.......
 appointmentRouter.post('/createApt', async (req, res, next) => {
     //  const file = req.files;
