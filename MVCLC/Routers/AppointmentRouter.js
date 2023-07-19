@@ -7,6 +7,17 @@ const checkAuth = require('../MiddleWares/CheckAuth');
 const cloudinary = require('cloudinary').v2;
 const fs = require('fs');
 const multer = require('multer');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+
+
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+      folder: 'uploads', // Optional: specify a folder in Cloudinary for the uploads
+      resource_type: 'auto', // Tells Cloudinary to determine the resource type based on the file extension
+    },
+  });
+  
 
 
 cloudinary.config({
@@ -15,7 +26,7 @@ cloudinary.config({
     api_secret: 'OAekp042IQNVaY63p0122vZAsRk'
 });
 
-const upload = multer({ dest: 'uploads/' });
+const upload = multer({ storage: storage });
 
 // GetAll Appointment is here......
 appointmentRouter.get('/getAll', (req, res, next) => {
