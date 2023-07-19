@@ -45,6 +45,8 @@ appointmentRouter.post('/addAppointment', async (req, res, next) => {
     else {
         const result = await cloudinary.uploader.upload(file.photo.tempFilePath);
         if (result) {
+            console.log(result.url);
+            const vistorImage = result.url;
             var query = { _id: "64ae599988318ab14b07860e" };
             Counter.findById(query).then(result => {
                 var aptCount = result.count + 1;
@@ -64,7 +66,7 @@ appointmentRouter.post('/addAppointment', async (req, res, next) => {
                         vistCount: req.body.vistCount,
                         natureofWork: req.body.natureofWork,
                         priortyofVisit: req.body.priortyofVisit,
-                        photo: pic.url,
+                        image: vistorImage,
                         visitPurpose: req.body.visitPurpose,
                         remarks: req.body.remarks,
                         aptId: aptCount,

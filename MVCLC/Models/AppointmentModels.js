@@ -14,7 +14,7 @@ var appointmentSchema = new mongoose.Schema({
     vistCount: String,
     natureofWork:String,
     priortyofVisit:String,
-    photo:String,
+    image:String,
     visitPurpose:String,
     aptId:String,
     aptStatus:String,
