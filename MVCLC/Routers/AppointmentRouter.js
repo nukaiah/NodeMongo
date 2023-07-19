@@ -6,12 +6,6 @@ var Counter = require('../Models/CouterModels');
 const checkAuth = require('../MiddleWares/CheckAuth');
 const cloudinary = require('cloudinary').v2;
 
-
-
-
-
-
-
 cloudinary.config({
     cloud_name: 'djeijog2o',
     api_key: '367211954513513',
@@ -39,7 +33,7 @@ appointmentRouter.get('/getAll', (req, res, next) => {
 });
 
 // Create Appointment here.......
-appointmentRouter.post('/addAppointment', async (req, res, next) => {
+appointmentRouter.post('/createApt', async (req, res, next) => {
     //  const file = req.files;
     res.status(200).json({
         status: true,
