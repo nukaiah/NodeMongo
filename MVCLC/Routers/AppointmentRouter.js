@@ -5,7 +5,7 @@ var Appointment = require('../Models/AppointmentModels');
 var Counter = require('../Models/CouterModels');
 const checkAuth = require('../MiddleWares/CheckAuth');
 const cloudinary = require('cloudinary').v2;
-
+const fs = require('fs');
 
 cloudinary.config({
     cloud_name: 'djeijog2o',
@@ -35,6 +35,19 @@ appointmentRouter.get('/getAll', (req, res, next) => {
 
 // Create Appointment here.......
 appointmentRouter.post('/addAppointment', async (req, res, next) => {
+
+    
+
+const directoryPath = '/var/task/tmp';
+
+// Check if the directory exists
+if (!fs.existsSync(directoryPath)) {
+  // If the directory doesn't exist, create it
+  fs.mkdirSync(directoryPath, { recursive: true });
+  console.log('Directory created successfully.');
+} else {
+  console.log('Directory already exists.');
+}
     const file = req.files;
     if (!file) {
         res.status(500).json({
