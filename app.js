@@ -3,7 +3,6 @@ var app = express();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 const cors = require("cors");
-const path = require('path');
 const fileUpload = require('express-fileupload');
 
 var userRouter = require('./MVCLC/Routers/UsersRouter');
@@ -27,12 +26,6 @@ mongoose.connection.on("connected",connected=>{
 app.use(cors());
 app.use(fileUpload({
   useTempFiles: true,
-    tempFileDir: path.join(__dirname, "task/"),
-    abortOnLimit:true,
-    preserveExtension:true,
-    safeFileNames:true,
-    limits: { fieldSize: 50 * 2024 * 1024 },
-
 }))
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
