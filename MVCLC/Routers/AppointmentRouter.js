@@ -38,8 +38,8 @@ appointmentRouter.get('/getAll', (req, res, next) => {
 // Set Apt
 appointmentRouter.post('/setApt',(req,res,next)=>{
     const file  = req.files.path;
-    file.mv('./uploads/'+file.name)
     res.status(200).json({
+        status:true,
         message:file
     })
     //console.log(file.name);
