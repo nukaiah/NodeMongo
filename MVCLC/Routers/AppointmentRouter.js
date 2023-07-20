@@ -5,7 +5,6 @@ var Appointment = require('../Models/AppointmentModels');
 var Counter = require('../Models/CouterModels');
 const checkAuth = require('../MiddleWares/CheckAuth');
 const cloudinary = require('cloudinary').v2;
-const formidable = require('formidable');
 
 
 cloudinary.config({
