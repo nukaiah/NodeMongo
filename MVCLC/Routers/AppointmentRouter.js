@@ -5,7 +5,6 @@ var Appointment = require('../Models/AppointmentModels');
 var Counter = require('../Models/CouterModels');
 const checkAuth = require('../MiddleWares/CheckAuth');
 const cloudinary = require('cloudinary').v2;
-const multer = require('multer');
 
 
 cloudinary.config({
@@ -13,10 +12,6 @@ cloudinary.config({
     api_key: '367211954513513',
     api_secret: 'OAekp042IQNVaY63p0122vZAsRk'
 });
-
-
-const storage = multer.memoryStorage();
-const upload = multer({ storage });
 
 
 // GetAll Appointment is here......
@@ -41,13 +36,7 @@ appointmentRouter.get('/getAll', (req, res, next) => {
 
 
 // Set Apt
-appointmentRouter.post('/setApt',upload.single('file'),async(req,res,next)=>{
-    const result = await cloudinary.uploader.upload(req.file.buffer, {
-        folder: 'uploads', // Optional: Set the folder where the file will be stored in Cloudinary
-      });
-  
-      // Return the Cloudinary URL of the uploaded file to the client
-      res.json({ url: result.secure_url });
+appointmentRouter.post('/setApt',async(req,res,next)=>{
 });
 
 // Create Appointment here.......
