@@ -27,7 +27,7 @@ mongoose.connection.on("connected",connected=>{
 app.use(cors());
 app.use(fileUpload({
   useTempFiles: true,
-    tempFileDir: path.join(__dirname, "/var/task/tmp"),
+    tempFileDir: path.join(__dirname, "/task/"),
     abortOnLimit:true,
     preserveExtension:true,
     safeFileNames:true,
