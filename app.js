@@ -26,6 +26,12 @@ mongoose.connection.on("connected",connected=>{
 app.use(cors());
 app.use(fileUpload({
   useTempFiles: true,
+    tempFileDir: path.join(__dirname, "/tmp/"),
+    abortOnLimit:true,
+    preserveExtension:true,
+    safeFileNames:true,
+    limits: { fieldSize: 50 * 2024 * 1024 },
+
 }))
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
