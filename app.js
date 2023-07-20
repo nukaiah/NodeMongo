@@ -3,6 +3,7 @@ var app = express();
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 const cors = require("cors");
+const path = require('path');
 const fileUpload = require('express-fileupload');
 
 var userRouter = require('./MVCLC/Routers/UsersRouter');
