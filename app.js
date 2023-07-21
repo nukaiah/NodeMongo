@@ -11,6 +11,7 @@ var villageLeaders = require('./MVCLC/Routers/VillageLeaderRouter');
 var organisations = require('./MVCLC/Routers/OganisationRouter');
 var appointmentRouter = require('./MVCLC/Routers/AppointmentRouter');
 var personalRouter = require('./MVCLC/Routers/PersonalRouter');
+const { dirname } = require('path');
 
 
 mongoose.set("strictQuery", false);
@@ -27,6 +28,9 @@ mongoose.connection.on("connected",connected=>{
 app.use(cors());
 app.use(fileUpload({
   useTempFiles: true, 
+  useTempFiles:true,
+  debug:true,
+  tempFileDir:(dirname,'./tmp')
 }));
 
 app.use(bodyParser.urlencoded({extended:false}));
