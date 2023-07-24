@@ -5,7 +5,7 @@ const checkAuth = require('../MiddleWares/CheckAuth');
 var MLAVisits = require('../Models/MLAVisitModels'); 
 
 
-personalRouter.post('/addMlAVists',checkAuth,(req,res,next)=>{
+personalRouter.post('/addMlAVists',(req,res,next)=>{
     try {
         const mlaVisits = new MLAVisits({
             _id:new mongoose.Types.ObjectId,
@@ -41,7 +41,7 @@ personalRouter.post('/addMlAVists',checkAuth,(req,res,next)=>{
     }
 });
 
-personalRouter.get('/getAll',checkAuth,(req,res,next)=>{
+personalRouter.get('/getAll',(req,res,next)=>{
     try {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
@@ -51,7 +51,7 @@ personalRouter.get('/getAll',checkAuth,(req,res,next)=>{
                 status:true,
                 message:"Data Fetched Successfully",
                 data:result
-            })
+            });
         }).catch(error=>{
             res.status(500).json({
                 status:false,
