@@ -79,7 +79,6 @@ userRouter.post('/login',(req,res,next)=>{
      Users.find({email:req.body.email})
      .exec()
      .then(user=>{
-        console.log(user);
         if(user.length==0){
             return res.status(401).json({
                 message:"No User Exist",
@@ -142,43 +141,72 @@ userRouter.post('/login',(req,res,next)=>{
 
 // Update or Change Password is Here.....
 userRouter.put('/updatePassword',(req,res,next)=>{
-   try {
+   
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
      var query = { _id: req.body._id};
-     bcrypt.hash(req.body.password,10,(err,hash)=>{
-         if(err){
-            res.status(500).json({
+     Users.find(query)
+     .exec()
+     .then(user=>{
+        if(user.length==0){
+            return res.status(401).json({
+                message:"No User Exist",
                 status:false,
-                error:err
             });
-         }
-         else{
-             Users.findByIdAndUpdate(query,{
-                 $set:{
-                     password:hash,
-                 }
-             }).then(result=>{
-                 res.status(200).json({
-                     status:true,
-                     message:"Password updated successfully",
-                 })
-             }).catch(error=>{
-                 res.status(500).json({
-                     status:false,
-                     message:"Failed to update password"
-                 })
-             })
-         }
-     });
-   } catch (error) {
-    res.status(500).json({
-        status:false,
-        error:error
+        }
+        else{
+            bcrypt.compare(req.body.password, user[0].password,(err, result)=>{
+                if(result){
+                    bcrypt.hash(req.body.newPassword,10,(err,hash)=>{
+                        Users.findByIdAndUpdate(query,{
+                            $set:{
+                                password:hash,
+                            }
+                        }).then(result=>{
+                            res.status(200).json({
+                                status:true,
+                                message:"Password updated successfully",
+                            })
+                        }).catch(error=>{
+                            res.status(500).json({
+                                status:false,
+                                message:"Failed to update password"
+                            });
+                        });
+                    });
+                }
+                else{
+                    console.log(err);
+                    return res.status(401).json({
+                        message:"Old Password not matched",
+                        status:false,
+                    });
+                    }
+                 });
+        }
     });
-   }
 });
+    //     bcrypt.hash(req.body.password,10,(err,hash)=>{
+    //         if(err){
+    //            res.status(400).json({
+    //                status:false,
+    //                error:err
+    //            });
+    //         }
+    //         else{
+              
+    //         }
+    //     });
+    //   } catch (error) {
+    //    res.status(500).json({
+    //        status:false,
+    //        error:error
+    //    });
+    //   }
+    //  });
+   
+     
 
 // Forgot Password is Here......
 userRouter.post('/forgotPassword',(req,res,next)=>{
