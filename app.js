@@ -6,6 +6,7 @@ const cors = require("cors");
 const fileUpload = require('express-fileupload');
 
 
+
 var userRouter = require('./MVCLC/Routers/UsersRouter');
 var villageLeaders = require('./MVCLC/Routers/VillageLeaderRouter');
 var organisations = require('./MVCLC/Routers/OganisationRouter');
@@ -14,9 +15,9 @@ var personalRouter = require('./MVCLC/Routers/PersonalRouter');
 var mlaVisitRouter = require('./MVCLC/Routers/MLAVisitRouters');
 var govtBenfitRouter = require('./MVCLC/Routers/GovtBenfitRouter');
 var VDWorksRouter = require('./MVCLC/Routers/VDWorksRouters');
+var fileUploadRouter = require('./MVCLC/Routers/FileUploaderRouter');
 
 
-const { dirname } = require('path');
 
 
 mongoose.set("strictQuery", false);
@@ -32,7 +33,6 @@ mongoose.connection.on("connected",connected=>{
 
 app.use(cors());
 app.use(fileUpload());
-
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
@@ -45,6 +45,7 @@ app.use('/api/appointments',appointmentRouter);
 app.use('/api/MlaVisit',mlaVisitRouter);
 app.use('/api/GovtBenfits',govtBenfitRouter);
 app.use('/api/VDWorks',VDWorksRouter);
+app.use('/api/files',fileUploadRouter)
 
 
 module.exports = app;
