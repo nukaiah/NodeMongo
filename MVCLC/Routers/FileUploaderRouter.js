@@ -9,14 +9,15 @@ cloudinary.config({
     api_secret: 'OAekp042IQNVaY63p0122vZAsRk'
 });
 
-fileRouter.post('/uploadFile', async(req, res, next) => {
+fileRouter.post('/uploadFile', upload.single('file'), async(req, res, next) => {
     // Check if files were uploaded
     if (!req.files || Object.keys(req.files).length === 0) {
       return res.status(400).json({ error: 'No files were uploaded.'});
     }
     
     else{
-    const uploadedFile = req.files.myFile;
+    const uploadedFile = req.files;
+    console.log(uploadedFile);
     // const result = await cloudinary.uploader.upload(uploadedFile.tempFilePath);
     // console.log(result)
     res.status(200).json({

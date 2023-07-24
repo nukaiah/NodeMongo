@@ -5,6 +5,7 @@ var bodyParser = require('body-parser');
 const cors = require("cors");
 const fileUpload = require('express-fileupload');
 const path = require('path');
+const upload = multer({ dest: 'tmp/' });
 
 
 
@@ -36,7 +37,7 @@ app.use(cors());
 app.use(fileUpload(
   {
     useTempFiles:true,
-    tempFileDir: path.join(__dirname, '/tmp'),
+    tempFileDir: path.join(_dirname, '/tmp'),
   }
 ));
 app.use(bodyParser.urlencoded({extended:false}));
