@@ -31,26 +31,12 @@ mongoose.connection.on("connected",connected=>{
 });
 
 app.use(cors());
-app.use(fileUpload({
-  useTempFiles: true, 
-  useTempFiles:true,
-  debug:true,
-  tempFileDir:(dirname,'./tmp')
-}));
+app.use(fileUpload());
 
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
 
-
-// Routers are defined here.........>>>>
-
-// app.use('/',(req,res,next)=>{
-//   res.status(200).json({
-//     status:true,
-//     message:"Please Specify the route" 
-//   });
-// });
 app.use('/api/users',userRouter);
 app.use('/api/personal',personalRouter);
 app.use('/api/organisation',organisations)
