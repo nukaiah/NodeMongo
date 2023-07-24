@@ -140,7 +140,7 @@ userRouter.post('/login',(req,res,next)=>{
 
 
 // Update or Change Password is Here.....
-userRouter.put('/updatePassword',(req,res,next)=>{
+userRouter.put('/updatePassword',checkAuth,(req,res,next)=>{
    
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
@@ -187,25 +187,7 @@ userRouter.put('/updatePassword',(req,res,next)=>{
         }
     });
 });
-    //     bcrypt.hash(req.body.password,10,(err,hash)=>{
-    //         if(err){
-    //            res.status(400).json({
-    //                status:false,
-    //                error:err
-    //            });
-    //         }
-    //         else{
-              
-    //         }
-    //     });
-    //   } catch (error) {
-    //    res.status(500).json({
-    //        status:false,
-    //        error:error
-    //    });
-    //   }
-    //  });
-   
+
      
 
 // Forgot Password is Here......
