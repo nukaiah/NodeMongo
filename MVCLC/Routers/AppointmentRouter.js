@@ -4,16 +4,7 @@ var mongoose = require("mongoose");
 var Appointment = require('../Models/AppointmentModels');
 var Counter = require('../Models/CouterModels');
 const checkAuth = require('../MiddleWares/CheckAuth');
-const cloudinary = require('cloudinary').v2;
-const path = require('path');
 
-
-
-cloudinary.config({
-    cloud_name: 'djeijog2o',
-    api_key: '367211954513513',
-    api_secret: 'OAekp042IQNVaY63p0122vZAsRk'
-});
 
 
 // GetAll Appointment is here......
@@ -37,99 +28,99 @@ appointmentRouter.get('/getAll', (req, res, next) => {
 });
 
 
-// Set Apt
-appointmentRouter.post('/setApt',async(req,res,next)=>{
-    console.log(req.files.path.tempFilePath);
-    res.status(200).json({
-        status:true,
-        result:req.files.path.tempFilePath
-    });
-    // req.files.foo
-    // const result = await cloudinary.uploader.upload(req.file.foo.path, {
-    //     folder: 'uploads', // Optional: Set the folder where the file will be stored in Cloudinary
-    //   });
+// // Set Apt
+// appointmentRouter.post('/setApt',async(req,res,next)=>{
+//     console.log(req.files.path.tempFilePath);
+//     res.status(200).json({
+//         status:true,
+//         result:req.files.path.tempFilePath
+//     });
+//     // req.files.foo
+//     // const result = await cloudinary.uploader.upload(req.file.foo.path, {
+//     //     folder: 'uploads', // Optional: Set the folder where the file will be stored in Cloudinary
+//     //   });
   
-    //   // Return the Cloudinary URL of the uploaded file to the client
-    //   res.json({ url: result.secure_url });
-});
+//     //   // Return the Cloudinary URL of the uploaded file to the client
+//     //   res.json({ url: result.secure_url });
+// });
 
-// Create Appointment here.......
-appointmentRouter.post('/createApt', async (req, res, next) => {
-    //  const file = req.files;
-    res.status(200).json({
-        status: true,
-        message: "Success"
-    }).catch(error => {
-        console.log(error);
-        res.status(500).json({
-            status: false,
-            message: "Failed to add Appointment",
-            error: error
-        });
-    });
-    // if (!file) {
-    //     res.status(500).json({
-    //         status: false,
-    //         message: "Select File"
-    //     });
-    // }
-    // else {
-    //     res.status(200).json({
-    //         status: true,
-    //         message: file.photo.tempFilePath
-    //     });
+// // Create Appointment here.......
+// appointmentRouter.post('/createApt', async (req, res, next) => {
+//     //  const file = req.files;
+//     res.status(200).json({
+//         status: true,
+//         message: "Success"
+//     }).catch(error => {
+//         console.log(error);
+//         res.status(500).json({
+//             status: false,
+//             message: "Failed to add Appointment",
+//             error: error
+//         });
+//     });
+//     // if (!file) {
+//     //     res.status(500).json({
+//     //         status: false,
+//     //         message: "Select File"
+//     //     });
+//     // }
+//     // else {
+//     //     res.status(200).json({
+//     //         status: true,
+//     //         message: file.photo.tempFilePath
+//     //     });
 
-    // const result = await cloudinary.uploader.upload(file.photo.tempFilePath, { folder: 'uploads/' });
-    // if (result) {
-    //     console.log(result.url);
-    //     const vistorImage = result.url;
-    //     var query = { _id: "64ae599988318ab14b07860e" };
-    //     Counter.findById(query).then(result => {
-    //         var aptCount = result.count + 1;
-    //         console.log(aptCount);
-    //         Counter.findByIdAndUpdate(query, { $set: { count: aptCount } }).then(data => {
-    //             const appointment = new Appointment({
-    //                 _id: new mongoose.Types.ObjectId,
-    //                 userId: req.body.userId,
-    //                 voterId: req.body.voterId,
-    //                 aadharId: req.body.aadharId,
-    //                 foodId: req.body.foodId,
-    //                 contactNumber: req.body.contactNumber,
-    //                 firstName: req.body.firstName,
-    //                 lastName: req.body.lastName,
-    //                 address: req.body.address,
-    //                 ConstituencywithVoteId: req.body.ConstituencywithVoteId,
-    //                 vistCount: req.body.vistCount,
-    //                 natureofWork: req.body.natureofWork,
-    //                 priortyofVisit: req.body.priortyofVisit,
-    //                 image: vistorImage,
-    //                 visitPurpose: req.body.visitPurpose,
-    //                 remarks: req.body.remarks,
-    //                 aptId: aptCount,
-    //                 aptStatus: 'Pending',
-    //                 ticketStatus: '',
-    //                 followupDate: '',
-    //                 createdDate: Date()
-    //             });
-    //             appointment.save().then(result => {
-    //                 res.status(200).json({
-    //                     status: true,
-    //                     message: "Appointment added Successfully",
-    //                     newAppoinment: result
-    //                 });
-    //             }).catch(error => {
-    //                 console.log(error);
-    //                 res.status(500).json({
-    //                     status: false,
-    //                     message: "Failed to add Appointment",
-    //                     error: error
-    //                 });
-    //             });
-    //         });
-    //     });
-    // }
-    // }
-});
+//     // const result = await cloudinary.uploader.upload(file.photo.tempFilePath, { folder: 'uploads/' });
+//     // if (result) {
+//     //     console.log(result.url);
+//     //     const vistorImage = result.url;
+//     //     var query = { _id: "64ae599988318ab14b07860e" };
+//     //     Counter.findById(query).then(result => {
+//     //         var aptCount = result.count + 1;
+//     //         console.log(aptCount);
+//     //         Counter.findByIdAndUpdate(query, { $set: { count: aptCount } }).then(data => {
+//     //             const appointment = new Appointment({
+//     //                 _id: new mongoose.Types.ObjectId,
+//     //                 userId: req.body.userId,
+//     //                 voterId: req.body.voterId,
+//     //                 aadharId: req.body.aadharId,
+//     //                 foodId: req.body.foodId,
+//     //                 contactNumber: req.body.contactNumber,
+//     //                 firstName: req.body.firstName,
+//     //                 lastName: req.body.lastName,
+//     //                 address: req.body.address,
+//     //                 ConstituencywithVoteId: req.body.ConstituencywithVoteId,
+//     //                 vistCount: req.body.vistCount,
+//     //                 natureofWork: req.body.natureofWork,
+//     //                 priortyofVisit: req.body.priortyofVisit,
+//     //                 image: vistorImage,
+//     //                 visitPurpose: req.body.visitPurpose,
+//     //                 remarks: req.body.remarks,
+//     //                 aptId: aptCount,
+//     //                 aptStatus: 'Pending',
+//     //                 ticketStatus: '',
+//     //                 followupDate: '',
+//     //                 createdDate: Date()
+//     //             });
+//     //             appointment.save().then(result => {
+//     //                 res.status(200).json({
+//     //                     status: true,
+//     //                     message: "Appointment added Successfully",
+//     //                     newAppoinment: result
+//     //                 });
+//     //             }).catch(error => {
+//     //                 console.log(error);
+//     //                 res.status(500).json({
+//     //                     status: false,
+//     //                     message: "Failed to add Appointment",
+//     //                     error: error
+//     //                 });
+//     //             });
+//     //         });
+//     //     });
+//     // }
+//     // }
+// });
 
 
 // Get Appointmeny By id is here.......
