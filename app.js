@@ -13,6 +13,7 @@ var appointmentRouter = require('./MVCLC/Routers/AppointmentRouter');
 var personalRouter = require('./MVCLC/Routers/PersonalRouter');
 var mlaVisitRouter = require('./MVCLC/Routers/MLAVisitRouters');
 var govtBenfitRouter = require('./MVCLC/Routers/GovtBenfitRouter');
+var VDWorksRouter = require('./MVCLC/Routers/VDWorksControllers');
 
 
 const { dirname } = require('path');
@@ -51,6 +52,7 @@ app.use('/api/villageLeaders',villageLeaders);
 app.use('/api/appointments',appointmentRouter);
 app.use('/api/MlaVisit',mlaVisitRouter);
 app.use('/api/GovtBenfits',govtBenfitRouter);
+app.use('/api/VDWorks',VDWorksRouter);
 
 
 module.exports = app;
