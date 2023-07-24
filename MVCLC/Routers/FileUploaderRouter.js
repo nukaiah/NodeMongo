@@ -1,36 +1,46 @@
 const express = require('express');
 const fileRouter = express.Router();
-
-const cloudinary = require('cloudinary').v2;
-
-const multer = require('multer');
-const upload = multer({ dest: 'tmp/',limits: {
-  fileSize: 10 * 1024 * 1024, // 10MB limit
-}, }); 
+const upload = require("../MiddleWares/multr");
+const cloudinary = require("../MiddleWares/Cloudinary");
 
 
-cloudinary.config({
-    cloud_name: 'djeijog2o',
-    api_key: '367211954513513',
-    api_secret: 'OAekp042IQNVaY63p0122vZAsRk'
+
+
+  
+  // fileRouter.post('/upload', (req, res, next) => {
+  //   // Check if files were uploaded
+  //   if (!req.files || Object.keys(req.files).length === 0) {
+  //     return res.status(400).json({ error: 'No files were uploaded.' });
+  //   }
+  
+  //   // Access the uploaded file from the request object
+  //   const uploadedFile = req.files.file; // "file" should match the name attribute in the file input field
+  //   console.log(uploadedFile);
+  //   console.log(uploadedFile.tempFilePath);
+  
+  //   // Upload the file to Cloudinary
+  //   cloudinary.uploader.upload(uploadedFile.tempFilePath, (err, result) => {
+  //     if (err) {
+  //       return res.status(500).json({ error: 'Error uploading file to Cloudinary.' });
+  //     }
+  
+  //     // The result object contains the Cloudinary URL for the uploaded file
+  //     const imageUrl = result.secure_url;
+  
+  //     // You can save the Cloudinary URL or perform any other actions here
+  //     // For example, you can save the URL to a database
+  
+  //     res.json({ imageUrl: imageUrl });
+  //   });
+  // });
+
+
+
+// Define a route to handle file uploads
+
+fileRouter.post('/upload', upload.single("image"),async(req, res) => {
+  const result = await cloudinary.uploader.upload(req.file.path);
 });
-
-fileRouter.post('/uploadFile',  async(req, res, next) => {
-    // Check if files were uploaded
-    if (!req.files || Object.keys(req.files).length === 0) {
-      return res.status(400).json({ error: 'No files were uploaded.'});
-    }
-    else{
-    const uploadedFile = req.files.file;
-    // // const result = await cloudinary.uploader.upload().end(uploadedFile.data);
-    // // console.log(result);
-    res.status(200).json({
-        status:true,
-        path:uploadedFile,
-        message:"File Uploaded Successfully"
-    });
-    }
-  });
   
 
 
