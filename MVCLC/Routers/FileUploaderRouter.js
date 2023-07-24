@@ -16,9 +16,6 @@ cloudinary.config({
 });
 
 fileRouter.post('/uploadFile',  async(req, res, next) => {
- 
-
-
     // Check if files were uploaded
     if (!req.files || Object.keys(req.files).length === 0) {
       return res.status(400).json({ error: 'No files were uploaded.'});
@@ -32,16 +29,7 @@ fileRouter.post('/uploadFile',  async(req, res, next) => {
         path:uploadedFile,
         message:"File Uploaded Successfully"
     });
-  
-    // uploadedFile.mv('/path/to/destination/folder/filename.ext', (err) => {
-    //   if (err) {
-    //     return res.status(500).json({ error: 'Error uploading file.' });
-    //   }
-  
-    //   return res.json({ message: 'File uploaded successfully!' });
-    // });
     }
-
   });
   
 
