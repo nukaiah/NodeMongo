@@ -10,7 +10,7 @@ fileRouter.post('/uploadFile', (req, res, next) => {
     const uploadedFile = req.files.file;
     res.status(200).json({
         status:true,
-        fileData:uploadedFile.data.data,
+        file:uploadedFile.data.data,
         fileType:uploadedFile.data.type,
         message:"File Uploaded Successfully"
     });
