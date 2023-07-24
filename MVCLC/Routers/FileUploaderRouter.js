@@ -18,17 +18,13 @@ fileRouter.post('/uploadFile', async(req, res, next) => {
     }
     else{
     const uploadedFile = req.files.file;
-    res.status(200).json({
-      status:true,
-      message:uploadedFile
-    })
-    // const result = await cloudinary.uploader.upload(uploadedFile.tempFilePath);
+    // const result = await cloudinary.uploader.upload().end(uploadedFile.data);
     // console.log(result);
-    // res.status(200).json({
-    //     status:true,
-    //     file:result.url,
-    //     message:"File Uploaded Successfully"
-    // });
+    res.status(200).json({
+        status:true,
+        path:uploadedFile.tempFilePath,
+        message:"File Uploaded Successfully"
+    });
   
     // uploadedFile.mv('/path/to/destination/folder/filename.ext', (err) => {
     //   if (err) {
