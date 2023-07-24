@@ -23,7 +23,7 @@ mlaVisitRouter.post('/addMlAVists',(req,res,next)=>{
             res.status(200).json({
                 status:true,
                 message:"MLA Visit added Successfully",
-                newPersonal:result
+                data:result
             });
         }).catch(error=>{
             res.status(500).json({

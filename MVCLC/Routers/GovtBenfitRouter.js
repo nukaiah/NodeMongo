@@ -26,7 +26,7 @@ govtBenfitRouter.post('/addGovtBenfits',(req,res,next)=>{
             res.status(200).json({
                 status:true,
                 message:"Govt Benfit  added Successfully",
-                newPersonal:result
+                data:result
             });
         }).catch(error=>{
             res.status(500).json({

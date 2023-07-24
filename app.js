@@ -13,7 +13,7 @@ var appointmentRouter = require('./MVCLC/Routers/AppointmentRouter');
 var personalRouter = require('./MVCLC/Routers/PersonalRouter');
 var mlaVisitRouter = require('./MVCLC/Routers/MLAVisitRouters');
 var govtBenfitRouter = require('./MVCLC/Routers/GovtBenfitRouter');
-var VDWorksRouter = require('./MVCLC/Routers/VDWorksControllers');
+var VDWorksRouter = require('./MVCLC/Routers/VDWorksRouters');
 
 
 const { dirname } = require('path');

@@ -21,7 +21,7 @@ VDWorksRouter.post('/addVdWork',(req,res,next)=>{
             workStatus:req.body.workStatus,
             workStartDate:req.body.workStartDate,
             workEndDate:req.body.workEndDate,
-            amoutStatus:Strireq.body.amoutStatus,
+            amoutStatus:req.body.amoutStatus,
             amoutSpent:req.body.amoutSpent,
             amoutSanction:req.body.amoutSanction,
             amoutApproved:req.body.amoutApproved,
@@ -33,7 +33,7 @@ VDWorksRouter.post('/addVdWork',(req,res,next)=>{
             res.status(200).json({
                 status:true,
                 message:"VD Work added Successfully",
-                newPersonal:result
+                data:result
             });
         }).catch(error=>{
             res.status(500).json({
