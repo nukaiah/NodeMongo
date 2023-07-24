@@ -141,7 +141,7 @@ userRouter.post('/login',(req,res,next)=>{
 
 
 // Update or Change Password is Here.....
-userRouter.put('/updatePassword',checkAuth,(req,res,next)=>{
+userRouter.put('/updatePassword',(req,res,next)=>{
    try {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
