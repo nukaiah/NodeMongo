@@ -11,6 +11,10 @@ var villageLeaders = require('./MVCLC/Routers/VillageLeaderRouter');
 var organisations = require('./MVCLC/Routers/OganisationRouter');
 var appointmentRouter = require('./MVCLC/Routers/AppointmentRouter');
 var personalRouter = require('./MVCLC/Routers/PersonalRouter');
+var mlaVisitRouter = require('./MVCLC/Routers/MLAVisitRouters');
+var govtBenfitRouter = require('./MVCLC/Routers/GovtBenfitRouter');
+
+
 const { dirname } = require('path');
 
 
@@ -45,6 +49,8 @@ app.use('/api/personal',personalRouter);
 app.use('/api/organisation',organisations)
 app.use('/api/villageLeaders',villageLeaders);
 app.use('/api/appointments',appointmentRouter);
+app.use('/api/MlaVisit',mlaVisitRouter);
+app.use('/api/GovtBenfits',govtBenfitRouter);
 
 
 module.exports = app;
