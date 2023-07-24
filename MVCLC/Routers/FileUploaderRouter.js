@@ -40,6 +40,11 @@ const cloudinary = require("../MiddleWares/Cloudinary");
 
 fileRouter.post('/upload', upload.single("image"),async(req, res) => {
   const result = await cloudinary.uploader.upload(req.file.path);
+  console.log(result);
+  res.status(200).json({
+    status:true,
+    message:result
+  });
 });
   
 
