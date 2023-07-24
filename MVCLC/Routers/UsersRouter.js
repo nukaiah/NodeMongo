@@ -128,7 +128,8 @@ userRouter.post('/login',(req,res,next)=>{
                      }
                  });
         }
-        });
+
+         });
    } catch (error) {
     res.status(500).json({
         status:false,
@@ -140,73 +141,37 @@ userRouter.post('/login',(req,res,next)=>{
 
 
 // Update or Change Password is Here.....
-userRouter.put('/updatePassword',(req,res,next)=>{
+userRouter.put('/updatePassword',checkAuth,(req,res,next)=>{
    try {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
      var query = { _id: req.body._id};
-     Users.find(query)
-     .exec()
-     .then(user=>{
-        console.log(user);
-        if(user.length==0){
-            return res.status(401).json({
-                message:"No User Exist",
+     bcrypt.hash(req.body.password,10,(err,hash)=>{
+         if(err){
+            res.status(500).json({
                 status:false,
+                error:err
             });
-        }
-        else{
-            bcrypt.compare(req.body.password, user[0].password,(err, result)=>{
-                if(result){
-                    const token = jwt.sign({
-                        firstName:user[0].firstName,
-                        lastName:user[0].lastName,
-                        email:user[0].email,
-                        phone:user[0].phone,
-                    },
-                    'this is login data',
-                    {
-                        expiresIn:"24h"
-                    },
-                    );
-                    bcrypt.hash(req.body.password,10,(err,hash)=>{
-                        if(err){
-                           res.status(500).json({
-                               status:false,
-                               error:err
-                           });
-                        }
-                        else{
-                            Users.findByIdAndUpdate(query,{
-                                $set:{
-                                    password:hash,
-                                }
-                            }).then(result=>{
-                                res.status(200).json({
-                                    status:true,
-                                    message:"Password updated successfully",
-                                })
-                            }).catch(error=>{
-                                res.status(500).json({
-                                    status:false,
-                                    message:"Failed to update password"
-                                })
-                            })
-                        }
-                    });        
-                }
-                else{
-                    console.log(err);
-                    return res.status(401).json({
-                        message:"Password not matched",
-                        status:false,
-                    });
-                   
-                     }
-                 });
-        }
-        });
+         }
+         else{
+             Users.findByIdAndUpdate(query,{
+                 $set:{
+                     password:hash,
+                 }
+             }).then(result=>{
+                 res.status(200).json({
+                     status:true,
+                     message:"Password updated successfully",
+                 })
+             }).catch(error=>{
+                 res.status(500).json({
+                     status:false,
+                     message:"Failed to update password"
+                 })
+             })
+         }
+     });
    } catch (error) {
     res.status(500).json({
         status:false,
