@@ -32,7 +32,11 @@ mongoose.connection.on("connected",connected=>{
 });
 
 app.use(cors());
-app.use(fileUpload());
+app.use(fileUpload(
+  {
+    useTempFiles:true
+  }
+));
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
