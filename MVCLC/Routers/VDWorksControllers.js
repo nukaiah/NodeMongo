@@ -5,7 +5,7 @@ const checkAuth = require('../MiddleWares/CheckAuth');
 var VDWorks = require('../Models/VDWorkModels'); 
 
 
-VDWorksRouter.post('/addVdWork',checkAuth,(req,res,next)=>{
+VDWorksRouter.post('/addVdWork',(req,res,next)=>{
     try {
         const vdWork = new VDWorks({
             _id:new mongoose.Types.ObjectId,
@@ -51,7 +51,7 @@ VDWorksRouter.post('/addVdWork',checkAuth,(req,res,next)=>{
     }
 });
 
-VDWorksRouter.get('/getAll',checkAuth,(req,res,next)=>{
+VDWorksRouter.get('/getAll',(req,res,next)=>{
     try {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
