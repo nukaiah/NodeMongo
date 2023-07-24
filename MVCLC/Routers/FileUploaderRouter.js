@@ -4,14 +4,15 @@ const fileRouter = express.Router();
 fileRouter.post('/uploadFile', (req, res, next) => {
     // Check if files were uploaded
     if (!req.files || Object.keys(req.files).length === 0) {
-      return res.status(400).json({ error: 'No files were uploaded.' });
+      return res.status(400).json({ error: 'No files were uploaded.'});
     }
     else{
-    const uploadedFile = req.files.file;
+    const uploadedFile = req.files.myFile;
+    console.log(uploadedFile);
+
     res.status(200).json({
         status:true,
-        file:uploadedFile.data.data,
-        fileType:uploadedFile.data.type,
+        file:uploadedFile.data,
         message:"File Uploaded Successfully"
     });
   
