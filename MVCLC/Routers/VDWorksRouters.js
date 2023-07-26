@@ -23,8 +23,8 @@ VDWorksRouter.post('/addVdWork',(req,res,next)=>{
             workEndDate:req.body.workEndDate,
             amountStatus:req.body.amountStatus,
             amountSpent:req.body.amountSpent,
-            amoutSanction:req.body.amoutSanction,
-            amoutApproved:req.body.amoutApproved,
+            amountSanction:req.body.amoutSanction,
+            amountApproved:req.body.amoutApproved,
             stateContribution:req.body.stateContribution,
             centralContribution:req.body.centralContribution,
         });

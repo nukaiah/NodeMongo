@@ -16,8 +16,8 @@ var VDWorkSchema = new mongoose.Schema({
     workEndDate:Date,
     amountStatus:String,
     amountSpent:String,
-    amoutSanction:String,
-    amoutApproved:String,
+    amountSanction:String,
+    amountApproved:String,
     stateContribution:String,
     centralContribution:String,
 });
