@@ -93,6 +93,7 @@ userRouter.post('/login',(req,res,next)=>{
                         lastName:user[0].lastName,
                         email:user[0].email,
                         phone:user[0].phone,
+                        _id:user[0]._id
                     },
                     'this is login data',
                     {
@@ -142,10 +143,11 @@ userRouter.post('/login',(req,res,next)=>{
 // Update or Change Password is Here.....
 userRouter.put('/updatePassword',checkAuth,(req,res,next)=>{
    try {
+    const userId = req.userId; 
      res.header("Access-Control-Allow-Origin", "*");
      res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-      var query = { _id: req.body._id};
+      var query = { _id: userId};
       Users.find(query)
       .exec()
       .then(user=>{
@@ -280,35 +282,43 @@ userRouter.post('/getAccountDetails',checkAuth,(req,res,next)=>{
 // Profile Details Update
 
 userRouter.put('/updateProfile',checkAuth,(req,res,next)=>{
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    var query = { _id: req.body._id};
-    Users.findByIdAndUpdate(query,{
-        $set:{
-            firstName:req.body.firstName,
-            lastName:req.body.lastName,
-            email:req.body.email,
-            phone:req.body.phone,
-            presentAdd:req.body.presentAdd,
-            permanentAdd:req.body.permanentAdd,
-            proofType:req.body.proofType,
-            proofIdNumber:req.body.proofIdNumber,
-        }
-    }).then(result=>{
-        res.status(200).json({
-            status:true,
-            message:"Profile Details updated successfully",
-        })
-    }).catch(error=>{
-        res.status(500).json({
-            status:false,
-            message:"Failed to update Profile Details"
-        });
-    });
+   try {
+     const userId = req.userId; 
+     res.header("Access-Control-Allow-Origin", "*");
+     res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
+     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+     var query = { _id: userId};
+     Users.findByIdAndUpdate(query,{
+         $set:{
+             firstName:req.body.firstName,
+             lastName:req.body.lastName,
+             email:req.body.email,
+             phone:req.body.phone,
+             presentAdd:req.body.presentAdd,
+             permanentAdd:req.body.permanentAdd,
+             proofType:req.body.proofType,
+             proofIdNumber:req.body.proofIdNumber,
+         }
+     }).then(result=>{
+         res.status(200).json({
+             status:true,
+             message:"Profile Details updated successfully",
+         })
+     }).catch(error=>{
+         res.status(400).json({
+             status:false,
+             message:"Failed to update Profile Details"
+         });
+     });
+ 
+   } catch (error) {
+    res.status(500).json({
+             status:false,
+             message:"Failed to update Profile Details"
+         });
+   }
 
-
-})
+});
 
 userRouter.delete('/delete',checkAuth,(req,res,next)=>{
     res.header("Access-Control-Allow-Origin", "*");
