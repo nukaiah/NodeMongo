@@ -86,7 +86,7 @@ userRouter.post('/login',(req,res,next)=>{
             });
         }
         else{
-            bcrypt.compare(req.body.password, user[0].password,(err, result)=>{
+            bcrypt.compare(req.body.password, user[0].password,(error, result)=>{
                 if(result){
                     const token = jwt.sign({
                         firstName:user[0].firstName,
@@ -118,12 +118,11 @@ userRouter.post('/login',(req,res,next)=>{
                     
                 }
                 else{
-                    console.log(err);
                     return res.status(401).json({
                         message:"Password not matched",
                         status:false,
+                        issue:error
                     });
-                   
                      }
                  });
         }
