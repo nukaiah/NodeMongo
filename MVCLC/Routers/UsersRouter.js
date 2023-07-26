@@ -13,9 +13,6 @@ const checkAuth = require('../MiddleWares/CheckAuth');
 // Sign Up Function is Here.....
 userRouter.post('/signUp',(req,res,next)=>{
    try {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     Users.find({email:req.body.email})
     .exec()
     .then(user=>{
@@ -73,9 +70,6 @@ userRouter.post('/signUp',(req,res,next)=>{
 // Login Function is Here....
 userRouter.post('/login',(req,res,next)=>{
    try {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
      Users.find({email:req.body.email})
      .exec()
      .then(user=>{
@@ -145,9 +139,6 @@ userRouter.post('/login',(req,res,next)=>{
 userRouter.put('/updatePassword',checkAuth,(req,res,next)=>{
    try {
     const userId = req.userId; 
-     res.header("Access-Control-Allow-Origin", "*");
-     res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
-     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
       var query = { _id: userId};
       Users.find(query)
       .exec()
@@ -202,9 +193,6 @@ userRouter.put('/updatePassword',checkAuth,(req,res,next)=>{
 // Forgot Password is Here......
 userRouter.post('/forgotPassword',(req,res,next)=>{
     try {
-        res.header("Access-Control-Allow-Origin", "*");
-        res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         var queryEmail ={email: req.body.email};
         Users.find(queryEmail)
         .exec()
@@ -255,9 +243,6 @@ userRouter.post('/forgotPassword',(req,res,next)=>{
 // Get Account details
 userRouter.post('/getAccountDetails',checkAuth,(req,res,next)=>{
     try {
-        res.header("Access-Control-Allow-Origin", "*");
-        res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         var query = { _id: req.body._id};
         Users.find(query).exec()
         .then(result=>{
@@ -285,9 +270,6 @@ userRouter.post('/getAccountDetails',checkAuth,(req,res,next)=>{
 userRouter.put('/updateProfile',checkAuth,(req,res,next)=>{
    try {
      const userId = req.userId; 
-     res.header("Access-Control-Allow-Origin", "*");
-     res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
-     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
      var query = { _id: userId};
      Users.findByIdAndUpdate(query,{
          $set:{
@@ -322,31 +304,35 @@ userRouter.put('/updateProfile',checkAuth,(req,res,next)=>{
 });
 
 userRouter.delete('/delete',checkAuth,(req,res,next)=>{
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    var query = {_id:req.body._id};
-    Users.remove(query).then(result=>{
-        res.status(200).json({
-            status:true,
-            message:"User removed Sucessfully"
-        })
-    }).catch(error=>{
+
+    try {
+        var query = {_id:req.body._id};
+        Users.remove(query).then(result=>{
+            res.status(200).json({
+                status:true,
+                message:"User removed Sucessfully"
+            })
+        }).catch(error=>{
+            res.status(400).json({
+                status:false,
+                message:"Failed to Remove User",
+                error:error
+            });
+        });
+    } catch (error) {
         res.status(500).json({
             status:false,
             message:"Failed to Remove User",
             error:error
         });
-    })
+    }
 });
 
 
 
 userRouter.get('/getlimit',checkAuth,(req,res,next)=>{
     try {
-        res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    
         Users.find().limit(2).then(result=>{
             res.status(200).json({
                 status:true,
@@ -365,9 +351,6 @@ userRouter.get('/getlimit',checkAuth,(req,res,next)=>{
 
 userRouter.get('/getAll',checkAuth,(req,res,next)=>{
    try {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
      Users.find().then(result=>{
          res.status(200).json({
              status:true,
