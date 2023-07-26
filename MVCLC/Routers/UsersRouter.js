@@ -193,6 +193,9 @@ userRouter.put('/updatePassword',checkAuth,(req,res,next)=>{
 // Forgot Password is Here......
 userRouter.post('/forgotPassword',(req,res,next)=>{
     try {
+        res.setHeader("Access-Control-Allow-Origin", "*"); // Replace * with your frontend domain if needed
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+
         var queryEmail ={email: req.body.email};
         Users.find(queryEmail)
         .exec()
