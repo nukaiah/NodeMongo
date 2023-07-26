@@ -103,8 +103,7 @@ userRouter.post('/login',(req,res,next)=>{
                     res.status(200).json({                 
                          status:true,
                              message:"Login Successfully",
-                             loginData:{
-                                firstName:user[0].firstName,
+                             loginData:{firstName:user[0].firstName,
                              lastName:user[0].lastName,
                              email:user[0].email,
                              password:user[0].password,
