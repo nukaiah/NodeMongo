@@ -6,6 +6,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const checkAuth = require('../MiddleWares/CheckAuth');
+require('dotenv').config();
 
 
 
@@ -210,12 +211,12 @@ userRouter.post('/forgotPassword',(req,res,next)=>{
                 const transporter = nodemailer.createTransport({
                     service: 'gmail',
                     auth: {
-                      user: 'srinivas.y@lionorbit.com',
-                      pass: 'Srinivas@123',
+                      user: process.env.USER_EMAIL,
+                      pass: process.env.PASSWORD,
                     },
                   });
                   var mailOptions = {
-                    from: 'srinivas.y@lionorbit.com',
+                    from: process.env.USER_EMAIL,
                     to:req.body.email,
                     subject: 'Reset You Password',
                     text: '1. Click on link below to reset your LC account password \n2. www.google.com '
