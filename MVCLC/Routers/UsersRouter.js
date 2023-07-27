@@ -19,14 +19,16 @@ userRouter.post('/signUp',(req,res,next)=>{
     .then(user=>{
         console.log(user.length);
         if(user.length>0){
-            return res.status(401).json({
+            return res.status(200).json({
                 message:"Email Alreay Exist"
             });
         }
         else{
             bcrypt.hash(req.body.password,10,(err,hash)=>{
                 if(err){
-                    error:err
+                    return res.status(200).json({
+                        message:err
+                    });
                 }
                 else{
                     const users = new Users({
@@ -50,7 +52,7 @@ userRouter.post('/signUp',(req,res,next)=>{
                         })
                     }).catch(error=>{
                         console.log(error);
-                        res.status(500).json({
+                        res.status(200).json({
                             status:false,
                             message:"Failed to create User"
                         })
@@ -60,7 +62,7 @@ userRouter.post('/signUp',(req,res,next)=>{
         }
     })
    } catch (error) {
-    res.status(500).json({
+    res.status(400).json({
         status:false,
         error:error
     });
@@ -142,7 +144,7 @@ userRouter.put('/updatePassword',checkAuth,(req,res,next)=>{
       .exec()
       .then(user=>{
          if(user.length==0){
-             return res.status(401).json({
+             return res.status(200).json({
                  message:"No User Exist",
                  status:false,
              });
@@ -161,7 +163,7 @@ userRouter.put('/updatePassword',checkAuth,(req,res,next)=>{
                                  message:"Password updated successfully",
                              })
                          }).catch(error=>{
-                             res.status(500).json({
+                             res.status(200).json({
                                  status:false,
                                  message:"Failed to update password"
                              });
@@ -170,7 +172,7 @@ userRouter.put('/updatePassword',checkAuth,(req,res,next)=>{
                  }
                  else{
                      console.log(err);
-                     return res.status(401).json({
+                     return res.status(200).json({
                          message:"Old Password not matched",
                          status:false,
                      });
@@ -179,7 +181,7 @@ userRouter.put('/updatePassword',checkAuth,(req,res,next)=>{
          }
      });
    } catch (error) {
-    res.status(500).json({
+    res.status(400).json({
         status:false,
         message:error
     });
@@ -199,7 +201,7 @@ userRouter.post('/forgotPassword',(req,res,next)=>{
         .exec()
         .then(user=>{
             if(user.length<1){
-                return res.status(401).json({
+                return res.status(200).json({
                     message:"This Email is not registerd"
                 });
             }
@@ -254,13 +256,16 @@ userRouter.post('/getAccountDetails',checkAuth,(req,res,next)=>{
             })
         })
         .catch(error=>{
-            res.status(500).json({
+            res.status(200).json({
                 status:false,
-                message:"Failed to Find User"
-            })
-        })
+                message:error
+            });
+        });
     } catch (error) {
-        message:error
+        res.status(400).json({
+            status:false,
+            message:error
+        });
     }
 
 });
@@ -289,7 +294,7 @@ userRouter.put('/updateProfile',checkAuth,(req,res,next)=>{
              message:"Profile Details updated successfully",
          })
      }).catch(error=>{
-         res.status(400).json({
+         res.status(200).json({
              status:false,
              message:"Failed to update Profile Details"
          });
@@ -298,7 +303,7 @@ userRouter.put('/updateProfile',checkAuth,(req,res,next)=>{
    } catch (error) {
     res.status(500).json({
              status:false,
-             message:"Failed to update Profile Details"
+             message:error
          });
    }
 
@@ -314,14 +319,14 @@ userRouter.delete('/delete',checkAuth,(req,res,next)=>{
                 message:"User removed Sucessfully"
             })
         }).catch(error=>{
-            res.status(400).json({
+            res.status(200).json({
                 status:false,
                 message:"Failed to Remove User",
                 error:error
             });
         });
     } catch (error) {
-        res.status(500).json({
+        res.status(400).json({
             status:false,
             message:"Failed to Remove User",
             error:error
@@ -342,7 +347,7 @@ userRouter.get('/getlimit',checkAuth,(req,res,next)=>{
             })
         })
     } catch (error) {
-        res.status(500).json({
+        res.status(400).json({
             status:false,
             error:error
         });
@@ -360,7 +365,7 @@ userRouter.get('/getAll',checkAuth,(req,res,next)=>{
          })
      })
    } catch (error) {
-    res.status(500).json({
+    res.status(400).json({
         status:false,
         error:error
     });
