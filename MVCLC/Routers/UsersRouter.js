@@ -75,9 +75,9 @@ userRouter.post('/login',(req,res,next)=>{
      .exec()
      .then(user=>{
         if(user.length==0){
-            return res.status(400).json({
+            return res.status(200).json({
                 message:"No User Exist",
-                loginStatus:false,
+                status:false,
             });
         }
         else{
@@ -96,10 +96,9 @@ userRouter.post('/login',(req,res,next)=>{
                     },
                     );
                     res.status(200).json({                 
-                             loginStatus:true,
+                         status:true,
                              message:"Login Successfully",
-                             loginData:{
-                                firstName:user[0].firstName,
+                             loginData:{firstName:user[0].firstName,
                              lastName:user[0].lastName,
                              email:user[0].email,
                              password:user[0].password,
@@ -114,9 +113,9 @@ userRouter.post('/login',(req,res,next)=>{
                     
                 }
                 else{
-                   res.status(400).json({
+                    return res.status(200).json({
                         message:"Password not matched",
-                        loginStatus:false,
+                        status:false,
                         issue:error
                     });
                      }
@@ -125,8 +124,8 @@ userRouter.post('/login',(req,res,next)=>{
 
          });
    } catch (error) {
-    res.status(500).json({
-        loginStatus:false,
+    res.status(400).json({
+        status:false,
         error:error
     });
     
