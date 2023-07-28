@@ -36,14 +36,14 @@ VDWorksRouter.post('/addVdWork',(req,res,next)=>{
                 data:result
             });
         }).catch(error=>{
-            res.status(500).json({
+            res.status(200).json({
                 status:false,
                 message:"Failed Add VD Work ",
                 error:error
             });
         });
     } catch (error) {
-        res.status(500).json({
+        res.status(400).json({
             status:false,
             message:"Failed Add Govt Benfit ",
             error:error
@@ -63,14 +63,14 @@ VDWorksRouter.get('/getAll',(req,res,next)=>{
                 data:result
             })
         }).catch(error=>{
-            res.status(500).json({
+            res.status(200).json({
                 status:false,
                 message:"Failed to Get Data",
                 error:error
             });
         });
     } catch (error) {
-        res.status(500).json({
+        res.status(400).json({
             status:false,
             message:"Failed to Get Data",
             error:error

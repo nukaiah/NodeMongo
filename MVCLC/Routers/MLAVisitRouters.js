@@ -26,14 +26,14 @@ mlaVisitRouter.post('/addMlAVists',(req,res,next)=>{
                 data:result
             });
         }).catch(error=>{
-            res.status(500).json({
+            res.status(200).json({
                 status:false,
                 message:"Failed Add MLA Visit",
                 error:error
             });
         });
     } catch (error) {
-        res.status(500).json({
+        res.status(400).json({
             status:false,
             message:"Failed Add MLA Visit",
             error:error
@@ -53,14 +53,14 @@ mlaVisitRouter.get('/getAll',(req,res,next)=>{
                 data:result
             });
         }).catch(error=>{
-            res.status(500).json({
+            res.status(200).json({
                 status:false,
                 message:"Failed to Get Data",
                 error:error
             });
         });
     } catch (error) {
-        res.status(500).json({
+        res.status(400).json({
             status:false,
             message:"Failed to Get Data",
             error:error

@@ -16,13 +16,14 @@ villageLeaderRouter.get('/getAll',(req,res,next)=>{
                 data:result
             })
         }).catch(error=>{
-            res.status(500).json({
+            res.status(200).json({
                 status:false,
                 message:"No Data Found",
+                error:error
             })
         });
     } catch (error) {
-        res.status(500).json({
+        res.status(400).json({
             status:false,
             message:"Failed to fetch Village Leader",
             error:error
@@ -33,36 +34,44 @@ villageLeaderRouter.get('/getAll',(req,res,next)=>{
 
 
 villageLeaderRouter.post('/addVillageLeader',(req,res,next)=>{
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    const villageLeaders = new VillageLeaders({
-            _id:new mongoose.Types.ObjectId,
-            mandal:req.body.mandal,
-            village:req.body.village,
-            leaderName:req.body.leaderName,
-            govtDes:req.body.govtDes,
-            party:req.body.party,
-            partyDes:req.body.partyDes,
-            phone:req.body.phone,
-            voterId:req.body.voterId,
-            aadharId:req.body.aadharId,
-            rationId:req.body.rationId,
+   try {
+     res.header("Access-Control-Allow-Origin", "*");
+     res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
+     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+     const villageLeaders = new VillageLeaders({
+             _id:new mongoose.Types.ObjectId,
+             mandal:req.body.mandal,
+             village:req.body.village,
+             leaderName:req.body.leaderName,
+             govtDes:req.body.govtDes,
+             party:req.body.party,
+             partyDes:req.body.partyDes,
+             phone:req.body.phone,
+             voterId:req.body.voterId,
+             aadharId:req.body.aadharId,
+             rationId:req.body.rationId,
+     });
+     villageLeaders.save().then(result=>{
+         console.log(result);
+         res.status(200).json({
+             status:true,
+             message:"VillageLeader added Successfully",
+             data:result
+         });
+     }).catch(error=>{
+         res.status(200).json({
+             status:false,
+             message:"Failed to add VillageLeader",
+             error:error
+         });
+     });
+   } catch (error) {
+    res.status(400).json({
+        status:false,
+        message:"Failed to add VillageLeader",
+        error:error
     });
-    villageLeaders.save().then(result=>{
-        console.log(result);
-        res.status(200).json({
-            status:true,
-            message:"VillageLeader added Successfully",
-            data:result
-        });
-    }).catch(error=>{
-        res.status(500).json({
-            status:false,
-            message:"Failed to add VillageLeader",
-            error:error
-        });
-    })
+   }
 });
 
 
@@ -80,9 +89,15 @@ villageLeaderRouter.post('/getbyId',checkAuth,(req,res,next)=>{
                 message:"Village Leader Fetched Successfully",
                 data:result
             });
-        })
+        }).catch(error=>{
+            res.status(200).json({
+                status:false,
+                message:"Failed to add VillageLeader",
+                error:error
+            });
+        });
     } catch (error) {
-        res.status(500).json({
+        res.status(400).json({
             status:false,
             error:error
         });
@@ -102,9 +117,15 @@ villageLeaderRouter.delete('/delete',checkAuth,(req,res,next)=>{
              status:true,
              message:"Village Leader Deleted Successfully",
          });
-     });
+     }).catch(error=>{
+        res.status(200).json({
+            status:false,
+            message:"Failed to add VillageLeader",
+            error:error
+        });
+    });
    } catch (error) {
-    res.status(500).json({
+    res.status(400).json({
         status:false,
         message:"Failed to remove Village Leader "
     });
