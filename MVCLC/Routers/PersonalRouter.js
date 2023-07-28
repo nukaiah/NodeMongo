@@ -72,4 +72,36 @@ personalRouter.get('/getAll',checkAuth,(req,res,next)=>{
     }
 });
 
+personalRouter.post('/getById', checkAuth, (req, res, next) => {
+    try {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        var query = { _id: res.body._id };
+        Personal.findById(query)
+            .exec()
+            .then(result => {
+                res.status(200).json({
+                    status: true,
+                    message: "Data Sucessfully",
+                    data: result
+                });
+
+            }).atch(error => {
+                res.status(200).json({
+                    status: false,
+                    message: "Failed to Get Appointment",
+                    error: error
+                });
+            })
+    } catch (error) {
+        res.status(400).json({
+            status: false,
+            message: "Failed to Get Appointment",
+            error: error
+        });
+
+    }
+});
+
 module.exports = personalRouter;
