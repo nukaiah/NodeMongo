@@ -11,6 +11,7 @@ var userSchema = new mongoose.Schema({
     permanentAdd:String,
     proofType:String,
     proofIdNumber:String,
+    imageUrl:String
 });
 
 module.exports = mongoose.model("Users",userSchema);

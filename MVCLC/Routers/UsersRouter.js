@@ -109,6 +109,7 @@ userRouter.post('/login',(req,res,next)=>{
                              permanentAdd:user[0].permanentAdd,
                              proofType:user[0].proofType,
                              proofIdNumber:user[0].proofIdNumber,
+                             imageUrl:user[0].imageUrl,
                              token:token
                              }
                          });
@@ -207,6 +208,8 @@ userRouter.post('/forgotPassword',(req,res,next)=>{
             }
             else{
                 console.log(req.body.email);
+                console.log(process.env.USER_EMAIL);
+                console.log(process.env.PASSWORD);
                 const transporter = nodemailer.createTransport({
                     service: 'gmail',
                     auth: {
