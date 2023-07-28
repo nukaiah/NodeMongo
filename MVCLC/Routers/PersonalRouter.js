@@ -77,7 +77,7 @@ personalRouter.post('/getById', checkAuth, (req, res, next) => {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-        var query = { _id: res.body._id };
+        var query = { _id: req.body._id };
         Personal.findById(query)
             .exec()
             .then(result => {
