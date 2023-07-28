@@ -223,7 +223,9 @@ userRouter.post('/forgotPassword',(req,res,next)=>{
                 
                   transporter.sendMail(mailOptions, function(error, info){
                     if (error) {
-                      console.log(error);
+                        return res.status(200).json({
+                            message:error
+                        });
                     } else {
                       console.log('Email sent: ' + info.response);
                       return res.status(200).json({
@@ -236,7 +238,7 @@ userRouter.post('/forgotPassword',(req,res,next)=>{
             }
         })
     } catch (error) {
-        res.status(500).json({
+        res.status(400).json({
             status:false,
             error:error
         });
