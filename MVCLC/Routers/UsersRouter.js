@@ -387,7 +387,7 @@ userRouter.get('/getAll',checkAuth,(req,res,next)=>{
 
 
 
-userRouter.put('/updateImage',upload.single("image"),async (req,res,next)=>{
+userRouter.put('/updateImage',checkAuth,upload.single("image"),async (req,res,next)=>{
    try {
     console.log(req.body.public_id.length);
     var result = req.body.public_id.length==0?await cloudinary.uploader.upload(req.file.path,{ folder:'Users/'}):await cloudinary.uploader.upload(req.file.path,{ 

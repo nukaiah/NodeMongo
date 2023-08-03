@@ -4,7 +4,7 @@ var mongoose = require("mongoose");
 const checkAuth = require('../MiddleWares/CheckAuth');
 const VillageLeaders = require('../Models/VillageLeaderModels');
 
-villageLeaderRouter.get('/getAll',(req,res,next)=>{
+villageLeaderRouter.get('/getAll',checkAuth,(req,res,next)=>{
     try {
         res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
@@ -33,7 +33,7 @@ villageLeaderRouter.get('/getAll',(req,res,next)=>{
 });
 
 
-villageLeaderRouter.post('/addVillageLeader',(req,res,next)=>{
+villageLeaderRouter.post('/addVillageLeader',checkAuth,(req,res,next)=>{
    try {
      res.header("Access-Control-Allow-Origin", "*");
      res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");

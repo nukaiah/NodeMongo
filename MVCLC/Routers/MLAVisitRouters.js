@@ -5,7 +5,7 @@ const checkAuth = require('../MiddleWares/CheckAuth');
 var MLAVisits = require('../Models/MLAVisitModels'); 
 
 
-mlaVisitRouter.post('/addMlAVists',(req,res,next)=>{
+mlaVisitRouter.post('/addMlAVists',checkAuth,(req,res,next)=>{
     try {
         const mlaVisits = new MLAVisits({
             _id:new mongoose.Types.ObjectId,
@@ -41,7 +41,7 @@ mlaVisitRouter.post('/addMlAVists',(req,res,next)=>{
     }
 });
 
-mlaVisitRouter.get('/getAll',(req,res,next)=>{
+mlaVisitRouter.get('/getAll',checkAuth,(req,res,next)=>{
     try {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");

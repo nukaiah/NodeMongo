@@ -5,7 +5,7 @@ const checkAuth = require('../MiddleWares/CheckAuth');
 var GOVTBENFITS = require('../Models/GovtBenfitModels'); 
 
 
-govtBenfitRouter.post('/addGovtBenfits',(req,res,next)=>{
+govtBenfitRouter.post('/addGovtBenfits',checkAuth,(req,res,next)=>{
     try {
         const govtBenfits = new GOVTBENFITS({
             _id:new mongoose.Types.ObjectId,
@@ -44,7 +44,7 @@ govtBenfitRouter.post('/addGovtBenfits',(req,res,next)=>{
     }
 });
 
-govtBenfitRouter.get('/getAll',(req,res,next)=>{
+govtBenfitRouter.get('/getAll',checkAuth,(req,res,next)=>{
     try {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");

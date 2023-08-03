@@ -10,7 +10,7 @@ const cloudinary = require("../MiddleWares/Cloudinary");
 
 
 // GetAll Appointment is here......
-appointmentRouter.get('/getAll', (req, res, next) => {
+appointmentRouter.get('/getAll', checkAuth,(req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -31,7 +31,7 @@ appointmentRouter.get('/getAll', (req, res, next) => {
 
 
 // Create Appointment here.......
-appointmentRouter.post('/createApt', upload.single("image"),async (req, res, next) => {
+appointmentRouter.post('/createApt',checkAuth, upload.single("image"),async (req, res, next) => {
     const result = await cloudinary.uploader.upload(req.file.path,{ folder: 'Visitors/' });
     if (result) {
         console.log(result.url);

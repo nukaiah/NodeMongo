@@ -14,7 +14,6 @@ var personalRouter = require('./MVCLC/Routers/PersonalRouter');
 var mlaVisitRouter = require('./MVCLC/Routers/MLAVisitRouters');
 var govtBenfitRouter = require('./MVCLC/Routers/GovtBenfitRouter');
 var VDWorksRouter = require('./MVCLC/Routers/VDWorksRouters');
-var fileUploadRouter = require('./MVCLC/Routers/FileUploaderRouter');
 
 
 
@@ -44,7 +43,6 @@ app.use('/api/appointments',appointmentRouter);
 app.use('/api/MlaVisit',mlaVisitRouter);
 app.use('/api/GovtBenfits',govtBenfitRouter);
 app.use('/api/VDWorks',VDWorksRouter);
-app.use('/api/files',fileUploadRouter)
 
 
 module.exports = app;
