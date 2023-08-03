@@ -30,22 +30,6 @@ appointmentRouter.get('/getAll', (req, res, next) => {
 });
 
 
-// // Set Apt
-// appointmentRouter.post('/setApt',async(req,res,next)=>{
-//     console.log(req.files.path.tempFilePath);
-//     res.status(200).json({
-//         status:true,
-//         result:req.files.path.tempFilePath
-//     });
-//     // req.files.foo
-//     // const result = await cloudinary.uploader.upload(req.file.foo.path, {
-//     //     folder: 'uploads', // Optional: Set the folder where the file will be stored in Cloudinary
-//     //   });
-  
-//     //   // Return the Cloudinary URL of the uploaded file to the client
-//     //   res.json({ url: result.secure_url });
-// });
-
 // Create Appointment here.......
 appointmentRouter.post('/createApt', upload.single("image"),async (req, res, next) => {
     const result = await cloudinary.uploader.upload(req.file.path,{ folder: 'Visitors/' });
@@ -198,5 +182,6 @@ appointmentRouter.delete('/delete', checkAuth, (req, res, next) => {
         })
     }
 });
+
 
 module.exports = appointmentRouter;

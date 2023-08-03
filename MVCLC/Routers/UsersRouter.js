@@ -7,6 +7,8 @@ const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
 const checkAuth = require('../MiddleWares/CheckAuth');
 require('dotenv').config();
+const upload = require("../MiddleWares/multr");
+const cloudinary = require("../MiddleWares/Cloudinary");
 
 
 
@@ -139,7 +141,7 @@ userRouter.post('/login',(req,res,next)=>{
 // Update or Change Password is Here.....
 userRouter.put('/updatePassword',checkAuth,(req,res,next)=>{
    try {
-    const userId = req.userId; 
+    const userId = req.body.userId; 
       var query = { _id: userId};
       Users.find(query)
       .exec()
@@ -378,6 +380,55 @@ userRouter.get('/getAll',checkAuth,(req,res,next)=>{
     });
    }
 });
+
+
+
+userRouter.put('/updateImage',upload.single("image"),async (req,res,next)=>{
+   try {
+    console.log(req.body.public_id.length);
+    var result = req.body.public_id.length==0?await cloudinary.uploader.upload(req.file.path,{ folder:'Users/'}):await cloudinary.uploader.upload(req.file.path,{ 
+        public_id:req.body.public_id,
+        overwrite:true
+    });
+     if(result){
+         var query = { _id: req.body._id};
+         var imageUrl = result.url;
+         var imageId = result.public_id;
+         const updateFields = {
+            $set: {
+                cloudUrl: imageId,
+                imageUrl: imageUrl,
+            },
+          };
+         Users.updateOne(query,updateFields,{ new: true }).then(data=>{
+                 res.status(200).json({
+                     status:true,
+                     message:"Profiel Updated Successfully"
+                 });
+ 
+         }).catch(e=>{
+             res.status(200).json({
+                 status:false,
+                 message:"Failed to Update Profile"
+             });
+         });
+     }else{
+         
+             res.status(200).json({
+                 status:false,
+                 message:"Failed to Update Profile"
+             });
+        
+ 
+     }
+   } catch (error) {
+    res.status(500).json({
+        status:false,
+        error:error
+    });
+   }
+});
+
 
 
 

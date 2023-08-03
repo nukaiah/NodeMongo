@@ -20,7 +20,7 @@ var fileUploadRouter = require('./MVCLC/Routers/FileUploaderRouter');
 
 
 mongoose.set("strictQuery", false);
-mongoose.connect('mongodb+srv://crud:sri123@crudapp.gzvya.mongodb.net/?retryWrites=true&w=majority',{useNewUrlParser: true});
+mongoose.connect('mongodb+srv://crud:sri123@crudapp.gzvya.mongodb.net/?retryWrites=true&w=majority',{useNewUrlParser: true,useUnifiedTopology: true,});
 
 mongoose.connection.on("error",err=>{
     console.log("Failed to Connect");
