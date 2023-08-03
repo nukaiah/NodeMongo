@@ -106,7 +106,9 @@ userRouter.post('/login',(req,res,next)=>{
                     res.status(200).json({                 
                          status:true,
                              message:"Login Successfully",
-                             loginData:{firstName:user[0].firstName,
+                             loginData:{
+                                _id:user[0]._id,
+                                firstName:user[0].firstName,
                              lastName:user[0].lastName,
                              email:user[0].email,
                              password:user[0].password,
@@ -116,6 +118,8 @@ userRouter.post('/login',(req,res,next)=>{
                              proofType:user[0].proofType,
                              proofIdNumber:user[0].proofIdNumber,
                              imageUrl:user[0].imageUrl,
+                             cloudUrl:user[0].cloudUrl,
+                             type:user[0].type,
                              token:token
                              }
                          });
