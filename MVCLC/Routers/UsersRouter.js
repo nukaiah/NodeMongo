@@ -224,7 +224,7 @@ userRouter.post('/forgotPassword',(req,res,next)=>{
                     from: process.env.USER_EMAIL,
                     to:req.body.email,
                     subject: 'Reset You Password',
-                    text: '1. Click on link below to reset your LC account password \n2. www.google.com '
+                    text: '1. Click on link below to reset your LC account password \n2. http://leaderconnect.sivamdirector.com/changepassword.html '
                   };
                 
                   transporter.sendMail(mailOptions, function(error, info){
