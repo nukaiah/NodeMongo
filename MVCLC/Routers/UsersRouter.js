@@ -203,6 +203,7 @@ userRouter.post('/forgotPassword',(req,res,next)=>{
         .then(user=>{
             if(user.length<1){
                 return res.status(200).json({
+                    status:false,
                     message:"This Email is not registerd"
                 });
             }
@@ -227,11 +228,12 @@ userRouter.post('/forgotPassword',(req,res,next)=>{
                   transporter.sendMail(mailOptions, function(error, info){
                     if (error) {
                         return res.status(200).json({
+                            status:false,
                             message:error
                         });
                     } else {
-                      console.log('Email sent: ' + info.response);
                       return res.status(200).json({
+                        status:true,
                         message:"Email Sent Successfully"
                     });
                     }
