@@ -149,7 +149,7 @@ userRouter.post('/login',(req,res,next)=>{
 // Update or Change Password is Here.....
 userRouter.put('/updatePassword',checkAuth,(req,res,next)=>{
    try {
-    const userId = req.body.userId; 
+    const userId = req.userId; 
       var query = { _id: userId};
       Users.find(query)
       .exec()
