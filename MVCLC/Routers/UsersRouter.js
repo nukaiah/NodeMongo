@@ -43,7 +43,11 @@ userRouter.post('/signUp',(req,res,next)=>{
                         presentAdd:req.body.presentAdd,
                         permanentAdd:req.body.permanentAdd,
                         proofType:req.body.proofType,
-                        proofIdNumber:req.body.proofIdNumber
+                        proofIdNumber:req.body.proofIdNumber,
+                        imageUrl:req.body.imageUrl,
+                        cloudUrl:req.body.cloudUrl,
+                        type:req.body.type
+
                     });
                     users.save().then(result=>{
                         console.log(result);
