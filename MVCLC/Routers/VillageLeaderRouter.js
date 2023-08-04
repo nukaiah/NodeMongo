@@ -35,6 +35,7 @@ villageLeaderRouter.get('/getAll',checkAuth,(req,res,next)=>{
 
 villageLeaderRouter.post('/addVillageLeader',checkAuth,(req,res,next)=>{
    try {
+    const userId = req.userId; 
      res.header("Access-Control-Allow-Origin", "*");
      res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -50,9 +51,9 @@ villageLeaderRouter.post('/addVillageLeader',checkAuth,(req,res,next)=>{
              voterId:req.body.voterId,
              aadharId:req.body.aadharId,
              rationId:req.body.rationId,
+             createdBy:userId
      });
      villageLeaders.save().then(result=>{
-         console.log(result);
          res.status(200).json({
              status:true,
              message:"VillageLeader added Successfully",

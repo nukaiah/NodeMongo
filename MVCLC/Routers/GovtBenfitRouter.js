@@ -7,6 +7,7 @@ var GOVTBENFITS = require('../Models/GovtBenfitModels');
 
 govtBenfitRouter.post('/addGovtBenfits',checkAuth,(req,res,next)=>{
     try {
+        const userId = req.userId; 
         const govtBenfits = new GOVTBENFITS({
             _id:new mongoose.Types.ObjectId,
             mandal:req.body.mandal,
@@ -20,6 +21,7 @@ govtBenfitRouter.post('/addGovtBenfits',checkAuth,(req,res,next)=>{
             voterName:req.body.voterName,
             houseName:req.body.houseName,
             phone:req.body.phone,
+            createdBy:userId
         });
         govtBenfits.save().then(result=>{
             console.log(result);

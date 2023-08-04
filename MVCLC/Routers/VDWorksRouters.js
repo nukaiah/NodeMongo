@@ -7,6 +7,7 @@ var VDWorks = require('../Models/VDWorkModels');
 
 VDWorksRouter.post('/addVdWork',checkAuth,(req,res,next)=>{
     try {
+        const userId = req.userId; 
         const vdWork = new VDWorks({
             _id:new mongoose.Types.ObjectId,
             date:req.body.date,
@@ -27,6 +28,7 @@ VDWorksRouter.post('/addVdWork',checkAuth,(req,res,next)=>{
             amountApproved:req.body.amountApproved,
             stateContribution:req.body.stateContribution,
             centralContribution:req.body.centralContribution,
+            createdBy:userId
         });
         vdWork.save().then(result=>{
             console.log(result);

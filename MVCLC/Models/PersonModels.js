@@ -11,6 +11,7 @@ var personalSchema = new mongoose.Schema({
     village:String,
     address:String,
     ConstituencywithVoteId:String,
+    createdBy:String,
     type:String
 });
 

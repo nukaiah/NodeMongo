@@ -20,6 +20,7 @@ var VDWorkSchema = new mongoose.Schema({
     amountApproved:String,
     stateContribution:String,
     centralContribution:String,
+    createdBy:String
 });
 
 module.exports = mongoose.model("VDWorks",VDWorkSchema);

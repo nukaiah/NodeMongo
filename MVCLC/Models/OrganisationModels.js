@@ -8,7 +8,8 @@ const organisationSchema =  new mongoose.Schema({
     phone:String,
     regdNo:String,
     location:String,
-    type:String
+    type:String,
+    createdBy:String
 });
 
 

@@ -393,13 +393,13 @@ userRouter.get('/getAll',checkAuth,(req,res,next)=>{
 
 userRouter.put('/updateImage',checkAuth,upload.single("image"),async (req,res,next)=>{
    try {
-    console.log(req.body.public_id.length);
+    const userId = req.userId; 
     var result = req.body.public_id.length==0?await cloudinary.uploader.upload(req.file.path,{ folder:'Users/'}):await cloudinary.uploader.upload(req.file.path,{ 
         public_id:req.body.public_id,
         overwrite:true
     });
      if(result){
-         var query = { _id: req.body._id};
+         var query = { _id: userId}
          var imageUrl = result.url;
          var imageId = result.public_id;
          const updateFields = {

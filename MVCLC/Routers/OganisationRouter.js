@@ -6,9 +6,7 @@ const Oraganisation = require('../Models/OrganisationModels');
 
 organisationRouter.post('/addOrganisation',checkAuth,(req,res,next)=>{
     try {
-        res.header("Access-Control-Allow-Origin", "*");
-        res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        const userId = req.userId; 
         const organisation = new Oraganisation({
             _id:new mongoose.Types.ObjectId,
             orgName:req.body.orgName,
@@ -17,6 +15,7 @@ organisationRouter.post('/addOrganisation',checkAuth,(req,res,next)=>{
             phone:req.body.phone,
             regdNo:req.body.regdNo,
             location:req.body.location,
+            createdBy:userId,
             type:'Organisation'
         });
         organisation.save().then(result=>{
@@ -66,6 +65,18 @@ organisationRouter.get('/getAll',checkAuth,(req,res,next)=>{
             error:error
         });
     }
+});
+
+organisationRouter.post('/getByID',checkAuth,(req,res,next)=>{
+    var query = {_id:req.body._id};
+    console.log(query);
+    Oraganisation.findById(query).exec().then(result=>{
+        res.status(200).json({
+            status:true,
+            message:"Data Found Successfully",
+            data:result
+        })
+    });
 });
 
 module.exports = organisationRouter;

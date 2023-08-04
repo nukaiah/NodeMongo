@@ -6,6 +6,7 @@ const Personal = require('../Models/PersonModels');
 
 personalRouter.post('/addPersonal',checkAuth,(req,res,next)=>{
     try {
+        const userId = req.userId; 
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -20,6 +21,7 @@ personalRouter.post('/addPersonal',checkAuth,(req,res,next)=>{
             village:req.body.village,
             address:req.body.address,
             ConstituencywithVoteId:req.body.ConstituencywithVoteId,
+            createdBy:userId,
             type:'Personal'
         });
         personal.save().then(result=>{

@@ -21,7 +21,8 @@ var appointmentSchema = new mongoose.Schema({
     ticketStatus:String,
     followupDate:Date,
     remarks:String,
-    createdDate:Date
+    createdDate:Date,
+    createdBy:String
 });
 
 

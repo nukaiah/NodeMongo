@@ -7,6 +7,7 @@ var MLAVisits = require('../Models/MLAVisitModels');
 
 mlaVisitRouter.post('/addMlAVists',checkAuth,(req,res,next)=>{
     try {
+        const userId = req.userId; 
         const mlaVisits = new MLAVisits({
             _id:new mongoose.Types.ObjectId,
             date:req.body.date,
@@ -16,7 +17,8 @@ mlaVisitRouter.post('/addMlAVists',checkAuth,(req,res,next)=>{
             gpProgram:req.body.gpProgram,
             proDesc:req.body.proDesc,
             proInchagre:req.body.proInchagre,
-            proInchagrePhone:req.body.proInchagrePhone
+            proInchagrePhone:req.body.proInchagrePhone,
+            createdBy:userId
         });
         mlaVisits.save().then(result=>{
             console.log(result);
