@@ -36,7 +36,6 @@ appointmentRouter.post('/createApt',checkAuth, upload.single("image"),async (req
         const userId = req.userId; 
         const result = await cloudinary.uploader.upload(req.file.path,{ folder: 'Visitors/' });
         if (result) {
-            console.log(result.url);
             const vistorImage = result.url;
             var query = { _id: "64ae599988318ab14b07860e" };
             Counter.findById(query).then(result => {
@@ -45,7 +44,7 @@ appointmentRouter.post('/createApt',checkAuth, upload.single("image"),async (req
                 Counter.findByIdAndUpdate(query, { $set: { count: aptCount } }).then(data => {
                     const appointment = new Appointment({
                         _id: new mongoose.Types.ObjectId,
-                        userId: req.body.userId,
+                        createdBy: userId,
                         voterId: req.body.voterId,
                         aadharId: req.body.aadharId,
                         foodId: req.body.foodId,
@@ -65,7 +64,6 @@ appointmentRouter.post('/createApt',checkAuth, upload.single("image"),async (req
                         ticketStatus: '',
                         followupDate: '',
                         createdDate: Date(),
-                        createdBy:userId
                     });
                     appointment.save().then(result => {
                         res.status(200).json({
