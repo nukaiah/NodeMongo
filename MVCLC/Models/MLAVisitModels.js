@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const mlavisitSchema =  new mongoose.Schema({
     _id:mongoose.Schema.Types.ObjectId,
-    date:Date,
+    date:String,
     mandal:String,
     village:String,
     purposeVisit:String,

@@ -6,6 +6,7 @@ const cors = require("cors");
 const path = require('path');
 
 
+
 var userRouter = require('./MVCLC/Routers/UsersRouter');
 var villageLeaders = require('./MVCLC/Routers/VillageLeaderRouter');
 var organisations = require('./MVCLC/Routers/OganisationRouter');
@@ -14,12 +15,13 @@ var personalRouter = require('./MVCLC/Routers/PersonalRouter');
 var mlaVisitRouter = require('./MVCLC/Routers/MLAVisitRouters');
 var govtBenfitRouter = require('./MVCLC/Routers/GovtBenfitRouter');
 var VDWorksRouter = require('./MVCLC/Routers/VDWorksRouters');
+var xlsxRouter = require('./MVCLC/Routers/XLSXRouter');
 
 
 
 
 mongoose.set("strictQuery", false);
-mongoose.connect('mongodb+srv://crud:sri123@crudapp.gzvya.mongodb.net/?retryWrites=true&w=majority',{useNewUrlParser: true,useUnifiedTopology: true,});
+mongoose.connect("mongodb+srv://crud:sri123@crudapp.gzvya.mongodb.net/?retryWrites=true&w=majority",{useNewUrlParser: true,useUnifiedTopology: true,});
 
 mongoose.connection.on("error",err=>{
     console.log("Failed to Connect");
@@ -43,6 +45,7 @@ app.use('/api/appointments',appointmentRouter);
 app.use('/api/MlaVisit',mlaVisitRouter);
 app.use('/api/GovtBenfits',govtBenfitRouter);
 app.use('/api/VDWorks',VDWorksRouter);
+app.use('/api/XlData',xlsxRouter);
 
 
 module.exports = app;

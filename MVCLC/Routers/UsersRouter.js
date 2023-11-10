@@ -47,7 +47,6 @@ userRouter.post('/signUp',(req,res,next)=>{
                         imageUrl:req.body.imageUrl,
                         cloudUrl:req.body.cloudUrl,
                         type:req.body.type
-
                     });
                     users.save().then(result=>{
                         console.log(result);
@@ -57,7 +56,6 @@ userRouter.post('/signUp',(req,res,next)=>{
                             newUser:result
                         })
                     }).catch(error=>{
-                        console.log(error);
                         res.status(200).json({
                             status:false,
                             message:"Failed to create User"

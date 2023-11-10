@@ -30,6 +30,7 @@ VDWorksRouter.post('/addVdWork',checkAuth,(req,res,next)=>{
             centralContribution:req.body.centralContribution,
             createdBy:userId
         });
+
         vdWork.save().then(result=>{
             console.log(result);
             res.status(200).json({
