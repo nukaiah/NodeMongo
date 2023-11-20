@@ -2,13 +2,14 @@ const express = require('express');
 const xlsx = require('xlsx');
 const xlsxRouter = express.Router();
 const fileUpload = require('express-fileupload');
+const checkAuth = require('../MiddleWares/CheckAuth');
 const MlaVisits = require('../Models/MLAVisitModels');
 
 
 xlsxRouter.use(fileUpload());
 
 
-xlsxRouter.post('/MlaXlxsUpload', async (req, res, next) => {
+xlsxRouter.post('/MlaXlxsUpload', checkAuth,async (req, res, next) => {
   try {
     // Assuming the file is sent as 'file' in the request
     const file = req.files.file;
@@ -16,10 +17,12 @@ xlsxRouter.post('/MlaXlxsUpload', async (req, res, next) => {
 
     const sheetName = workbook.SheetNames[0];
     const sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
-    console.log(sheetData);
 
+    const dataWithIds = sheetData.map(record => ({ createdBy: req.userId, ...record }));
 
-    await MlaVisits.insertMany(sheetData);
+    console.log(dataWithIds);
+
+    await MlaVisits.insertMany(dataWithIds);
     
     return res.status(200).json({
       status: true,

@@ -5,7 +5,7 @@ const checkAuth = require('../MiddleWares/CheckAuth');
 var MLAVisits = require('../Models/MLAVisitModels'); 
 
 
-mlaVisitRouter.post('/addMlAVists',checkAuth,(req,res,next)=>{
+mlaVisitRouter.post('/addMlAVists',checkAuth, async(req,res,next)=>{
     try {
         const userId = req.userId; 
         const mlaVisits = new MLAVisits({
@@ -20,7 +20,7 @@ mlaVisitRouter.post('/addMlAVists',checkAuth,(req,res,next)=>{
             proInchagrePhone:req.body.proInchagrePhone,
             createdBy:userId
         });
-        mlaVisits.save().then(result=>{
+        await mlaVisits.save().then(result=>{
             console.log(result);
             res.status(200).json({
                 status:true,
