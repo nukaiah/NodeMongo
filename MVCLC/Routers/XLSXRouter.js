@@ -19,11 +19,10 @@ xlsxRouter.post('/MlaXlxsUpload', checkAuth, async (req, res, next) => {
     // Check for duplicates and insert only unique records
     for (const record of dataWithIds) {
       const query = {
-        // Define the fields that determine uniqueness
-        field1: record.field1,
-        field2: record.field2,
-        field3: record.field3,
-        field4: record.field4,
+        dateSA: record.dateSA,
+        mandal: record.mandal,
+        village: record.village,
+        purposeVisit: record.purposeVisit,
       };
 
       const existingRecord = await MlaVisits.findOne(query);
@@ -49,5 +48,6 @@ xlsxRouter.post('/MlaXlxsUpload', checkAuth, async (req, res, next) => {
     });
   }
 });
+
 
 module.exports = xlsxRouter;
