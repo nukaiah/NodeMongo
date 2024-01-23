@@ -1,13 +1,14 @@
 const express = require('express');
 const xlsx = require('xlsx');
 const xlsxRouter = express.Router();
+var mongoose = require("mongoose");
 const fileUpload = require('express-fileupload');
 const checkAuth = require('../MiddleWares/CheckAuth');
 const MlaVisits = require('../Models/MLAVisitModels');
 
 xlsxRouter.use(fileUpload());
 
-xlsxRouter.post('/MlaXlxsUpload', checkAuth,async (req, res, next) => {
+xlsxRouter.post('/MlaXlxsUpload',async (req, res, next) => {
   try {
     // Assuming the file is sent as 'file' in the request
     const file = req.files.file;
@@ -16,11 +17,33 @@ xlsxRouter.post('/MlaXlxsUpload', checkAuth,async (req, res, next) => {
     const sheetName = workbook.SheetNames[0];
     const sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
-    const dataWithIds = sheetData.map(record => ({ createdBy: req.userId, ...record }));
+    const dataWithIds = sheetData.map(record => ({ createdBy: req.userId,_id:new mongoose.Types.ObjectId, ...record }));
 
-    console.log(dataWithIds);
+  
+    for (const record of dataWithIds) {
+      console.log(record);
+      const query = {
+        date: record.date,
+        mandal: record.mandal,
+        village: record.village,
+        purposeVisit: record.purposeVisit,
+        gpProgram: record.gpProgram,
+        proDesc: record.proDesc,
+        proInchagre: record.proInchagre,
+        proInchagrePhone: record.proInchagrePhone,
+      };
+      const existingRecord = await MlaVisits.findOne(query);
+      if (!existingRecord) {
+        console.log("NO");
+        await MlaVisits.create(record);
+      } else {
+        console.log("YES");
+        console.log('Record already exists:', existingRecord);
+      }
+    }
 
-    await MlaVisits.insertMany(dataWithIds);
+
+    // await MlaVisits.insertMany(dataWithIds);
     
     return res.status(200).json({
       status: true,
