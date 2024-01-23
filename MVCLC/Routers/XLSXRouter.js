@@ -14,7 +14,7 @@ xlsxRouter.post('/MlaXlxsUpload', checkAuth, async (req, res, next) => {
     const sheetName = workbook.SheetNames[0];
     const sheetData = xlsx.utils.sheet_to_json(workbook.Sheets[sheetName]);
 
-    const dataWithIds = sheetData.map(record => ({ createdBy: req.userId, ...record }));
+    const dataWithIds = sheetData.map(record => ({ createdBy: req.userId, _id: new mongoose.Types.ObjectId(), ...record }));
 
     // Check for duplicates and insert only unique records
     for (const record of dataWithIds) {
