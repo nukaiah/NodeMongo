@@ -8,7 +8,7 @@ const MlaVisits = require('../Models/MLAVisitModels');
 
 xlsxRouter.use(fileUpload());
 
-xlsxRouter.post('/MlaXlxsUpload',async (req, res, next) => {
+xlsxRouter.post('/MlaXlxsUpload',checkAuth,async (req, res, next) => {
   try {
     // Assuming the file is sent as 'file' in the request
     const file = req.files.file;

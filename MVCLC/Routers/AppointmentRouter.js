@@ -34,9 +34,7 @@ appointmentRouter.get('/getAll', checkAuth,(req, res, next) => {
 appointmentRouter.post('/createApt',checkAuth, upload.single("image"),async (req, res, next) => {
     try {
         const userId = req.userId; 
-        const result = await cloudinary.uploader.upload(req.file.path,{ folder: 'Visitors/' });
-        if (result) {
-            const vistorImage = result.url;
+        if(req.file==null&&req.file==undefined){
             var query = { _id: "64ae599988318ab14b07860e" };
             Counter.findById(query).then(result => {
                 var aptCount = result.count + 1;
@@ -56,7 +54,7 @@ appointmentRouter.post('/createApt',checkAuth, upload.single("image"),async (req
                         vistCount: req.body.vistCount,
                         natureofWork: req.body.natureofWork,
                         priortyofVisit: req.body.priortyofVisit,
-                        image: vistorImage,
+                        image: undefined,
                         visitPurpose: req.body.visitPurpose,
                         remarks: req.body.remarks,
                         aptId: aptCount,
@@ -80,12 +78,63 @@ appointmentRouter.post('/createApt',checkAuth, upload.single("image"),async (req
                     });
                 });
             });
+
         }
         else{
-            res.status(200).json({
-                status:false,
-                message:"Failed to create Appointment"
-            });
+            const result = await cloudinary.uploader.upload(req.file.path,{ folder: 'Visitors/' });
+            if (result) {
+                const vistorImage = result.url;
+                var query = { _id: "64ae599988318ab14b07860e" };
+                Counter.findById(query).then(result => {
+                    var aptCount = result.count + 1;
+                    console.log(aptCount);
+                    Counter.findByIdAndUpdate(query, { $set: { count: aptCount } }).then(data => {
+                        const appointment = new Appointment({
+                            _id: new mongoose.Types.ObjectId,
+                            createdBy: userId,
+                            voterId: req.body.voterId,
+                            aadharId: req.body.aadharId,
+                            foodId: req.body.foodId,
+                            contactNumber: req.body.contactNumber,
+                            firstName: req.body.firstName,
+                            lastName: req.body.lastName,
+                            address: req.body.address,
+                            ConstituencywithVoteId: req.body.ConstituencywithVoteId,
+                            vistCount: req.body.vistCount,
+                            natureofWork: req.body.natureofWork,
+                            priortyofVisit: req.body.priortyofVisit,
+                            image: vistorImage,
+                            visitPurpose: req.body.visitPurpose,
+                            remarks: req.body.remarks,
+                            aptId: aptCount,
+                            aptStatus: 'Pending',
+                            ticketStatus: '',
+                            followupDate: '',
+                            createdDate: Date(),
+                        });
+                        appointment.save().then(result => {
+                            res.status(200).json({
+                                status: true,
+                                message: "Appointment added Successfully",
+                                newAppoinment: result
+                            });
+                        }).catch(error => {
+                            res.status(200).json({
+                                status: false,
+                                message: "Failed to add Appointment",
+                                error: error
+                            });
+                        });
+                    });
+                });
+            }
+            else{
+                res.status(200).json({
+                    status:false,
+                    message:"Failed to create Appointment"
+                });
+            }
+
         }
     } catch (error) {
         res.status(200).json({
