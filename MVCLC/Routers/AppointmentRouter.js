@@ -10,23 +10,33 @@ const cloudinary = require("../MiddleWares/Cloudinary");
 
 
 // GetAll Appointment is here......
-appointmentRouter.get('/getAll', checkAuth,(req, res, next) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    Appointment.find().then(result => {
-        res.status(200).json({
-            status: true,
-            message: "Appointments Fetched Successfully",
-            data: result
-        })
-    }).catch(error => {
-        res.status(500).json({
-            status: false,
-            message: "No Data Found",
-        })
-    })
-
+appointmentRouter.get('/getAll',async (req, res, next) => {
+   try {
+     res.header("Access-Control-Allow-Origin", "*");
+     res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
+     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+     var result = await Appointment.find();
+     if(result){
+         res.status(200).json({
+             status: true,
+             message: "Appointments Fetched Successfully",
+             data: result
+         });
+     }
+     else{
+         res.status(200).json({
+             status: true,
+             message: "Appointments Fetched Failed",
+             data: result.error
+         }); 
+     }
+   } catch (error) {
+    res.status(400).json({
+        status: true,
+        message: "Appointments Fetched Failed",
+        data: error
+    }); 
+   }
 });
 
 
@@ -76,11 +86,21 @@ appointmentRouter.post('/createApt', checkAuth, upload.fields([{ name: 'image' }
 
         const savedAppointment = await appointment.save();
 
-        res.status(200).json({
-            status: true,
-            message: "Appointment added Successfully",
-            newAppointment: savedAppointment
-        });
+        if(savedAppointment){
+            res.status(200).json({
+                status: true,
+                message: "Appointment Created Successfully",
+                newAppointment: savedAppointment
+            });
+        }
+        else{
+            res.status(200).json({
+                status: false,
+                message: "Appointment Created failed",
+                newAppointment: savedAppointment.error
+            });
+        }
+        
     } catch (error) {
         res.status(200).json({
             status: false,
@@ -93,64 +113,57 @@ appointmentRouter.post('/createApt', checkAuth, upload.fields([{ name: 'image' }
 
 
 // Get Appointmeny By id is here.......
-appointmentRouter.post('/getById', checkAuth, (req, res, next) => {
-    try {
-        res.header("Access-Control-Allow-Origin", "*");
-        res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-        var query = { _id: res.body._id };
-        Appointment.findById(query)
-            .exec()
-            .then(result => {
-                res.status(200).json({
-                    status: true,
-                    message: "Appointment Fetched Sucessfully",
-                    data: result
-                });
-
-            }).atch(error => {
-                res.status(500).json({
-                    status: false,
-                    message: "Failed to Get Appointment",
-                    error: error
-                });
-            })
-    } catch (error) {
-        res.status(500).json({
-            status: false,
-            message: "Failed to Get Appointment",
-            error: error
+appointmentRouter.post('/getById',checkAuth,async (req, res, next) => {
+   try {
+     var query = {_id:req.body._id};
+     var result = await Appointment.findById(query);
+     if(result){
+        res.status(200).json({
+            status:true,
+            message:"Appointment fetched successfully",
+            data:result
+        });
+     }
+     else{
+        res.status(200).json({
+            status:false,
+            message:"Appointment fetched failed",
+            data:result
         });
 
-    }
+     }
+   } catch (error) {
+    res.status(400).json({
+        status:false,
+        message:"Appointment fetched failed",
+        data:result
+    });
+   }
 });
 
 
 // Change Appointment status is here.....
-appointmentRouter.put('/updateStatus', checkAuth, (req, res, next) => {
+appointmentRouter.post('/updateStatus',checkAuth, async(req, res, next) => {
     try {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         var query = { _id: req.body._id };
-        Appointment.findByIdAndUpdate(query, {
-            $set: {
-                aptStatus: req.body.aptStatus
-            }
-        }).exec().then(result => {
+        var result = await Appointment.findByIdAndUpdate(query,{$set: { aptStatus: req.body.aptStatus }})
+        if(result){
             res.status(200).json({
-                status: true,
-                message: "Appointment Status Updated Sucessfully"
+                 status:true,
+                 message:"Appointment Status Updated Successfully"
             });
-        }).catch(error => {
-            res.status(500).json({
-                status: false,
-                message: "Failed to Upadte Appointment Status",
-                error: error
-            });
-        });
+        }
+        else{
+            res.status(200).json({
+                status:true,
+                message:"Appointment Status Updated Failed"
+           });
+        }
     } catch (error) {
-        res.status(500).json({
+        res.status(400).json({
             status: false,
             message: "Failed to Upadte Appointment Status",
             error: error
@@ -158,28 +171,31 @@ appointmentRouter.put('/updateStatus', checkAuth, (req, res, next) => {
     }
 });
 
+
 // Delete the appointment permanantly is here.......
-appointmentRouter.delete('/delete', checkAuth, (req, res, next) => {
+appointmentRouter.delete('/delete', async (req, res, next) => {
     try {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         var query = { _id: req.body._id };
-        Appointment.findByIdAndDelete(query).exec().then(result => {
+        var result = await Appointment.findByIdAndDelete(query);
+        if(result){
             res.status(200).json({
                 status: true,
                 message: "Appointment Deleted Sucessfully",
                 data: result
             });
-        }).catch(error => {
-            res.status(500).json({
+        }
+        else{
+            res.status(200).json({
                 status: false,
                 message: "Failed to Deleted Appointment",
-                error: error
+                error: result.error
             });
-        });
+        }
     } catch (error) {
-        res.status(500).json({
+        res.status(400).json({
             status: false,
             message: "Failed to Deleted Appointment",
             error: error
@@ -189,7 +205,6 @@ appointmentRouter.delete('/delete', checkAuth, (req, res, next) => {
 
 
 module.exports = appointmentRouter;
-
 
 
 

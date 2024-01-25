@@ -92,7 +92,7 @@ personalRouter.post('/getById', checkAuth, (req, res, next) => {
             }).catch(error => {
                 res.status(200).json({
                     status: false,
-                    message: "Failed to Get Appointment",
+                    message: "Failed to Get Appointment Data",
                     error: error
                 });
             })
