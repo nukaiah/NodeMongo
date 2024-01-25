@@ -140,50 +140,58 @@ userRouter.post('/login', async (req, res, next) => {
 
 
 // Update or Change Password is Here.....
-userRouter.put('/updatePassword', checkAuth, (req, res, next) => {
+userRouter.put('/updatePassword', checkAuth, async (req, res, next) => {
     try {
         const userId = req.userId;
         var query = { _id: userId };
-        Users.find(query)
-            .exec()
-            .then(user => {
-                if (user.length == 0) {
-                    return res.status(200).json({
-                        message: "No User Exist",
-                        status: false,
-                    });
+        var user = await Users.find(query);
+        if (user.length == 0)
+        {
+            res.status(200).json({
+                message: "No User Exist",
+                status: false,
+            });
+        }
+        else 
+        {
+            var result = await bcrypt.compare(req.body.password, user[0].password);
+            if (result)
+            {
+                var hash = await bcrypt.hash(req.body.newPassword, 10);
+                if (hash) 
+                {
+                    var userResult = await Users.findByIdAndUpdate(query, { $set: { password: hash } });
+                    if (userResult)
+                    {
+                        res.status(200).json({
+                            status: true,
+                            message: "Password updated successfully",
+                        });
+                    }
+                    else
+                    {
+                        res.status(200).json({
+                            status: false,
+                            message: "Failed to Update Password"
+                        });
+                    }
                 }
                 else {
-                    bcrypt.compare(req.body.password, user[0].password, (err, result) => {
-                        if (result) {
-                            bcrypt.hash(req.body.newPassword, 10, (err, hash) => {
-                                Users.findByIdAndUpdate(query, {
-                                    $set: {
-                                        password: hash,
-                                    }
-                                }).then(result => {
-                                    res.status(200).json({
-                                        status: true,
-                                        message: "Password updated successfully",
-                                    })
-                                }).catch(error => {
-                                    res.status(200).json({
-                                        status: false,
-                                        message: "Failed to update password"
-                                    });
-                                });
-                            });
-                        }
-                        else {
-                            console.log(err);
-                            return res.status(200).json({
-                                message: "Old Password not matched",
-                                status: false,
-                            });
-                        }
-                    });
+                    res.status(200).json({
+                        status: false,
+                        message: "Failed to Update Password"
+                    })
                 }
-            });
+            }
+            else 
+            {
+                res.status(200).json({
+                    message: "Old Password not matched",
+                    status: false,
+                });
+            }
+
+        }
     } catch (error) {
         res.status(400).json({
             status: false,
