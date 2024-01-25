@@ -195,56 +195,48 @@ userRouter.put('/updatePassword', checkAuth, (req, res, next) => {
 
 
 // Forgot Password is Here......
-userRouter.post('/forgotPassword', (req, res, next) => {
+userRouter.post('/forgotPassword', async (req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     try {
         var queryEmail = { email: req.body.email };
-        Users.find(queryEmail)
-            .exec()
-            .then(user => {
-                if (user.length < 1) {
+        var user = await Users.find(queryEmail);
+        if (user.length < 1) {
+            res.status(200).json({
+                status: false,
+                message: "This Email is not registerd"
+            });
+        }
+        else {
+            const transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: process.env.USER_EMAIL,
+                    pass: process.env.PASSWORD,
+                },
+            });
+            var mailOptions = {
+                from: process.env.USER_EMAIL,
+                to: req.body.email,
+                subject: 'Reset You Password',
+                text: '1. Click on link below to reset your LC account password \n2. http://leaderconnect.sivamdirector.com/changepassword.html '
+            };
+
+            transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
                     return res.status(200).json({
                         status: false,
-                        message: "This Email is not registerd"
+                        message: error
+                    });
+                } else {
+                    return res.status(200).json({
+                        status: true,
+                        message: "Email Sent Successfully"
                     });
                 }
-                else {
-                    console.log(req.body.email);
-                    console.log(process.env.USER_EMAIL);
-                    console.log(process.env.PASSWORD);
-                    const transporter = nodemailer.createTransport({
-                        service: 'gmail',
-                        auth: {
-                            user: process.env.USER_EMAIL,
-                            pass: process.env.PASSWORD,
-                        },
-                    });
-                    var mailOptions = {
-                        from: process.env.USER_EMAIL,
-                        to: req.body.email,
-                        subject: 'Reset You Password',
-                        text: '1. Click on link below to reset your LC account password \n2. http://leaderconnect.sivamdirector.com/changepassword.html '
-                    };
-
-                    transporter.sendMail(mailOptions, function (error, info) {
-                        if (error) {
-                            return res.status(200).json({
-                                status: false,
-                                message: error
-                            });
-                        } else {
-                            return res.status(200).json({
-                                status: true,
-                                message: "Email Sent Successfully"
-                            });
-                        }
-                    });
-
-
-                }
-            })
+            });
+        }
     } catch (error) {
         res.status(400).json({
             status: false,
