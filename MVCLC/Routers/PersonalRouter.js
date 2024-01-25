@@ -4,7 +4,7 @@ var mongoose = require("mongoose");
 const checkAuth = require('../MiddleWares/CheckAuth');
 const Personal = require('../Models/PersonModels');
 
-personalRouter.post('/addPersonal',checkAuth,(req,res,next)=>{
+personalRouter.post('/addPersonal',checkAuth,async (req,res,next)=>{
     try {
         const userId = req.userId; 
         res.header("Access-Control-Allow-Origin", "*");
@@ -24,22 +24,25 @@ personalRouter.post('/addPersonal',checkAuth,(req,res,next)=>{
             createdBy:userId,
             type:'Personal'
         });
-        personal.save().then(result=>{
-            console.log(result);
+        var result = await personal.save();
+        if(result)
+        {
             res.status(200).json({
                 status:true,
                 message:"Personal added Successfully",
                 newPersonal:result
             });
-        }).catch(error=>{
-            res.status(500).json({
+        }
+        else
+        {
+            res.status(200).json({
                 status:false,
                 message:"Failed Add Personal",
                 error:error
             });
-        });
+        }
     } catch (error) {
-        res.status(500).json({
+        res.status(400).json({
             status:false,
             message:"Failed Add Personal",
             error:error
@@ -47,24 +50,29 @@ personalRouter.post('/addPersonal',checkAuth,(req,res,next)=>{
     }
 });
 
-personalRouter.get('/getAll',checkAuth,(req,res,next)=>{
+personalRouter.get('/getAll',checkAuth,async (req,res,next)=>{
     try {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-        Personal.find().exec().then(result=>{
+        var result = await Personal.find();
+
+        if(result)
+        {
             res.status(200).json({
                 status:true,
                 message:"Data Fetched Successfully",
                 data:result
-            })
-        }).catch(error=>{
-            res.status(500).json({
+            });
+        }
+        else
+        {
+            res.status(200).json({
                 status:false,
                 message:"Failed to Get Data",
                 error:error
             });
-        });
+        }
     } catch (error) {
         res.status(500).json({
             status:false,
@@ -74,28 +82,29 @@ personalRouter.get('/getAll',checkAuth,(req,res,next)=>{
     }
 });
 
-personalRouter.post('/getById', checkAuth, (req, res, next) => {
+personalRouter.post('/getById', checkAuth, async (req, res, next) => {
     try {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         var query = { _id: req.body._id };
-        Personal.findById(query)
-            .exec()
-            .then(result => {
-                res.status(200).json({
-                    status: true,
-                    message: "Data Sucessfully",
-                    data: result
-                });
-
-            }).catch(error => {
-                res.status(200).json({
-                    status: false,
-                    message: "Failed to Get Appointment Data",
-                    error: error
-                });
-            })
+        var result = await Personal.findById(query);
+        if(result)
+        {
+            res.status(200).json({
+                status: true,
+                message: "Data Sucessfully",
+                data: result
+            });
+        }
+        else
+        {
+            res.status(200).json({
+                status: false,
+                message: "Failed to Get Appointment Data",
+                error: error
+            });
+        }
     } catch (error) {
         res.status(400).json({
             status: false,
