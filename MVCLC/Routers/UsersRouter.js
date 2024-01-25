@@ -12,7 +12,6 @@ const cloudinary = require("../MiddleWares/Cloudinary");
 
 
 
-
 // Sign Up Function is Here.....
 userRouter.post('/signUp', async (req, res, next) => {
     try {
@@ -201,7 +200,6 @@ userRouter.put('/updatePassword', checkAuth, async (req, res, next) => {
 });
 
 
-
 // Forgot Password is Here......
 userRouter.post('/forgotPassword', async (req, res, next) => {
     res.header("Access-Control-Allow-Origin", "*");
@@ -281,13 +279,12 @@ userRouter.post('/getAccountDetails', checkAuth, (req, res, next) => {
 });
 
 
-// Profile Details Update
-
-userRouter.put('/updateProfile', checkAuth, (req, res, next) => {
+// Profile Details Update.........
+userRouter.put('/updateProfile', checkAuth, async (req, res, next) => {
     try {
         const userId = req.userId;
         var query = { _id: userId };
-        Users.findByIdAndUpdate(query, {
+        var result = await Users.findByIdAndUpdate(query, {
             $set: {
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
@@ -298,28 +295,30 @@ userRouter.put('/updateProfile', checkAuth, (req, res, next) => {
                 proofType: req.body.proofType,
                 proofIdNumber: req.body.proofIdNumber,
             }
-        }).then(result => {
+        });
+        if(result)
+        {
             res.status(200).json({
                 status: true,
                 message: "Profile Details updated successfully",
             })
-        }).catch(error => {
-            res.status(200).json({
+        }
+        else
+        {
+            res.status(500).json({
                 status: false,
-                message: "Failed to update Profile Details"
+                message: result.error
             });
-        });
-
+        }
     } catch (error) {
-        res.status(500).json({
+        res.status(400).json({
             status: false,
             message: error
         });
     }
-
 });
 
-
+// Profile Picture Update is Here.........
 userRouter.put('/updateImage', checkAuth, upload.single("image"), async (req, res, next) => {
     try {
         const userId = req.userId;
@@ -337,26 +336,28 @@ userRouter.put('/updateImage', checkAuth, upload.single("image"), async (req, re
                     imageUrl: imageUrl,
                 },
             };
-            Users.updateOne(query, updateFields, { new: true }).then(data => {
+            var data = Users.updateOne(query, updateFields, { new: true });
+            if(data)
+            {
                 res.status(200).json({
                     status: true,
                     message: "Profiel Updated Successfully"
                 });
-
-            }).catch(e => {
+            }
+            else
+            {
                 res.status(200).json({
                     status: false,
                     message: "Failed to Update Profile"
                 });
-            });
-        } else {
-
+            }
+        } 
+        else
+        {
             res.status(200).json({
                 status: false,
                 message: "Failed to Update Profile"
             });
-
-
         }
     } catch (error) {
         res.status(500).json({
@@ -365,9 +366,6 @@ userRouter.put('/updateImage', checkAuth, upload.single("image"), async (req, re
         });
     }
 });
-
-
-
 
 
 module.exports = userRouter;
