@@ -113,7 +113,7 @@ appointmentRouter.post('/createApt', checkAuth, upload.fields([{ name: 'image' }
 
 
 // Get Appointmeny By id is here.......
-appointmentRouter.post('/getById',checkAuth,async (req, res, next) => {
+appointmentRouter.post('/getById',async (req, res, next) => {
    try {
      var query = {_id:req.body._id};
      var result = await Appointment.findById(query);
