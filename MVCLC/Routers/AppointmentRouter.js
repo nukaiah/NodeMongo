@@ -246,7 +246,7 @@ appointmentRouter.post('/createApt',checkAuth,async(req,res,next)=>{
             docs: docUrl,
             followupComments:req.body.followupComments??"",
             action:req.body.action??"",
-            userlinkid:"65b281d5afe07cc97228d567"
+            userlinkid:req.body.userlinkid
         });
 
         const savedAppointment = await appointment.save();
