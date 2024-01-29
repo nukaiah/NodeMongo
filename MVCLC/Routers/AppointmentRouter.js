@@ -211,7 +211,7 @@ appointmentRouter.delete('/delete', async (req, res, next) => {
     }
 });
 
-appointmentRouter.post('/createApt',checkAuth,async(req,res,next)=>{
+appointmentRouter.post('/createApt',async(req,res,next)=>{
     try {
         const userId = req.userId;
         const query = { _id: "64ae599988318ab14b07860e" };
