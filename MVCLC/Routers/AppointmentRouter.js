@@ -9,108 +9,108 @@ const cloudinary = require("../MiddleWares/Cloudinary");
 
 
 
-// GetAll Appointment is here......
-appointmentRouter.get('/getAll',async (req, res, next) => {
-   try {
-     res.header("Access-Control-Allow-Origin", "*");
-     res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
-     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-     var result = await Appointment.find();
-     if(result){
-         res.status(200).json({
-             status: true,
-             message: "Appointments Fetched Successfully",
-             data: result
-         });
-     }
-     else{
-         res.status(200).json({
-             status: true,
-             message: "Appointments Fetched Failed",
-             data: result.error
-         }); 
-     }
-   } catch (error) {
-    res.status(400).json({
-        status: true,
-        message: "Appointments Fetched Failed",
-        data: error
-    }); 
-   }
-});
+// // GetAll Appointment is here......
+// appointmentRouter.get('/getAll',async (req, res, next) => {
+//    try {
+//      res.header("Access-Control-Allow-Origin", "*");
+//      res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
+//      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//      var result = await Appointment.find();
+//      if(result){
+//          res.status(200).json({
+//              status: true,
+//              message: "Appointments Fetched Successfully",
+//              data: result
+//          });
+//      }
+//      else{
+//          res.status(200).json({
+//              status: true,
+//              message: "Appointments Fetched Failed",
+//              data: result.error
+//          }); 
+//      }
+//    } catch (error) {
+//     res.status(400).json({
+//         status: true,
+//         message: "Appointments Fetched Failed",
+//         data: error
+//     }); 
+//    }
+// });
 
 
-// Create Appointment here.......
-appointmentRouter.post('/createApt', checkAuth, upload.fields([{ name: 'image' }, { name: 'doc' }]), async (req, res) => {
-    try {
-        const userId = req.userId;
-        const query = { _id: "64ae599988318ab14b07860e" };
+// // Create Appointment here.......
+// appointmentRouter.post('/createApt', checkAuth, upload.fields([{ name: 'image' }, { name: 'doc' }]), async (req, res) => {
+//     try {
+//         const userId = req.userId;
+//         const query = { _id: "64ae599988318ab14b07860e" };
 
-        let vistorImage, docUrl;
+//         let vistorImage, docUrl;
 
-        if (req.files && req.files['image']) {
-            vistorImage = (await cloudinary.uploader.upload(req.files['image'][0].path, { folder: 'Visitors/' })).url;
-        }
+//         if (req.files && req.files['image']) {
+//             vistorImage = (await cloudinary.uploader.upload(req.files['image'][0].path, { folder: 'Visitors/' })).url;
+//         }
 
-        if (req.files && req.files['doc']) {
-            docUrl = (await cloudinary.uploader.upload(req.files['doc'][0].path, { folder: 'Documents/' })).url;
-        }
+//         if (req.files && req.files['doc']) {
+//             docUrl = (await cloudinary.uploader.upload(req.files['doc'][0].path, { folder: 'Documents/' })).url;
+//         }
 
-        const aptCount = (await Counter.findById(query)).count + 1;
-        await Counter.findByIdAndUpdate(query, { $set: { count: aptCount } });
+//         const aptCount = (await Counter.findById(query)).count + 1;
+//         await Counter.findByIdAndUpdate(query, { $set: { count: aptCount } });
 
-        const appointment = new Appointment({
-            _id: new mongoose.Types.ObjectId,
-            createdBy: userId,
-            voterId: req.body.voterId,
-            aadharId: req.body.aadharId,
-            rationId: req.body.rationId,
-            contactNumber: req.body.contactNumber,
-            firstName: req.body.firstName,
-            lastName: req.body.lastName,
-            address: req.body.address,
-            ConstituencywithVoteId: req.body.ConstituencywithVoteId,
-            vistCount: req.body.vistCount,
-            natureofWork: req.body.natureofWork,
-            priortyofVisit: req.body.priortyofVisit,
-            image: vistorImage,
-            visitPurpose: req.body.visitPurpose,
-            remarks: req.body.remarks,
-            aptId: aptCount,
-            aptStatus: 'Pending',
-            ticketStatus: '',
-            followupDate: '',
-            createdDate: Date(),
-            docs: docUrl,
-            followupComments:req.body.followupComments??"",
-            action:req.body.action??"",
-        });
+//         const appointment = new Appointment({
+//             _id: new mongoose.Types.ObjectId,
+//             createdBy: userId,
+//             voterId: req.body.voterId,
+//             aadharId: req.body.aadharId,
+//             rationId: req.body.rationId,
+//             contactNumber: req.body.contactNumber,
+//             firstName: req.body.firstName,
+//             lastName: req.body.lastName,
+//             address: req.body.address,
+//             ConstituencywithVoteId: req.body.ConstituencywithVoteId,
+//             vistCount: req.body.vistCount,
+//             natureofWork: req.body.natureofWork,
+//             priortyofVisit: req.body.priortyofVisit,
+//             image: vistorImage,
+//             visitPurpose: req.body.visitPurpose,
+//             remarks: req.body.remarks,
+//             aptId: aptCount,
+//             aptStatus: 'Pending',
+//             ticketStatus: '',
+//             followupDate: '',
+//             createdDate: Date(),
+//             docs: docUrl,
+//             followupComments:req.body.followupComments??"",
+//             action:req.body.action??"",
+//         });
 
-        const savedAppointment = await appointment.save();
+//         const savedAppointment = await appointment.save();
 
-        if(savedAppointment){
-            res.status(200).json({
-                status: true,
-                message: "Appointment Created Successfully",
-                newAppointment: savedAppointment
-            });
-        }
-        else{
-            res.status(200).json({
-                status: false,
-                message: "Appointment Created failed",
-                newAppointment: savedAppointment.error
-            });
-        }
+//         if(savedAppointment){
+//             res.status(200).json({
+//                 status: true,
+//                 message: "Appointment Created Successfully",
+//                 newAppointment: savedAppointment
+//             });
+//         }
+//         else{
+//             res.status(200).json({
+//                 status: false,
+//                 message: "Appointment Created failed",
+//                 newAppointment: savedAppointment.error
+//             });
+//         }
         
-    } catch (error) {
-        res.status(200).json({
-            status: false,
-            message: "Failed to add Appointment",
-            error: error.message || error
-        });
-    }
-});
+//     } catch (error) {
+//         res.status(200).json({
+//             status: false,
+//             message: "Failed to add Appointment",
+//             error: error.message || error
+//         });
+//     }
+// });
 
 
 
@@ -211,100 +211,100 @@ appointmentRouter.delete('/delete', async (req, res, next) => {
     }
 });
 
-// appointmentRouter.post('/shortCutAptCreate',async(req,res,next)=>{
+appointmentRouter.post('/createApt',checkAuth,async(req,res,next)=>{
+    try {
+        const userId = req.userId;
+        const query = { _id: "64ae599988318ab14b07860e" };
 
-//     try {
-//         const userId = req.userId;
-//         const query = { _id: "64ae599988318ab14b07860e" };
+        let vistorImage, docUrl;
 
-//         let vistorImage, docUrl;
+        if (req.files && req.files['image']) {
+            vistorImage = (await cloudinary.uploader.upload(req.files['image'][0].path, { folder: 'Visitors/' })).url;
+        }
 
-//         if (req.files && req.files['image']) {
-//             vistorImage = (await cloudinary.uploader.upload(req.files['image'][0].path, { folder: 'Visitors/' })).url;
-//         }
+        if (req.files && req.files['doc']) {
+            docUrl = (await cloudinary.uploader.upload(req.files['doc'][0].path, { folder: 'Documents/' })).url;
+        }
 
-//         if (req.files && req.files['doc']) {
-//             docUrl = (await cloudinary.uploader.upload(req.files['doc'][0].path, { folder: 'Documents/' })).url;
-//         }
+        const aptCount = (await Counter.findById(query)).count + 1;
+        await Counter.findByIdAndUpdate(query, { $set: { count: aptCount } });
 
-//         const aptCount = (await Counter.findById(query)).count + 1;
-//         await Counter.findByIdAndUpdate(query, { $set: { count: aptCount } });
+        const appointment = new Appointment({
+            _id: new mongoose.Types.ObjectId,
+            createdBy: userId,
+            vistCount: req.body.vistCount,
+            natureofWork: req.body.natureofWork,
+            priortyofVisit: req.body.priortyofVisit,
+            image: vistorImage,
+            visitPurpose: req.body.visitPurpose,
+            remarks: req.body.remarks,
+            aptId: aptCount,
+            aptStatus: 'Pending',
+            ticketStatus: '',
+            followupDate: '',
+            createdDate: Date(),
+            docs: docUrl,
+            followupComments:req.body.followupComments??"",
+            action:req.body.action??"",
+            userlinkid:"65b281d5afe07cc97228d567"
+        });
 
-//         const appointment = new Appointment({
-//             _id: new mongoose.Types.ObjectId,
-//             createdBy: userId,
-//             vistCount: req.body.vistCount,
-//             natureofWork: req.body.natureofWork,
-//             priortyofVisit: req.body.priortyofVisit,
-//             image: vistorImage,
-//             visitPurpose: req.body.visitPurpose,
-//             remarks: req.body.remarks,
-//             aptId: aptCount,
-//             aptStatus: 'Pending',
-//             ticketStatus: '',
-//             followupDate: '',
-//             createdDate: Date(),
-//             docs: docUrl,
-//             followupComments:req.body.followupComments??"",
-//             action:req.body.action??"",
-//             user:"65b24ae144db5579e78d05aa"
-//         });
+        const savedAppointment = await appointment.save();
 
-//         const savedAppointment = await appointment.save();
-
-//         if(savedAppointment){
-//             res.status(200).json({
-//                 status: true,
-//                 message: "Appointment Created Successfully",
-//                 newAppointment: savedAppointment
-//             });
-//         }
-//         else{
-//             res.status(200).json({
-//                 status: false,
-//                 message: "Appointment Created failed",
-//                 newAppointment: savedAppointment.error
-//             });
-//         }
+        if(savedAppointment){
+            res.status(200).json({
+                status: true,
+                message: "Appointment Created Successfully",
+                newAppointment: savedAppointment
+            });
+        }
+        else{
+            res.status(200).json({
+                status: false,
+                message: "Appointment Created failed",
+                newAppointment: savedAppointment.error
+            });
+        }
         
-//     } catch (error) {
-//         res.status(200).json({
-//             status: false,
-//             message: "Failed to add Appointment",
-//             error: error.message || error
-//         });
-//     }
+    } catch (error) {
+        res.status(200).json({
+            status: false,
+            message: "Failed to add Appointment",
+            error: error.message || error
+        });
+    }
    
-// });
+});
 
-// appointmentRouter.get('/getAll',checkAuth,async (req, res, next) => {
-//     try {
-//       res.header("Access-Control-Allow-Origin", "*");
-//       res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
-//       res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//       var result = await Appointment.find();
-//       if(result){
-//           res.status(200).json({
-//               status: true,
-//               message: "Appointments Fetched Successfully",
-//               data: result
-//           });
-//       }
-//       else{
-//           res.status(200).json({
-//               status: true,
-//               message: "Appointments Fetched Failed",
-//               data: result.error
-//           }); 
-//       }
-//     } catch (error) {
-//      res.status(400).json({
-//          status: true,
-//          message: "Appointments Fetched Failed",
-//          data: error
-//      }); 
-//     }
-//  });
+appointmentRouter.get('/getAlll',checkAuth,async (req, res, next) => {
+    try {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+
+        const result = await Appointment.find().populate('userlinkid');
+          
+        if (result) {
+            res.status(200).json({
+                status: true,
+                message: "Appointments Fetched Successfully",
+                data: result
+            });
+        } else {
+            res.status(200).json({
+                status: false,
+                message: "Appointments Fetched Failed",
+                data: result.error || "Unknown error"
+            });
+        }
+    } catch (error) {
+        res.status(500).json({
+            status: false,
+            message: "Internal Server Error",
+            data: error.message || "Unknown error"
+        });
+    }
+});
 
  
 module.exports = appointmentRouter;
