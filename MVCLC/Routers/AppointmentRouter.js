@@ -157,7 +157,7 @@ appointmentRouter.post('/updateStatus',checkAuth, async(req, res, next) => {
             followupDate: req.body.followupDate,
             followupComments: req.body.followupComments 
         };
-        var result = await Appointment.findByIdAndUpdate(query,{$set: { aptStatus: req.body.aptStatus }})
+        var result = await Appointment.findByIdAndUpdate(query,{$set: updateData})
         if(result){
             res.status(200).json({
                  status:true,
