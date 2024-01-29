@@ -231,6 +231,7 @@ appointmentRouter.post('/shortcutApt',async(req,res,next)=>{
 
         const appointment = new Appointment({
             _id: new mongoose.Types.ObjectId,
+            userlinkid:req.body.userlinkid,
             createdBy: userId,
             vistCount: req.body.vistCount,
             natureofWork: req.body.natureofWork,
@@ -245,8 +246,7 @@ appointmentRouter.post('/shortcutApt',async(req,res,next)=>{
             createdDate: Date(),
             docs: docUrl,
             followupComments:req.body.followupComments,
-            action:req.body.action,
-            userlinkid:req.body.userlinkid
+            action:req.body.action
         });
 
         const savedAppointment = await appointment.save();
