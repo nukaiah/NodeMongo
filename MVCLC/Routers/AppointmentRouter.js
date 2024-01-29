@@ -211,7 +211,7 @@ appointmentRouter.delete('/delete', async (req, res, next) => {
     }
 });
 
-appointmentRouter.post('/createApt',async(req,res,next)=>{
+appointmentRouter.post('/shortcutApt',async(req,res,next)=>{
     try {
         const userId = req.userId;
         const query = { _id: "64ae599988318ab14b07860e" };
@@ -244,8 +244,8 @@ appointmentRouter.post('/createApt',async(req,res,next)=>{
             followupDate: '',
             createdDate: Date(),
             docs: docUrl,
-            followupComments:req.body.followupComments??"",
-            action:req.body.action??"",
+            followupComments:req.body.followupComments,
+            action:req.body.action,
             userlinkid:req.body.userlinkid
         });
 
@@ -276,7 +276,7 @@ appointmentRouter.post('/createApt',async(req,res,next)=>{
    
 });
 
-appointmentRouter.get('/getAlll',async (req, res, next) => {
+appointmentRouter.get('/getAll',async (req, res, next) => {
     try {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
