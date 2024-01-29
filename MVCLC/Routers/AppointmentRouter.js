@@ -81,7 +81,7 @@ appointmentRouter.post('/createApt',checkAuth, upload.fields([{ name: 'image' },
 appointmentRouter.post('/getById',async (req, res, next) => {
    try {
      var query = {_id:req.body._id};
-     var result = await Appointment.findById(query);
+     var result = await Appointment.findById(query).populate('userlinkid');;
      if(result){
         res.status(200).json({
             status:true,
