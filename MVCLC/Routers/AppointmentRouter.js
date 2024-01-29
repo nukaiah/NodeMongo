@@ -82,8 +82,8 @@ appointmentRouter.post('/createApt', checkAuth, upload.fields([{ name: 'image' }
             followupDate: '',
             createdDate: Date(),
             docs: docUrl,
-            followupComments:req.body.followupComments,
-            action:req.body.action,
+            followupComments:req.body.followupComments??"",
+            action:req.body.action??"",
         });
 
         const savedAppointment = await appointment.save();
