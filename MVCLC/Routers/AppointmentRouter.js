@@ -276,7 +276,7 @@ appointmentRouter.post('/createApt',async(req,res,next)=>{
    
 });
 
-appointmentRouter.get('/getAlll',checkAuth,async (req, res, next) => {
+appointmentRouter.get('/getAlll',async (req, res, next) => {
     try {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
