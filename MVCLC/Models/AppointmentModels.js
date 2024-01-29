@@ -22,7 +22,9 @@ var appointmentSchema = new mongoose.Schema({
     remarks:String,
     createdDate:Date,
     createdBy:String,
-    docs: String
+    docs: String,
+    followupComments: String,
+    action:String
 });
 
 

@@ -81,7 +81,9 @@ appointmentRouter.post('/createApt', checkAuth, upload.fields([{ name: 'image' }
             ticketStatus: '',
             followupDate: '',
             createdDate: Date(),
-            docs: docUrl
+            docs: docUrl,
+            followupComments:req.body.followupComments,
+            action:req.body.action,
         });
 
         const savedAppointment = await appointment.save();
@@ -149,6 +151,12 @@ appointmentRouter.post('/updateStatus',checkAuth, async(req, res, next) => {
         res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         var query = { _id: req.body._id };
+        var updateData = {
+            aptStatus: req.body.aptStatus,
+            action: req.body.action,
+            followupDate: req.body.followupDate,
+            followupComments: req.body.followupComments 
+        };
         var result = await Appointment.findByIdAndUpdate(query,{$set: { aptStatus: req.body.aptStatus }})
         if(result){
             res.status(200).json({
