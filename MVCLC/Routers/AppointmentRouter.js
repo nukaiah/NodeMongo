@@ -115,8 +115,10 @@ appointmentRouter.post('/updateStatus',checkAuth, async(req, res, next) => {
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         var query = { _id: req.body._id };
         var updateData = {
-            aptStatus: req.body.aptStatus,
+            priortyofVisit:req.body.priortyofVisit,
+            visitPurpose:req.body.visitPurpose,
             action: req.body.action,
+            aptStatus: req.body.aptStatus,
             followupDate: req.body.followupDate,
             followupComments: req.body.followupComments 
         };
