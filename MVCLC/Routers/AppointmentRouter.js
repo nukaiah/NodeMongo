@@ -11,7 +11,7 @@ const cloudinary = require("../MiddleWares/Cloudinary");
 
 
 // Create Appointment here.......
-appointmentRouter.post('/createApt',checkAuth, upload.fields([{ name: 'image' }, { name: 'doc' }]), async (req, res) => {
+appointmentRouter.post('/createApt', upload.fields([{ name: 'image' }, { name: 'doc' }]), async (req, res) => {
     try {
         const userId = req.userId;
         const query = { _id: "64ae599988318ab14b07860e" };
@@ -25,6 +25,10 @@ appointmentRouter.post('/createApt',checkAuth, upload.fields([{ name: 'image' },
         if (req.files && req.files['doc']) {
             docUrl = (await cloudinary.uploader.upload(req.files['doc'][0].path, { folder: 'Documents/' })).url;
         }
+
+        const paramsToAdd = "f_auto,q_auto";
+        const parts = docUrl.split("upload");
+        const transformedUrl = parts[0] + '/upload/' + paramsToAdd + '/' + parts[1];
 
         const aptCount = (await Counter.findById(query)).count + 1;
         await Counter.findByIdAndUpdate(query, { $set: { count: aptCount } });
@@ -44,7 +48,7 @@ appointmentRouter.post('/createApt',checkAuth, upload.fields([{ name: 'image' },
             ticketStatus: '',
             followupDate: '',
             createdDate: Date(),
-            docs: docUrl,
+            docs: transformedUrl,
             followupComments:req.body.followupComments,
             action:req.body.action,
         });
