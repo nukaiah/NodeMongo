@@ -19,11 +19,11 @@ appointmentRouter.post('/createApt',checkAuth, upload.fields([{ name: 'image' },
         let vistorImage, docUrl;
 
         if (req.files && req.files['image']) {
-            vistorImage = (await cloudinary.uploader.upload(req.files['image'][0].path, { folder: 'Visitors/' })).url;
+            vistorImage = (await cloudinary.uploader.upload(req.files['image'][0].path, { folder: 'Visitors/' })).secure_url;
         }
 
         if (req.files && req.files['doc']) {
-            docUrl = (await cloudinary.uploader.upload(req.files['doc'][0].path, { folder: 'Documents/' })).url;
+            docUrl = (await cloudinary.uploader.upload(req.files['doc'][0].path, { folder: 'Documents/' })).secure_url;
         }
 
         const aptCount = (await Counter.findById(query)).count + 1;
