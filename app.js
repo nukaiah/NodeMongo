@@ -16,7 +16,6 @@ var mlaVisitRouter = require('./MVCLC/Routers/MLAVisitRouters');
 var govtBenfitRouter = require('./MVCLC/Routers/GovtBenfitRouter');
 var VDWorksRouter = require('./MVCLC/Routers/VDWorksRouters');
 var xlsxRouter = require('./MVCLC/Routers/XLSXRouter');
-var paymentRouter = require('./MVCLC/Routers/Payment');
 
 
 
@@ -47,7 +46,6 @@ app.use('/api/MlaVisit',mlaVisitRouter);
 app.use('/api/GovtBenfits',govtBenfitRouter);
 app.use('/api/VDWorks',VDWorksRouter);
 app.use('/api/XlData',xlsxRouter);
-app.use('/api',paymentRouter);
 
 
 module.exports = app;

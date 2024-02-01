@@ -3,8 +3,9 @@ const organisationRouter  = express.Router();
 var mongoose = require("mongoose");
 const checkAuth = require('../MiddleWares/CheckAuth');
 const Oraganisation = require('../Models/OrganisationModels');
+const e = require('express');
 
-organisationRouter.post('/addOrganisation',checkAuth,(req,res,next)=>{
+organisationRouter.post('/addOrganisation',checkAuth,async (req,res,next)=>{
     try {
         const userId = req.userId; 
         const organisation = new Oraganisation({
@@ -18,19 +19,21 @@ organisationRouter.post('/addOrganisation',checkAuth,(req,res,next)=>{
             createdBy:userId,
             type:'Organisation'
         });
-        organisation.save().then(result=>{
+        var result = await organisation.save();
+        if(result){
             res.status(200).json({
                 status:true,
                 message:"Organisation added Successfully",
                 newPersonal:result
             });
-        }).catch(error=>{
-            res.status(500).json({
+        }
+        else{
+            res.status(200).json({
                 status:false,
                 message:"Failed Add Organisation",
-                error:error
+                error:result.error
             });
-        });
+        }
     } catch (error) {
         res.status(500).json({
             status:false,
@@ -40,24 +43,26 @@ organisationRouter.post('/addOrganisation',checkAuth,(req,res,next)=>{
     }
 });
 
-organisationRouter.get('/getAll',checkAuth,(req,res,next)=>{
+organisationRouter.get('/getAll',checkAuth,async (req,res,next)=>{
     try {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-        Oraganisation.find().exec().then(result=>{
+        var result = await Oraganisation.find();
+        if(result){
             res.status(200).json({
                 status:true,
                 message:"Data Fetched Successfully",
                 data:result
-            })
-        }).catch(error=>{
-            res.status(500).json({
+            });
+        }
+        else{
+            res.status(200).json({
                 status:false,
                 message:"Failed to Get Data",
-                error:error
+                error:result.error
             });
-        });
+        }
     } catch (error) {
         res.status(500).json({
             status:false,
@@ -67,16 +72,31 @@ organisationRouter.get('/getAll',checkAuth,(req,res,next)=>{
     }
 });
 
-organisationRouter.post('/getByID',checkAuth,(req,res,next)=>{
-    var query = {_id:req.body._id};
-    console.log(query);
-    Oraganisation.findById(query).exec().then(result=>{
-        res.status(200).json({
-            status:true,
-            message:"Data Found Successfully",
-            data:result
-        })
+organisationRouter.post('/getByID',checkAuth,async (req,res,next)=>{
+   try {
+     var query = {_id:req.body._id};
+     var result = await Oraganisation.findById(query);
+     if(result){
+         res.status(200).json({
+             status:true,
+             message:"Data Found Successfully",
+             data:result
+         });
+     }
+     else{
+         res.status(200).json({
+             status:false,
+             message:"Data Found Failed",
+             data:result.error
+         })
+     }
+   } catch (error) {
+    res.status(500).json({
+        status:false,
+        message:"Failed to Get Data",
+        error:error
     });
+   }
 });
 
 module.exports = organisationRouter;

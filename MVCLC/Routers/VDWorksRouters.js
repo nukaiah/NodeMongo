@@ -5,10 +5,10 @@ const checkAuth = require('../MiddleWares/CheckAuth');
 var VDWorks = require('../Models/VDWorkModels'); 
 
 
-VDWorksRouter.post('/addVdWork',checkAuth,(req,res,next)=>{
+VDWorksRouter.post('/addVdWork',checkAuth,async (req,res,next)=>{
     try {
         const userId = req.userId; 
-        const vdWork = new VDWorks({
+        var data = {
             _id:new mongoose.Types.ObjectId,
             date:req.body.date,
             mandal:req.body.mandal,
@@ -29,22 +29,34 @@ VDWorksRouter.post('/addVdWork',checkAuth,(req,res,next)=>{
             stateContribution:req.body.stateContribution,
             centralContribution:req.body.centralContribution,
             createdBy:userId
-        });
-
-        vdWork.save().then(result=>{
-            console.log(result);
-            res.status(200).json({
-                status:true,
-                message:"VD Work added Successfully",
-                data:result
-            });
-        }).catch(error=>{
+        };
+        const vdWork =  VDWorks(data);
+        const existedData = await vdWork.findOne(vdWork)
+        if(existedData){
             res.status(200).json({
                 status:false,
-                message:"Failed Add VD Work ",
-                error:error
+                message:"VD Work Already existed",
+                data:result
             });
-        });
+        }
+        else{
+            var result = await vdWork.save();
+            if(result){
+                res.status(200).json({
+                    status:true,
+                    message:"VD Work added Successfully",
+                    data:result
+                });
+            }
+            else{
+                res.status(200).json({
+                    status:false,
+                    message:"Failed Add VD Work ",
+                    error:error
+                });
+            }
+        }
+       
     } catch (error) {
         res.status(400).json({
             status:false,
@@ -54,24 +66,27 @@ VDWorksRouter.post('/addVdWork',checkAuth,(req,res,next)=>{
     }
 });
 
-VDWorksRouter.get('/getAll',checkAuth,(req,res,next)=>{
+VDWorksRouter.get('/getAll',checkAuth,async (req,res,next)=>{
     try {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-        VDWorks.find().exec().then(result=>{
+        var result = await VDWorks.find();
+        if(result)
+        {
             res.status(200).json({
                 status:true,
                 message:"Data Fetched Successfully",
                 data:result
-            })
-        }).catch(error=>{
+            });
+        }
+        else{
             res.status(200).json({
                 status:false,
                 message:"Failed to Get Data",
                 error:error
             });
-        });
+        }
     } catch (error) {
         res.status(400).json({
             status:false,
@@ -80,8 +95,6 @@ VDWorksRouter.get('/getAll',checkAuth,(req,res,next)=>{
         });
     }
 });
-
-
 
 
 module.exports = VDWorksRouter;

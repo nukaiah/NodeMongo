@@ -5,10 +5,10 @@ const checkAuth = require('../MiddleWares/CheckAuth');
 var GOVTBENFITS = require('../Models/GovtBenfitModels'); 
 
 
-govtBenfitRouter.post('/addGovtBenfits',checkAuth,(req,res,next)=>{
+govtBenfitRouter.post('/addGovtBenfits',checkAuth, async (req,res,next)=>{
     try {
         const userId = req.userId; 
-        const govtBenfits = new GOVTBENFITS({
+        var data ={
             _id:new mongoose.Types.ObjectId,
             mandal:req.body.mandal,
             village:req.body.village,
@@ -22,21 +22,35 @@ govtBenfitRouter.post('/addGovtBenfits',checkAuth,(req,res,next)=>{
             houseName:req.body.houseName,
             phone:req.body.phone,
             createdBy:userId
-        });
-        govtBenfits.save().then(result=>{
-            console.log(result);
+        };
+        const govtBenfits = new GOVTBENFITS(data);
+        const existingRecord = await govtBenfits.findOne(data);
+        if(existingRecord){
+            res.status(200).json({
+                status:false,
+                message:"Record Alreay Existed",
+                data:existingRecord
+            });
+        }
+        else{
+            var result = await govtBenfits.save();
+        if(result)
+        {
             res.status(200).json({
                 status:true,
-                message:"Govt Benfit  added Successfully",
+                message:"Govt Benfit added Successfully",
                 data:result
             });
-        }).catch(error=>{
+        }
+        else
+        {
             res.status(200).json({
                 status:false,
                 message:"Failed Add Govt Benfit ",
-                error:error
+                error:result.error
             });
-        });
+        }
+        }
     } catch (error) {
         res.status(400).json({
             status:false,
@@ -46,24 +60,27 @@ govtBenfitRouter.post('/addGovtBenfits',checkAuth,(req,res,next)=>{
     }
 });
 
-govtBenfitRouter.get('/getAll',checkAuth,(req,res,next)=>{
+govtBenfitRouter.get('/getAll',checkAuth,async (req,res,next)=>{
     try {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-        GOVTBENFITS.find().exec().then(result=>{
+        var result = await GOVTBENFITS.find();
+        if(result){
             res.status(200).json({
                 status:true,
                 message:"Data Fetched Successfully",
                 data:result
-            })
-        }).catch(error=>{
+            });
+        }
+        else
+        {
             res.status(200).json({
                 status:false,
                 message:"Failed to Get Data",
-                error:error
+                error:result.error
             });
-        });
+        }
     } catch (error) {
         res.status(400).json({
             status:false,
@@ -72,8 +89,6 @@ govtBenfitRouter.get('/getAll',checkAuth,(req,res,next)=>{
         });
     }
 });
-
-
 
 
 module.exports = govtBenfitRouter;

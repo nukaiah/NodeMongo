@@ -252,23 +252,23 @@ userRouter.post('/forgotPassword', async (req, res, next) => {
 });
 
 // Get Account details
-userRouter.post('/getAccountDetails', checkAuth, (req, res, next) => {
+userRouter.post('/getAccountDetails', checkAuth, async (req, res, next) => {
     try {
         var query = { _id: req.body._id };
-        Users.find(query).exec()
-            .then(result => {
-                res.status(200).json({
-                    status: true,
-                    message: "User Account Details Founded Successfully",
-                    data: result
-                })
+        var result = await Users.find(query);
+        if(result){
+            res.status(200).json({
+                status: true,
+                message: "User Account Details Founded Successfully",
+                data: result
             })
-            .catch(error => {
-                res.status(200).json({
-                    status: false,
-                    message: error
-                });
-            });
+        }
+        else{
+            res.status(200).json({
+                status: false,
+                message: error
+            }); 
+        }
     } catch (error) {
         res.status(400).json({
             status: false,
@@ -301,7 +301,7 @@ userRouter.put('/updateProfile', checkAuth, async (req, res, next) => {
             res.status(200).json({
                 status: true,
                 message: "Profile Details updated successfully",
-            })
+            });
         }
         else
         {

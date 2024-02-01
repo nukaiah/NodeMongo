@@ -9,7 +9,6 @@ const cloudinary = require("../MiddleWares/Cloudinary");
 
 
 
-
 // Create Appointment here.......
 appointmentRouter.post('/createApt', upload.fields([{ name: 'image' }, { name: 'doc' }]), async (req, res) => {
     try {

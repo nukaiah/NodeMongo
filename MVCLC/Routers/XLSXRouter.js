@@ -21,7 +21,6 @@ xlsxRouter.post('/MlaXlxsUpload',checkAuth,async (req, res, next) => {
 
   
     for (const record of dataWithIds) {
-      console.log(record);
       const query = {
         date: record.date,
         mandal: record.mandal,

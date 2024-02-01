@@ -5,10 +5,10 @@ const checkAuth = require('../MiddleWares/CheckAuth');
 var MLAVisits = require('../Models/MLAVisitModels'); 
 
 
-mlaVisitRouter.post('/addMlAVists',checkAuth, async(req,res,next)=>{
+mlaVisitRouter.post('/addMlAVists',checkAuth, async (req,res,next)=>{
     try {
         const userId = req.userId; 
-        const mlaVisits = new MLAVisits({
+        var data = {
             _id:new mongoose.Types.ObjectId,
             date:req.body.date,
             mandal:req.body.mandal,
@@ -19,21 +19,33 @@ mlaVisitRouter.post('/addMlAVists',checkAuth, async(req,res,next)=>{
             proInchagre:req.body.proInchagre,
             proInchagrePhone:req.body.proInchagrePhone,
             createdBy:userId
-        });
-        await mlaVisits.save().then(result=>{
-            console.log(result);
+        };
+        const mlaVisits = MLAVisits(data);
+        const existedData = await mlaVisits.findOne(data);
+        if(existedData){
             res.status(200).json({
                 status:true,
-                message:"MLA Visit added Successfully",
+                message:"Record Already existed",
                 data:result
             });
-        }).catch(error=>{
-            res.status(200).json({
-                status:false,
-                message:"Failed Add MLA Visit",
-                error:error
-            });
-        });
+        }
+        else{
+            var result = await await mlaVisits.save();
+            if(result){
+                res.status(200).json({
+                    status:true,
+                    message:"MLA Visit added Successfully",
+                    data:result
+                });
+            }
+            else{
+                res.status(200).json({
+                    status:false,
+                    message:"Failed Add MLA Visit",
+                    data:result.error
+                });
+            }
+        }
     } catch (error) {
         res.status(400).json({
             status:false,
@@ -43,24 +55,27 @@ mlaVisitRouter.post('/addMlAVists',checkAuth, async(req,res,next)=>{
     }
 });
 
-mlaVisitRouter.get('/getAll',checkAuth,(req,res,next)=>{
+mlaVisitRouter.get('/getAll',checkAuth,async (req,res,next)=>{
     try {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-        MLAVisits.find().exec().then(result=>{
+        var result = await MLAVisits.find();
+        if(result){
             res.status(200).json({
                 status:true,
                 message:"Data Fetched Successfully",
                 data:result
             });
-        }).catch(error=>{
+        }
+        else
+        {
             res.status(200).json({
                 status:false,
-                message:"Failed to Get Data",
-                error:error
+                message:"Data Fetched Failed",
+                data:result.error
             });
-        });
+        }
     } catch (error) {
         res.status(400).json({
             status:false,
