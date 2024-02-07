@@ -16,6 +16,9 @@ var mlaVisitRouter = require('./MVCLC/Routers/MLAVisitRouters');
 var govtBenfitRouter = require('./MVCLC/Routers/GovtBenfitRouter');
 var VDWorksRouter = require('./MVCLC/Routers/VDWorksRouters');
 var xlsxRouter = require('./MVCLC/Routers/XLSXRouter');
+const { myScheduledFunction } = require('./MVCLC/MiddleWares/recurssiveFunctions');
+
+
 
 
 
@@ -47,6 +50,8 @@ app.use('/api/GovtBenfits',govtBenfitRouter);
 app.use('/api/VDWorks',VDWorksRouter);
 app.use('/api/XlData',xlsxRouter);
 
+myScheduledFunction();
+  
 
 module.exports = app;
 
