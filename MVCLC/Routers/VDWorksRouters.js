@@ -2,7 +2,7 @@ const express = require('express');
 const VDWorksRouter  = express.Router();
 var mongoose = require("mongoose");
 const checkAuth = require('../MiddleWares/CheckAuth');
-var VDWorks = require('../Models/VDWorkModels'); 
+var vdSchema = require('../Models/VDWorkModels'); 
 
 
 VDWorksRouter.post('/addVdWork',checkAuth,async (req,res,next)=>{
@@ -30,8 +30,7 @@ VDWorksRouter.post('/addVdWork',checkAuth,async (req,res,next)=>{
             centralContribution:req.body.centralContribution,
             createdBy:userId
         };
-        const vdWork =  VDWorks(data);
-        const existedData = await vdWork.findOne(vdWork)
+        const existedData = await vdSchema.findOne(vdWork)
         if(existedData){
             res.status(200).json({
                 status:false,
@@ -40,7 +39,7 @@ VDWorksRouter.post('/addVdWork',checkAuth,async (req,res,next)=>{
             });
         }
         else{
-            var result = await vdWork.save();
+            var result = await vdSchema.create(vdSchema);
             if(result){
                 res.status(200).json({
                     status:true,
@@ -71,7 +70,7 @@ VDWorksRouter.get('/getAll',checkAuth,async (req,res,next)=>{
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-        var result = await VDWorks.find();
+        var result = await vdSchema.find();
         if(result)
         {
             res.status(200).json({
