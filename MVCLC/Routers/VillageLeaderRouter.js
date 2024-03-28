@@ -2,14 +2,16 @@ const express = require('express');
 const villageLeaderRouter = express.Router();
 var mongoose = require("mongoose");
 const checkAuth = require('../MiddleWares/CheckAuth');
-const VillageLeaders = require('../Models/VillageLeaderModels');
+const villageLeadersSchema = require('../Models/VillageLeaderModels');
+
+
 
 villageLeaderRouter.get('/getAll',checkAuth,async (req,res,next)=>{
     try {
-        res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-    var result = await VillageLeaders.find();
+    var result = await villageLeadersSchema.find();
     if(result){
         res.status(200).json({
             status:true,
@@ -37,11 +39,11 @@ villageLeaderRouter.get('/getAll',checkAuth,async (req,res,next)=>{
 
 villageLeaderRouter.post('/addVillageLeader',checkAuth,async (req,res,next)=>{
    try {
-    const userId = req.userId; 
      res.header("Access-Control-Allow-Origin", "*");
      res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-     var villageLeadersData = {
+     const userId = req.userId; 
+     var villageLeaderData = {
         _id:new mongoose.Types.ObjectId,
         mandal:req.body.mandal,
         village:req.body.village,
@@ -54,16 +56,17 @@ villageLeaderRouter.post('/addVillageLeader',checkAuth,async (req,res,next)=>{
         aadharId:req.body.aadharId,
         rationId:req.body.rationId,
         createdBy:userId};
-     var existedData  = await villageLeaders.findOne(villageLeadersData);
-     if(existedData){
+        console.log(villageLeaderData);
+      var existedData  = await villageLeadersSchema.findOne(villageLeaderData);
+      if(existedData){
         res.status(200).json({
             status:false,
             message:"Data Already existed",
             data:existedData
         });
-     }
-     else{
-        var result = await VillageLeaders.create(villageLeadersData);
+      }
+      else{
+        var result = await villageLeadersSchema.create(villageLeaderData);
         if(result){
             res.status(200).json({
                 status:true,
@@ -71,16 +74,14 @@ villageLeaderRouter.post('/addVillageLeader',checkAuth,async (req,res,next)=>{
                 data:result
             });
         }
-        else
-        {
+        else{
             res.status(200).json({
                 status:false,
-                message:"Failed to add VillageLeader",
+                message:"Failed to add",
                 error:result.error
             }); 
         }
-
-     }
+      }
    } catch (error) {
     res.status(400).json({
         status:false,
@@ -89,7 +90,6 @@ villageLeaderRouter.post('/addVillageLeader',checkAuth,async (req,res,next)=>{
     });
    }
 });
-
 
 
 module.exports = villageLeaderRouter;
