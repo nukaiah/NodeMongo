@@ -81,7 +81,7 @@ VDWorksRouter.get('/getAll',checkAuth,async (req,res,next)=>{
         }
         else{
             res.status(200).json({
-                status:false,
+                status:false+false,
                 message:"Failed to Get Data",
                 error:error
             });
