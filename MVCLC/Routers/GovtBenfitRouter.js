@@ -34,23 +34,24 @@ govtBenfitRouter.post('/addGovtBenfits',checkAuth, async (req,res,next)=>{
         }
         else{
             var result = await govtBenfits.save();
-        if(result)
-        {
-            res.status(200).json({
-                status:true,
-                message:"Govt Benfit added Successfully",
-                data:result
-            });
+            if(result)
+            {
+                res.status(200).json({
+                    status:true,
+                    message:"Govt Benfit added Successfully",
+                    data:result
+                });
+            }
+            else
+            {
+                res.status(200).json({
+                    status:false,
+                    message:"Failed Add Govt Benfit ",
+                    error:result.error
+                });
+            }
         }
-        else
-        {
-            res.status(200).json({
-                status:false,
-                message:"Failed Add Govt Benfit ",
-                error:result.error
-            });
-        }
-        }
+       
     } catch (error) {
         res.status(400).json({
             status:false,
@@ -60,7 +61,7 @@ govtBenfitRouter.post('/addGovtBenfits',checkAuth, async (req,res,next)=>{
     }
 });
 
-govtBenfitRouter.get('/getAll',checkAuth,async (req,res,next)=>{
+govtBenfitRouter.get('/getAll',async (req,res,next)=>{
     try {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
