@@ -2,8 +2,7 @@ const express = require('express');
 const govtBenfitRouter  = express.Router();
 var mongoose = require("mongoose");
 const checkAuth = require('../MiddleWares/CheckAuth');
-var govtSchema = require('../Models/GovtBenfitModels'); 
-const e = require('cors');
+var govtSchema = require('../Models/GovtBenfitModels');
 
 
 govtBenfitRouter.post('/addGovtBenfits',checkAuth, async (req,res,next)=>{
@@ -62,7 +61,7 @@ govtBenfitRouter.post('/addGovtBenfits',checkAuth, async (req,res,next)=>{
     }
 });
 
-govtBenfitRouter.get('/getAll',async (req,res,next)=>{
+govtBenfitRouter.get('/getAll',checkAuth,async (req,res,next)=>{
     try {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
@@ -87,7 +86,7 @@ govtBenfitRouter.get('/getAll',async (req,res,next)=>{
         res.status(400).json({
             status:false,
             message:"Failed to Get Data",
-            error:error
+            error:error.message
         });
     }
 });
