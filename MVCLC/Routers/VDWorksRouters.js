@@ -89,7 +89,7 @@ VDWorksRouter.get('/getAll',checkAuth,async (req,res,next)=>{
     } catch (error) {
         res.status(400).json({
             status:false,
-            message:"Failed to Get Data",
+            message:"Internal Server Issue",
             error:error
         });
     }
