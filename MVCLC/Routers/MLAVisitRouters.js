@@ -2,13 +2,13 @@ const express = require('express');
 const mlaVisitRouter  = express.Router();
 var mongoose = require("mongoose");
 const checkAuth = require('../MiddleWares/CheckAuth');
-var MLAVisits = require('../Models/MLAVisitModels'); 
+var mlavisitSchema = require('../Models/MLAVisitModels'); 
 
 
 mlaVisitRouter.post('/addMlAVists',checkAuth, async (req,res,next)=>{
     try {
         const userId = req.userId; 
-        var data = {
+        var mlavisitData = {
             _id:new mongoose.Types.ObjectId,
             date:req.body.date,
             mandal:req.body.mandal,
@@ -20,8 +20,7 @@ mlaVisitRouter.post('/addMlAVists',checkAuth, async (req,res,next)=>{
             proInchagrePhone:req.body.proInchagrePhone,
             createdBy:userId
         };
-        const mlaVisits = MLAVisits(data);
-        const existedData = await mlaVisits.findOne(data);
+        const existedData = await mlavisitSchema.findOne(mlavisitData);
         if(existedData){
             res.status(200).json({
                 status:true,
@@ -30,7 +29,7 @@ mlaVisitRouter.post('/addMlAVists',checkAuth, async (req,res,next)=>{
             });
         }
         else{
-            var result = await await mlaVisits.save();
+            var result = await mlavisitSchema.create(mlavisitData);
             if(result){
                 res.status(200).json({
                     status:true,
@@ -60,7 +59,7 @@ mlaVisitRouter.get('/getAll',checkAuth,async (req,res,next)=>{
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-        var result = await MLAVisits.find();
+        var result = await mlavisitSchema.find();
         if(result){
             res.status(200).json({
                 status:true,
