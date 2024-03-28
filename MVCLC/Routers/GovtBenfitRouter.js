@@ -80,7 +80,7 @@ govtBenfitRouter.get('/getAll',checkAuth,async (req,res,next)=>{
             res.status(200).json({
                 status:false,
                 message:"Failed to Get Data",
-                error:result.error
+                error:result
             });
         }
     } catch (error) {
