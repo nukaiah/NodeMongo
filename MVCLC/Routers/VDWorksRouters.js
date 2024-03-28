@@ -8,7 +8,7 @@ var vdSchema = require('../Models/VDWorkModels');
 VDWorksRouter.post('/addVdWork',checkAuth,async (req,res,next)=>{
     try {
         const userId = req.userId; 
-        var data = {
+        var vdWorkData = {
             _id:new mongoose.Types.ObjectId,
             date:req.body.date,
             mandal:req.body.mandal,
@@ -30,7 +30,7 @@ VDWorksRouter.post('/addVdWork',checkAuth,async (req,res,next)=>{
             centralContribution:req.body.centralContribution,
             createdBy:userId
         };
-        const existedData = await vdSchema.findOne(vdWork)
+        const existedData = await vdSchema.findOne(vdWorkData)
         if(existedData){
             res.status(200).json({
                 status:false,
@@ -39,7 +39,7 @@ VDWorksRouter.post('/addVdWork',checkAuth,async (req,res,next)=>{
             });
         }
         else{
-            var result = await vdSchema.create(vdSchema);
+            var result = await vdSchema.create(vdWorkData);
             if(result){
                 res.status(200).json({
                     status:true,
