@@ -41,7 +41,7 @@ villageLeaderRouter.post('/addVillageLeader',checkAuth,async (req,res,next)=>{
      res.header("Access-Control-Allow-Origin", "*");
      res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
      res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-     var data = {
+     var villageLeadersData = {
         _id:new mongoose.Types.ObjectId,
         mandal:req.body.mandal,
         village:req.body.village,
@@ -53,10 +53,8 @@ villageLeaderRouter.post('/addVillageLeader',checkAuth,async (req,res,next)=>{
         voterId:req.body.voterId,
         aadharId:req.body.aadharId,
         rationId:req.body.rationId,
-        createdBy:userId
-};
-     const villageLeaders = VillageLeaders(data);
-     var existedData  = await villageLeaders.findOne(data);
+        createdBy:userId};
+     var existedData  = await villageLeaders.findOne(villageLeadersData);
      if(existedData){
         res.status(200).json({
             status:false,
@@ -65,7 +63,7 @@ villageLeaderRouter.post('/addVillageLeader',checkAuth,async (req,res,next)=>{
         });
      }
      else{
-        var result = await villageLeaders.save();
+        var result = await VillageLeaders.create(villageLeadersData);
         if(result){
             res.status(200).json({
                 status:true,

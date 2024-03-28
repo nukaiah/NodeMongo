@@ -44,11 +44,11 @@ app.use(bodyParser.json());
 app.use('/api/users',userRouter);
 app.use('/api/personal',personalRouter);
 app.use('/api/organisation',organisations)
-app.use('/api/villageLeaders',villageLeaders);
 app.use('/api/appointments',appointmentRouter);
-app.use('/api/MlaVisit',mlaVisitRouter);
 app.use('/api/GovtBenfits',govtBenfitRouter);
 app.use('/api/VDWorks',VDWorksRouter);
+app.use('/api/villageLeaders',villageLeaders);
+app.use('/api/MlaVisit',mlaVisitRouter);
 app.use('/api/XlData',xlsxRouter);
 app.use('/api/pdf',pdfRouter);
 
