@@ -2,13 +2,14 @@ const express = require('express');
 const govtBenfitRouter  = express.Router();
 var mongoose = require("mongoose");
 const checkAuth = require('../MiddleWares/CheckAuth');
-var GOVTBENFITS = require('../Models/GovtBenfitModels'); 
+var govtSchema = require('../Models/GovtBenfitModels'); 
+const e = require('cors');
 
 
 govtBenfitRouter.post('/addGovtBenfits',checkAuth, async (req,res,next)=>{
     try {
         const userId = req.userId; 
-        var data ={
+        var govtData ={
             _id:new mongoose.Types.ObjectId,
             mandal:req.body.mandal,
             village:req.body.village,
@@ -23,8 +24,7 @@ govtBenfitRouter.post('/addGovtBenfits',checkAuth, async (req,res,next)=>{
             phone:req.body.phone,
             createdBy:userId
         };
-        const govtBenfits = new GOVTBENFITS(data);
-        const existingRecord = await govtBenfits.findOne(data);
+        const existingRecord = await govtSchema.findOne(govtData);
         if(existingRecord){
             res.status(200).json({
                 status:false,
@@ -33,7 +33,7 @@ govtBenfitRouter.post('/addGovtBenfits',checkAuth, async (req,res,next)=>{
             });
         }
         else{
-            var result = await govtBenfits.save();
+            var result = await govtSchema.create(govtData);
             if(result)
             {
                 res.status(200).json({
@@ -53,6 +53,7 @@ govtBenfitRouter.post('/addGovtBenfits',checkAuth, async (req,res,next)=>{
         }
        
     } catch (error) {
+        console.log(error)
         res.status(400).json({
             status:false,
             message:"Failed Add Govt Benfit ",
