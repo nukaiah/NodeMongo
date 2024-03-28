@@ -67,7 +67,6 @@ govtBenfitRouter.get('/getAll',checkAuth,async (req,res,next)=>{
         res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         var result = await govtSchema.find();
-        console.log(result);
         if(result){
             res.status(200).json({
                 status:true,
