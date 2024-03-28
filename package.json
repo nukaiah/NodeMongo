@@ -30,6 +30,9 @@
     "nodemailer": "^6.9.3",
     "nodemon": "^2.0.22",
     "path": "^0.12.7",
+    "pdfkit": "^0.15.0",
+    "pdfkit-table": "^0.1.99",
+    "pdfmake": "^0.2.10",
     "xlsx": "^0.18.5"
   }
 }

@@ -16,7 +16,12 @@ var mlaVisitRouter = require('./MVCLC/Routers/MLAVisitRouters');
 var govtBenfitRouter = require('./MVCLC/Routers/GovtBenfitRouter');
 var VDWorksRouter = require('./MVCLC/Routers/VDWorksRouters');
 var xlsxRouter = require('./MVCLC/Routers/XLSXRouter');
-const { myScheduledFunction } = require('./MVCLC/MiddleWares/recurssiveFunctions');
+// const { getTodsaysAppointment } = require('./MVCLC/MiddleWares/recurssiveFunctions');
+var patientRouter = require('./MVCLC/Routers/patientRouter');
+var consultationRouter = require('./MVCLC/Routers/ConsultationsRouter');
+var productsRouter = require('./MVCLC/Routers/ProductsRouter');
+var orderRouter = require('./MVCLC/Routers/OrdersRouter');
+var pdfRouter = require('./MVCLC/Routers/FiltersPdffilesRouter');
 
 
 
@@ -49,8 +54,13 @@ app.use('/api/MlaVisit',mlaVisitRouter);
 app.use('/api/GovtBenfits',govtBenfitRouter);
 app.use('/api/VDWorks',VDWorksRouter);
 app.use('/api/XlData',xlsxRouter);
+app.use('/api/patients',patientRouter)
+app.use('/api/consultation',consultationRouter)
+app.use('/api/products',productsRouter);
+app.use('/api/orders',orderRouter);
+app.use('/api/pdf',pdfRouter);
 
-myScheduledFunction();
+// getTodsaysAppointment();
   
 
 module.exports = app;
