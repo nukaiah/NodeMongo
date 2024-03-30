@@ -21,7 +21,8 @@ govtBenfitRouter.post('/addGovtBenfits',checkAuth, async (req,res,next)=>{
             voterName:req.body.voterName,
             houseName:req.body.houseName,
             phone:req.body.phone,
-            createdBy:userId
+            createdBy:userId,
+            date:req.body.date
         };
         const existingRecord = await govtSchema.findOne(govtData);
         if(existingRecord){
