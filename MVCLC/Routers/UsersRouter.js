@@ -288,7 +288,6 @@ userRouter.put('/updateProfile', checkAuth, async (req, res, next) => {
             $set: {
                 firstName: req.body.firstName,
                 lastName: req.body.lastName,
-                email: req.body.email,
                 phone: req.body.phone,
                 presentAdd: req.body.presentAdd,
                 permanentAdd: req.body.permanentAdd,
