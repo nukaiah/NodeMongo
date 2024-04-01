@@ -25,6 +25,9 @@ appointmentRouter.post('/createApt', upload.fields([{ name: 'image' }, { name: '
             docUrl = (await cloudinary.uploader.upload(req.files['doc'][0].path, { folder: 'Documents/' })).url;
         }
 
+        const currentDate = new Date();
+        const dateOnly = currentDate.toISOString().split('T')[0];
+
         const paramsToAdd = "f_auto,q_auto";
         const parts = docUrl.split("upload");
         const transformedUrl = parts[0] + '/upload/' + paramsToAdd + '/' + parts[1];
@@ -46,7 +49,7 @@ appointmentRouter.post('/createApt', upload.fields([{ name: 'image' }, { name: '
             aptStatus: 'In Progress',
             ticketStatus: '',
             followupDate: '',
-            createdDate: istDateTime,
+            createdDate: dateOnly,
             docs: transformedUrl,
             followupComments:req.body.followupComments,
             action:req.body.action,
@@ -77,7 +80,6 @@ appointmentRouter.post('/createApt', upload.fields([{ name: 'image' }, { name: '
         });
     }
 });
-
 
 
 // Get Appointmeny By id is here.......
