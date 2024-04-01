@@ -28,7 +28,7 @@ var mongoose = require('mongoose');
 
 var appointmentSchema = new mongoose.Schema({
     _id:mongoose.Schema.Types.ObjectId,
-    createdDate:Date,
+    createdDate:String,
     createdBy:String,
 
     vistCount: String,
