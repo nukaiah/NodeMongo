@@ -8,7 +8,7 @@ const PDFDocument = require('pdfkit');
 
 
 
-fileRouter.get('/download-pdf', (req, res) => {
+fileRouter.get('/downloadpdf', (req, res) => {
     const doc = new PDFDocument();
     res.setHeader('Content-Type', 'application/pdf');
     res.setHeader('Content-Disposition', 'attachment; filename="table.pdf"');
@@ -20,7 +20,7 @@ fileRouter.get('/download-pdf', (req, res) => {
     // Table data
     const tableData = [
         ["Mandal","Village","Voter ID","Adhaar No","Ration Card No","Name of Govt Scheme","Amount Binefitted Per Year","Amount Binefitted Per Month","Voter Name","Voter House No.","Voter Phone No."],
-        ["Chintalapalem, ChintalapalemChintalapalem","Dondapadu","1234567890","1234 5678 9000","1029384756","Raithu Loan","120000","10000","Yalagala Srinivas","4-19/1","8247467723"],
+        ["Chintalapalem","Dondapadu","1234567890","1234 5678 9000","1029384756","Raithu Loan","120000","10000","Yalagala Srinivas","4-19/1","8247467723"],
         ["Chintalapalem","Dondapadu","1234567890","1234 5678 9000","1029384756","Raithu Loan","120000","10000","Yalagala Srinivas","4-19/1","8247467723"],
         ["Chintalapalem","Dondapadu","1234567890","1234 5678 9000","1029384756","Raithu Loan","120000","10000","Yalagala Srinivas","4-19/1","8247467723"],
         ["Chintalapalem","Dondapadu","1234567890","1234 5678 9000","1029384756","Raithu Loan","120000","10000","Yalagala Srinivas","4-19/1","8247467723"],

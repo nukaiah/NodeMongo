@@ -327,12 +327,12 @@ userRouter.put('/updateImage', checkAuth, upload.single("image"), async (req, re
         });
         if (result) {
             var query = { _id: userId }
-            var imageUrl = result.url;
+            var profileUrl = result.url;
             var imageId = result.public_id;
             const updateFields = {
                 $set: {
                     cloudUrl: imageId,
-                    imageUrl: imageUrl,
+                    imageUrl: profileUrl,
                 },
             };
             var data = Users.updateOne(query, updateFields, { new: true });
