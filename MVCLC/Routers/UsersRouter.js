@@ -321,6 +321,8 @@ userRouter.put('/updateProfile', checkAuth, async (req, res, next) => {
 userRouter.put('/updateImage', checkAuth, upload.single("image"), async (req, res, next) => {
     try {
         const userId = req.userId;
+        console.log(userId);
+        console.log(req.file.path);
         var result = req.body.public_id.length == 0 ? await cloudinary.uploader.upload(req.file.path, { folder: 'Users/' }) : await cloudinary.uploader.upload(req.file.path, {
             public_id: req.body.public_id,
             overwrite: true
@@ -335,12 +337,12 @@ userRouter.put('/updateImage', checkAuth, upload.single("image"), async (req, re
                     imageUrl: profileUrl,
                 },
             };
-            var data = Users.updateOne(query, updateFields, { new: true });
+            var data = await Users.updateOne(query, updateFields, { new: true });
             if(data)
             {
                 res.status(200).json({
                     status: true,
-                    message: "Profiel Updated Successfully"
+                    message: "Profile Updated Successfully"
                 });
             }
             else
