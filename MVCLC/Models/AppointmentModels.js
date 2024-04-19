@@ -17,7 +17,7 @@ var appointmentSchema = new mongoose.Schema({
     aptId:String,
     aptStatus:String,
     ticketStatus:String,
-    followupDate:Date,
+    followupDate:String,
     followupComments: String,
     action:String,
     userlinkid: {

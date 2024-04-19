@@ -10,7 +10,6 @@ xlsxRouter.use(fileUpload());
 
 xlsxRouter.post('/MlaXlxsUpload',checkAuth,async (req, res, next) => {
   try {
-    // Assuming the file is sent as 'file' in the request
     const file = req.files.file;
     const workbook = xlsx.read(file.data, { type: 'buffer' });
 
