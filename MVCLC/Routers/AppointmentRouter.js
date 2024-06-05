@@ -149,6 +149,37 @@ appointmentRouter.post('/updateStatus',checkAuth, async(req, res, next) => {
     }
 });
 
+appointmentRouter.post('/changeStatue',checkAuth, async(req, res, next) => {
+    try {
+        res.header("Access-Control-Allow-Origin", "*");
+        res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        var query = { _id: req.body._id };
+        var updateData = {
+            aptStatus: req.body.aptStatus,
+        };
+        var result = await Appointment.findByIdAndUpdate(query,{$set: updateData})
+        if(result){
+            res.status(200).json({
+                 status:true,
+                 message:"Appointment Status Updated Successfully"
+            });
+        }
+        else{
+            res.status(200).json({
+                status:true,
+                message:"Appointment Status Updated Failed"
+           });
+        }
+    } catch (error) {
+        res.status(400).json({
+            status: false,
+            message: "Failed to Upadte Appointment Status",
+            error: error
+        });
+    }
+});
+
 
 // Delete the appointment permanantly is here.......
 appointmentRouter.delete('/delete',checkAuth, async (req, res, next) => {
