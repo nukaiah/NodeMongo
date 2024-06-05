@@ -156,7 +156,7 @@ appointmentRouter.post('/changeStatue',checkAuth, async(req, res, next) => {
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
         var query = { _id: req.body._id };
         var updateData = {
-            aptStatus: req.body.aptStatus,
+            action: req.body.action,
         };
         var result = await Appointment.findByIdAndUpdate(query,{$set: updateData})
         if(result){
