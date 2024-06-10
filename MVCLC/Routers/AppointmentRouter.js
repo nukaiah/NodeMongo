@@ -28,9 +28,10 @@ appointmentRouter.post('/createApt', upload.fields([{ name: 'image' }, { name: '
         const currentDate = new Date();
         const dateOnly = currentDate.toISOString().split('T')[0];
 
+        console.log(docUrl);
         const paramsToAdd = "f_auto,q_auto";
-        const parts = docUrl.split("upload");
-        const transformedUrl = parts[0] + '/upload/' + paramsToAdd + '/' + parts[1];
+        const parts = docUrl==""||docUrl==null?"":docUrl.split("upload");
+        const transformedUrl = docUrl==""||docUrl==null?"":parts[0] + '/upload/' + paramsToAdd + '/' + parts[1];
         const istDateTime = new Date(new Date().getTime() + 5.5 * 60 * 60 * 1000);
 
         const aptCount = (await Counter.findById(query)).count + 1;
