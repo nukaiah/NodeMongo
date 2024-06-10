@@ -221,7 +221,9 @@ appointmentRouter.get('/getAll',async (req, res, next) => {
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
         const result = await Appointment.find().populate('userlinkid');
-        result.sort((a, b) => new Date(b.createdDate) - new Date(a.createdDate));
+        console.log(result);
+        result.sort((a, b) => new Date(b.sortDate) - new Date(a.sortDate));
+        console.log(result);
         if (result) {
             res.status(200).json({
                 status: true,

@@ -20,6 +20,10 @@ var appointmentSchema = new mongoose.Schema({
     followupDate:String,
     followupComments: String,
     action:String,
+    sortDate: {
+      type: Date,
+      default: Date.now
+  },
     userlinkid: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Personal"
