@@ -214,14 +214,14 @@ appointmentRouter.delete('/delete',checkAuth, async (req, res, next) => {
 });
 
 
-appointmentRouter.get('/getAll',checkAuth,async (req, res, next) => {
+appointmentRouter.get('/getAll',async (req, res, next) => {
     try {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
         res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
 
         const result = await Appointment.find().populate('userlinkid');
-          
+        result.sort((a, b) => new Date(a.createdDate) - new Date(b.createdDate));
         if (result) {
             res.status(200).json({
                 status: true,
