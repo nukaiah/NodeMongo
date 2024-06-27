@@ -208,7 +208,6 @@ userRouter.post('/forgotPassword', async (req, res, next) => {
     try {
         var queryEmail = { email: req.body.email };
         var user = await Users.find(queryEmail);
-        console.log(user);
         if (user.length < 1) {
             res.status(200).json({
                 status: false,
@@ -216,7 +215,7 @@ userRouter.post('/forgotPassword', async (req, res, next) => {
             });
         }
         else {
-            var generatedPassword = user[0]["firstName"]+"@12";
+            var generatedPassword = user[0]["lastName"]+"@12";
             var hashData = await bcrypt.hash(generatedPassword, 10);
             var userResult = await Users.findOneAndUpdate(queryEmail, { $set: { password: hashData } });
             if(userResult){
@@ -231,7 +230,7 @@ userRouter.post('/forgotPassword', async (req, res, next) => {
                     from: "srinivas.y@lionorbit.com",
                     to: req.body.email,
                     subject: 'Reset You Password',
-                    text: generatedPassword
+                    text: ""+generatedPassword
                 };
     
                 transporter.sendMail(mailOptions, function (error, info) {
