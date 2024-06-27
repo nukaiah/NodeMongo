@@ -208,6 +208,7 @@ userRouter.post('/forgotPassword', async (req, res, next) => {
     try {
         var queryEmail = { email: req.body.email };
         var user = await Users.find(queryEmail);
+        console.log(user);
         if (user.length < 1) {
             res.status(200).json({
                 status: false,
@@ -215,33 +216,38 @@ userRouter.post('/forgotPassword', async (req, res, next) => {
             });
         }
         else {
-            const transporter = nodemailer.createTransport({
-                service: 'gmail',
-                auth: {
-                    user: process.env.USER_EMAIL,
-                    pass: process.env.PASSWORD,
-                },
-            });
-            var mailOptions = {
-                from: process.env.USER_EMAIL,
-                to: req.body.email,
-                subject: 'Reset You Password',
-                text: '1. Click on link below to reset your LC account password \n2. http://leaderconnect.sivamdirector.com/changepassword.html '
-            };
-
-            transporter.sendMail(mailOptions, function (error, info) {
-                if (error) {
-                    return res.status(200).json({
-                        status: false,
-                        message: error
-                    });
-                } else {
-                    return res.status(200).json({
-                        status: true,
-                        message: "Email Sent Successfully"
-                    });
-                }
-            });
+            var generatedPassword = user[0]["firstName"]+"@12";
+            var hashData = await bcrypt.hash(generatedPassword, 10);
+            var userResult = await Users.findOneAndUpdate(queryEmail, { $set: { password: hashData } });
+            if(userResult){
+                const transporter = nodemailer.createTransport({
+                    service: 'gmail',
+                    auth: {
+                        user: "srinivas.y@lionorbit.com",
+                        pass: "Hemalatha#143",
+                    },
+                });
+                var mailOptions = {
+                    from: "srinivas.y@lionorbit.com",
+                    to: req.body.email,
+                    subject: 'Reset You Password',
+                    text: generatedPassword
+                };
+    
+                transporter.sendMail(mailOptions, function (error, info) {
+                    if (error) {
+                        return res.status(200).json({
+                            status: false,
+                            message: error
+                        });
+                    } else {
+                        return res.status(200).json({
+                            status: true,
+                            message: "Email Sent Successfully"
+                        });
+                    }
+                });
+            }
         }
     } catch (error) {
         res.status(400).json({
