@@ -27,6 +27,7 @@ VDWorksRouter.post('/addVdWork',async (req,res,next)=>{
             amountSanction:req.body.amountSanction,
             amountApproved:req.body.amountApproved,
             stateContribution:req.body.stateContribution,
+            address:req.body.address,
             centralContribution:req.body.centralContribution,
             createdBy:userId
         };
