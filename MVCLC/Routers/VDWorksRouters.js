@@ -13,12 +13,13 @@ VDWorksRouter.post('/addVdWork',async (req,res,next)=>{
             date:req.body.date,
             mandal:req.body.mandal,
             village:req.body.village,
+            city:req.body.city,
             stateOrCentralSchemaL:req.body.stateOrCentralSchemaL,
             departmentOfWork:req.body.departmentOfWork,
             workType:req.body.workType,
             workDesc:req.body.workDesc,
             inchargeofWork:req.body.inchargeofWork,
-            inchargePhone:req.body.inchargeofWork,
+            inchargePhone:req.body.inchargePhone,
             workStatus:req.body.workStatus,
             workStartDate:req.body.workStartDate,
             workEndDate:req.body.workEndDate,
@@ -27,7 +28,6 @@ VDWorksRouter.post('/addVdWork',async (req,res,next)=>{
             amountSanction:req.body.amountSanction,
             amountApproved:req.body.amountApproved,
             stateContribution:req.body.stateContribution,
-            address:req.body.address,
             centralContribution:req.body.centralContribution,
             createdBy:userId
         };

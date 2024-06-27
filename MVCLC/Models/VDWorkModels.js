@@ -5,6 +5,7 @@ var VDWorkSchema = new mongoose.Schema({
     date:String,
     mandal:String,
     village:String,
+    city:String,
     stateOrCentralSchemaL:String,
     departmentOfWork:String,
     workType:String,
@@ -19,7 +20,6 @@ var VDWorkSchema = new mongoose.Schema({
     amountSanction:String,
     amountApproved:String,
     stateContribution:String,
-    address:String,
     centralContribution:String,
     createdBy:String
 });
