@@ -13,6 +13,7 @@ const govtbenfitSchema =  new mongoose.Schema({
     voterName:String,
     houseName:String,
     phone:String,
+    address:String,
     createdBy:String,
     date:String,
 });

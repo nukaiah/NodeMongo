@@ -21,6 +21,7 @@ govtBenfitRouter.post('/addGovtBenfits',checkAuth, async (req,res,next)=>{
             voterName:req.body.voterName,
             houseName:req.body.houseName,
             phone:req.body.phone,
+            address:req.body.address,
             createdBy:userId,
             date:req.body.date
         };

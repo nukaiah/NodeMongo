@@ -54,7 +54,7 @@ mlaVisitRouter.post('/addMlAVists',checkAuth, async (req,res,next)=>{
     }
 });
 
-mlaVisitRouter.get('/getAll',checkAuth,async (req,res,next)=>{
+mlaVisitRouter.get('/getAll',async (req,res,next)=>{
     try {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");
