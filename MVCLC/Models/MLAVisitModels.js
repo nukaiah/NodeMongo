@@ -9,6 +9,7 @@ const mlavisitSchema =  new mongoose.Schema({
     gpProgram:String,
     proDesc:String,
     proInchagre:String,
+    address:String,
     proInchagrePhone:String,
     createdBy:String
 });

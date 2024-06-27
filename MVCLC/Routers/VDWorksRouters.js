@@ -5,7 +5,7 @@ const checkAuth = require('../MiddleWares/CheckAuth');
 var vdSchema = require('../Models/VDWorkModels'); 
 
 
-VDWorksRouter.post('/addVdWork',checkAuth,async (req,res,next)=>{
+VDWorksRouter.post('/addVdWork',async (req,res,next)=>{
     try {
         const userId = req.userId; 
         var vdWorkData = {
@@ -65,7 +65,8 @@ VDWorksRouter.post('/addVdWork',checkAuth,async (req,res,next)=>{
     }
 });
 
-VDWorksRouter.get('/getAll',checkAuth,async (req,res,next)=>{
+
+VDWorksRouter.get('/getAll',async (req,res,next)=>{
     try {
         res.header("Access-Control-Allow-Origin", "*");
         res.header("Access-Control-Allow-Methods", "GET,PUT,PATCH,POST,DELETE");

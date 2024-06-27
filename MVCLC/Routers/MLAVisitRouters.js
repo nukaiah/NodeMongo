@@ -17,6 +17,7 @@ mlaVisitRouter.post('/addMlAVists',checkAuth, async (req,res,next)=>{
             gpProgram:req.body.gpProgram,
             proDesc:req.body.proDesc,
             proInchagre:req.body.proInchagre,
+            address:req.body.address,
             proInchagrePhone:req.body.proInchagrePhone,
             createdBy:userId
         };
