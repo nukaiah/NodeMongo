@@ -5,7 +5,7 @@ var VDWorkSchema = new mongoose.Schema({
     date:String,
     mandal:String,
     village:String,
-    city:String,
+    address:String,
     stateOrCentralSchemaL:String,
     departmentOfWork:String,
     workType:String,

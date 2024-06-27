@@ -13,7 +13,7 @@ VDWorksRouter.post('/addVdWork',async (req,res,next)=>{
             date:req.body.date,
             mandal:req.body.mandal,
             village:req.body.village,
-            city:req.body.city,
+            address:req.body.address,
             stateOrCentralSchemaL:req.body.stateOrCentralSchemaL,
             departmentOfWork:req.body.departmentOfWork,
             workType:req.body.workType,
