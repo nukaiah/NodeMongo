@@ -55,6 +55,7 @@ villageLeaderRouter.post('/addVillageLeader',checkAuth,async (req,res,next)=>{
         voterId:req.body.voterId,
         aadharId:req.body.aadharId,
         rationId:req.body.rationId,
+        address:req.body.address,
         createdBy:userId};
         console.log(villageLeaderData);
       var existedData  = await villageLeadersSchema.findOne(villageLeaderData);
