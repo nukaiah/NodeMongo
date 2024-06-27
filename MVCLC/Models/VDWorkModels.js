@@ -19,6 +19,7 @@ var VDWorkSchema = new mongoose.Schema({
     amountSanction:String,
     amountApproved:String,
     stateContribution:String,
+    address:String,
     centralContribution:String,
     createdBy:String
 });
