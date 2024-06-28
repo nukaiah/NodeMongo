@@ -257,6 +257,7 @@ userRouter.post('/forgotPassword', async (req, res, next) => {
     }
 });
 
+
 // Get Account details
 userRouter.post('/getAccountDetails', checkAuth, async (req, res, next) => {
     try {
@@ -322,6 +323,7 @@ userRouter.put('/updateProfile', checkAuth, async (req, res, next) => {
         });
     }
 });
+
 
 // Profile Picture Update is Here.........
 userRouter.put('/updateImage', checkAuth, upload.single("image"), async (req, res, next) => {
