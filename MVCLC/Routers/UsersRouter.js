@@ -216,7 +216,7 @@ userRouter.post('/forgotPassword', async (req, res, next) => {
             });
         }
         else {
-            var generatedPassword = user[0]["firstName"]+"@12";
+            var generatedPassword = user[0]["firstName"]+"@123*";
             var hashData = await bcrypt.hash(generatedPassword, 10);
             var userResult = await Users.findOneAndUpdate(queryEmail, { $set: { password: hashData } });
             if(userResult){
@@ -231,7 +231,7 @@ userRouter.post('/forgotPassword', async (req, res, next) => {
                     from: "srinivas.y@lionorbit.com",
                     to: req.body.email,
                     subject: 'Reset You Password',
-                    text: "This is system generated password for your lc account.You can continue with this password or you can change the pawword after logn.Thank You. Your Password is "+generatedPassword
+                    text: "This is system generated password for your lc account.You can continue with this password or you can change the password after logn.Thank You. Your Password is "+generatedPassword
                 };
     
                 transporter.sendMail(mailOptions, function (error, info) {
